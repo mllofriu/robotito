@@ -4,26 +4,30 @@
 #include "Arduino.h"
 #include "PoluloEncoder.h"
 
+#include <PID_v1.h>
+
 class PoluloMotor {
   public:
     PoluloMotor(int encoderPin1, int encoderPin2, int enablePin, int dirPin1, int dirPin2, float ratio);
     void setTargetVel(float targetVel);
     void pid();
     float getVel() {return encoder.getVel();}
-    void setP(float p) { this->p =  p;}
-    void setI(float i) { this->i = i;}
-    void setIWindow(size_t winSize);
+    void setkP(float kp) { this->kp =  kp;}
+    void setkI(float ki) { this->ki = ki;}
+    void setkD(float kd) { this->kd = kd;}
   private:
     PoluloEncoder encoder;
-    float targetVel;
-    float p = 100;
-    float i = 10;
+    double kp = 40;
+    double ki = 10;
+    double kd = .5;
 
-    size_t iWinSize = 10;
+    //Define Variables we'll be connecting to
+    double Input, Output, targetVel;;
 
     int enablePin;
     int dirPin1;
     int dirPin2;
+    PID myPID;
 };
 
 #endif

@@ -1,5 +1,6 @@
-#include <PoluloMotor.h>
+#include "PoluloMotor.h"
 #include <Encoder.h>
+#include <PID_v1.h>
 
 #define MOVE_PERIOD 800
 #define SLEEP_PERIOD 500
@@ -9,8 +10,10 @@ PoluloMotor * m2;
 PoluloMotor * m3;
 
 float motionVel = 8;    
-float pVal = 50;
-float iVal = 10;
+float kp = 10;
+float ki = 50;
+float kd = .5;
+
 
 char state;     
 char prevState;                     
@@ -25,18 +28,12 @@ void setup() {
   m1 = new PoluloMotor(9, 8, 10, 11, 12,30.0f);
   m2 = new PoluloMotor(3, 2, 6, 5, 4, 51.45f);
   m3 = new PoluloMotor(16, 17, 20, 19, 18, 51.45f);
-
-  m1->setP(pVal);
-  m2->setP(pVal);
-  m3->setP(pVal);
-
-  m1->setI(iVal);
-  m2->setI(iVal);
-  m3->setI(iVal);
   
   state = 's';
   prevState = 'c';
   lastUpdate = millis();
+
+  m1->setTargetVel(8);
 }
 
 void setVels(float v1, float v2, float v3){
@@ -47,10 +44,8 @@ void setVels(float v1, float v2, float v3){
 
 void loop() {
   m1->pid();
-
   m2->pid();
   m3->pid();
-  Serial.println("PID 4 done");
 
   switch (state){
       case 's':
@@ -83,11 +78,7 @@ void loop() {
         }
         break;
   }
-  
+    
 
-  pointer = malloc(1);
-  counter++;
-  if (pointer == NULL) Serial.println("got null");
-  else Serial.println(String(counter) + " allocations made");
   delay(20);
 }

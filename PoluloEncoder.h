@@ -3,7 +3,7 @@
 #define PoluloEncoder_h
 
 #include "Arduino.h"
-#include "Encoder.h"
+#include <Encoder.h>
 
 class PoluloEncoder {
   public:

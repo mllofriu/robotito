@@ -1,14 +1,21 @@
 #include "PoluloMotor.h"
 
 
+//Specify the links and initial tuning parameters
+PID * myPID;
+
 PoluloMotor::PoluloMotor(int encoderPin1, int encoderPin2, int enablePin, int dirPin1, int dirPin2, float ratio)
-	: encoder(encoderPin1, encoderPin2, ratio)
+	: encoder(encoderPin1, encoderPin2, ratio), myPID(&Input, &Output, &targetVel,kp,ki,kd, DIRECT)
 {
 	this->enablePin = enablePin;
 	this->dirPin1 = dirPin1;
 	this->dirPin2 = dirPin2;
 
 	targetVel = 0;
+  Input = encoder.getVel();
+  myPID.SetOutputLimits(-255, 255);
+  myPID.SetSampleTime(20); 
+  myPID.SetMode(AUTOMATIC);
 
 	pinMode(enablePin, OUTPUT);
 	pinMode(dirPin1, OUTPUT);
@@ -19,28 +26,9 @@ PoluloMotor::PoluloMotor(int encoderPin1, int encoderPin2, int enablePin, int di
 	digitalWrite(dirPin2, LOW);	
 }
 
-void PoluloMotor::setIWindow(size_t winSize) {
-    this->iWinSize = winSize;
-    // errors = BoundedQueue<float>(iWinSize);
-}
-
 void PoluloMotor::setTargetVel(float vel)
 {
 	targetVel = vel;
-	if (vel < 0){
-		digitalWrite(dirPin1, LOW);
-		digitalWrite(dirPin2, HIGH);	
-	} else if (vel > 0) {
-		digitalWrite(dirPin1, HIGH);
-		digitalWrite(dirPin2, LOW);	
-	} else {
-		digitalWrite(dirPin1, HIGH);
-		digitalWrite(dirPin2, HIGH);	
-	}
-
-	// errors = BoundedQueue<float>(iWinSize);
-
-	pid();
 }
 
 int sign(float num){
@@ -54,17 +42,17 @@ int sign(float num){
 
 void PoluloMotor::pid()
 {
-	float currVel = encoder.getVel();
-	float err = targetVel - currVel;
-
-	// errors.enqueue(err);
-
-  	// Serial.println(errors.average());
-  	// Serial.println();
-  	//  + errors.average() * i
-	float gain = max(0, min(255, (p * err) * sign(targetVel)));
-	// float gain = 30;
-	// gain = 00;
-
-	analogWrite(enablePin, gain);
+  Input = encoder.getVel();
+  myPID.Compute();
+  if (Output < 0){
+    digitalWrite(dirPin1, LOW);
+    digitalWrite(dirPin2, HIGH);  
+  } else if (Output > 0) {
+    digitalWrite(dirPin1, HIGH);
+    digitalWrite(dirPin2, LOW); 
+  } 
+//  Serial.println(Input);
+//  Serial.println(targetVel);
+//  Serial.println(Output);
+  analogWrite(enablePin, abs(Output));
 }
