@@ -1,6 +1,7 @@
 #include "PoluloMotor.h"
 #include <Encoder.h>
 #include <PID_v1.h>
+#include <PID_AutoTune_v0.h>
 
 #define MOVE_PERIOD 800
 #define SLEEP_PERIOD 500
@@ -9,7 +10,7 @@ PoluloMotor * m1;
 PoluloMotor * m2;
 PoluloMotor * m3;
 
-float motionVel = 8;    
+float motionVel = 4;    
 float kp = 10;
 float ki = 50;
 float kd = .5;
@@ -20,6 +21,9 @@ char prevState;
 long lastUpdate;
 int counter = 0;
 void * pointer;
+
+bool autoTune1Completed = 1;
+
 void setup() {
   Serial.begin(9600);
 
@@ -33,17 +37,28 @@ void setup() {
   prevState = 'c';
   lastUpdate = millis();
 
-  m1->setTargetVel(8);
+//   m1->setTargetVel(4);
+
 }
 
 void setVels(float v1, float v2, float v3){
   m1->setTargetVel(v1);
   m2->setTargetVel(v2);
   m3->setTargetVel(v3);
+  
 }
 
 void loop() {
+//  if (!autoTune1Completed)
+//    autoTune1Completed = m1->autoTune();
+//    
+//  else {
+////    m1->setTargetVel(4);
+////    m1->printTunedKs();
+//  }
   m1->pid();
+
+  
   m2->pid();
   m3->pid();
 
@@ -78,6 +93,8 @@ void loop() {
         }
         break;
   }
+
+  
     
 
   delay(20);

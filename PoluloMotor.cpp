@@ -5,17 +5,22 @@
 PID * myPID;
 
 PoluloMotor::PoluloMotor(int encoderPin1, int encoderPin2, int enablePin, int dirPin1, int dirPin2, float ratio)
-	: encoder(encoderPin1, encoderPin2, ratio), myPID(&Input, &Output, &targetVel,kp,ki,kd, DIRECT)
+	: encoder(encoderPin1, encoderPin2, ratio), myPID(&Input, &Output, &targetVel,kp,ki,kd, DIRECT), pidTuner(&Input, &Output)
 {
 	this->enablePin = enablePin;
 	this->dirPin1 = dirPin1;
 	this->dirPin2 = dirPin2;
 
 	targetVel = 0;
+  Output = 0;
   Input = encoder.getVel();
   myPID.SetOutputLimits(-255, 255);
   myPID.SetSampleTime(20); 
   myPID.SetMode(AUTOMATIC);
+
+  pidTuner.SetOutputStep(50);
+  pidTuner.SetControlType(1);
+  pidTuner.SetNoiseBand(1);
 
 	pinMode(enablePin, OUTPUT);
 	pinMode(dirPin1, OUTPUT);
@@ -24,6 +29,18 @@ PoluloMotor::PoluloMotor(int encoderPin1, int encoderPin2, int enablePin, int di
 	digitalWrite(enablePin, LOW);
 	digitalWrite(dirPin1, LOW);
 	digitalWrite(dirPin2, LOW);	
+}
+
+void PoluloMotor::printTunedKs(){
+  Serial.println("Constants");
+  Serial.println(pidTuner.GetKp());
+  Serial.println(pidTuner.GetKi());
+  Serial.println(pidTuner.GetKd());
+}
+
+bool PoluloMotor::autoTune()
+{
+  return pidTuner.Runtime();
 }
 
 void PoluloMotor::setTargetVel(float vel)
@@ -44,15 +61,24 @@ void PoluloMotor::pid()
 {
   Input = encoder.getVel();
   myPID.Compute();
-  if (Output < 0){
+  
+  // Linear feedforward model - max power / max vel 
+  float ff = targetVel * (255.0f/4) ;
+
+  float ctrlSignal = ff + Output;
+  // Direction setting
+  if (ctrlSignal < 0){
     digitalWrite(dirPin1, LOW);
     digitalWrite(dirPin2, HIGH);  
-  } else if (Output > 0) {
+  } else if (ctrlSignal > 0) {
     digitalWrite(dirPin1, HIGH);
     digitalWrite(dirPin2, LOW); 
   } 
-//  Serial.println(Input);
-//  Serial.println(targetVel);
-//  Serial.println(Output);
-  analogWrite(enablePin, abs(Output));
+  
+  Serial.println("Control variables");
+  Serial.println(Input);
+  Serial.println(targetVel);
+  Serial.println(Output);
+  Serial.println(ff);
+  analogWrite(enablePin, abs(ctrlSignal));
 }

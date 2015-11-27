@@ -3,6 +3,7 @@
 
 #include "Arduino.h"
 #include "PoluloEncoder.h"
+#include "PID_AutoTune_v0.h"
 
 #include <PID_v1.h>
 
@@ -15,11 +16,18 @@ class PoluloMotor {
     void setkP(float kp) { this->kp =  kp;}
     void setkI(float ki) { this->ki = ki;}
     void setkD(float kd) { this->kd = kd;}
+    bool autoTune();
+    void printTunedKs();
   private:
     PoluloEncoder encoder;
-    double kp = 40;
-    double ki = 10;
-    double kd = .5;
+    
+//    double kp = 8.36;
+//    double ki = 0.67;
+//    double kd = 26.14;
+
+    double kp = 10;
+    double ki = 2;
+    double kd = 0.0;
 
     //Define Variables we'll be connecting to
     double Input, Output, targetVel;;
@@ -28,6 +36,8 @@ class PoluloMotor {
     int dirPin1;
     int dirPin2;
     PID myPID;
+    PID_ATune pidTuner;
+    
 };
 
 #endif
