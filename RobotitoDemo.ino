@@ -3,7 +3,7 @@
 #include <PID_v1.h>
 #include <PID_AutoTune_v0.h>
 
-#define MOVE_PERIOD 800
+#define MOVE_PERIOD 2000
 #define SLEEP_PERIOD 500
  
 PoluloMotor * m1;
@@ -38,7 +38,11 @@ void setup() {
   lastUpdate = millis();
 
 //   m1->setTargetVel(4);
+  delay(1000);
 
+  m1->autoTune();
+  m2->autoTune();
+  m3->autoTune();
 }
 
 void setVels(float v1, float v2, float v3){

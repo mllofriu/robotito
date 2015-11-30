@@ -30,13 +30,13 @@ class PoluloMotor {
     double kd = 0.0;
 
     //Define Variables we'll be connecting to
-    double Input, Output, targetVel;;
+    double Input, Output, targetVel;
 
     int enablePin;
     int dirPin1;
     int dirPin2;
     PID myPID;
-    PID_ATune pidTuner;
+    float ffModelVel;
     
 };
 
