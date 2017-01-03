@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE eagle SYSTEM "eagle.dtd">
-<eagle version="7.6.0">
+<eagle version="7.7.0">
 <drawing>
 <settings>
 <setting alwaysvectorfont="no"/>
@@ -144,7 +144,7 @@
 <libraries>
 <library name="Teensy_3_and_LC_Series_Boards_v1.4">
 <packages>
-<package name="TEENSY_3.0-3.2&amp;LC_DIL+4">
+<package name="TEENSY_3.0-3.2_ALL_PINS_&amp;_PADS">
 <pad name="GND" x="-7.62" y="16.51" drill="0.9652"/>
 <pad name="0" x="-7.62" y="13.97" drill="0.9652"/>
 <pad name="1" x="-7.62" y="11.43" drill="0.9652"/>
@@ -159,6 +159,11 @@
 <pad name="10" x="-7.62" y="-11.43" drill="0.9652"/>
 <pad name="11" x="-7.62" y="-13.97" drill="0.9652"/>
 <pad name="12" x="-7.62" y="-16.51" drill="0.9652"/>
+<pad name="VBAT" x="-5.08" y="-16.51" drill="0.9652"/>
+<pad name="3.3V1" x="-2.54" y="-16.51" drill="0.9652"/>
+<pad name="GND1" x="0" y="-16.51" drill="0.9652"/>
+<pad name="PGM" x="2.54" y="-16.51" drill="0.9652"/>
+<pad name="RESET/DAC" x="5.08" y="-16.51" drill="0.9652"/>
 <pad name="13" x="7.62" y="-16.51" drill="0.9652"/>
 <pad name="14/A0" x="7.62" y="-13.97" drill="0.9652"/>
 <pad name="15/A1" x="7.62" y="-11.43" drill="0.9652"/>
@@ -186,15 +191,29 @@
 <wire x1="-8.89" y1="17.78" x2="-1.27" y2="17.78" width="0.2032" layer="21"/>
 <wire x1="-1.27" y1="17.78" x2="-1.27" y2="16.51" width="0.2032" layer="21"/>
 <text x="-3.81" y="13.97" size="1.27" layer="25" font="vector">&gt;NAME</text>
-<text x="-3.81" y="-13.97" size="1.27" layer="27" font="vector">&gt;VALUE</text>
+<text x="-3.81" y="5.08" size="1.27" layer="27" font="vector">&gt;VALUE</text>
 <pad name="VUSB" x="5.08" y="13.97" drill="0.9652"/>
 <pad name="AREF" x="5.08" y="8.89" drill="0.9652"/>
 <pad name="A10" x="5.08" y="6.35" drill="0.9652"/>
 <pad name="A11" x="5.08" y="3.81" drill="0.9652"/>
+<pad name="28" x="0" y="-13.97" drill="0.9652"/>
+<pad name="29" x="2.54" y="-13.97" drill="0.9652"/>
+<pad name="27" x="0" y="-11.43" drill="0.9652"/>
+<pad name="26" x="0" y="-8.89" drill="0.9652"/>
+<pad name="25" x="0" y="-6.35" drill="0.9652"/>
+<pad name="24" x="0" y="-3.81" drill="0.9652"/>
+<pad name="30" x="2.54" y="-11.43" drill="0.9652"/>
+<pad name="31" x="2.54" y="-8.89" drill="0.9652"/>
+<pad name="32" x="2.54" y="-6.35" drill="0.9652"/>
+<pad name="33" x="2.54" y="-3.81" drill="0.9652"/>
+<pad name="3.3V2" x="2.54" y="-1.27" drill="0.9652"/>
+<pad name="A13" x="2.54" y="1.27" drill="0.9652"/>
+<pad name="GND2" x="0" y="-1.27" drill="0.9652"/>
+<pad name="A12" x="0" y="1.27" drill="0.9652"/>
 </package>
 </packages>
 <symbols>
-<symbol name="TEENSY_3.1-3.2_DIL+4">
+<symbol name="TEENSY_3.1-3.2_ALL_PINS_AND_PADS">
 <wire x1="-17.78" y1="-35.56" x2="17.78" y2="-35.56" width="0.254" layer="94"/>
 <wire x1="17.78" y1="-35.56" x2="17.78" y2="33.02" width="0.254" layer="94"/>
 <wire x1="17.78" y1="33.02" x2="-17.78" y2="33.02" width="0.254" layer="94"/>
@@ -207,12 +226,13 @@
 <pin name="7/RX3" x="-22.86" y="10.16" visible="pin" length="middle"/>
 <pin name="6/PWM" x="-22.86" y="12.7" visible="pin" length="middle"/>
 <pin name="5/PWM" x="-22.86" y="15.24" visible="pin" length="middle"/>
-<pin name="4/CAN-RX-PWM" x="-22.86" y="17.78" visible="pin" length="middle"/>
+<pin name="4/CAN-RX/PWM" x="-22.86" y="17.78" visible="pin" length="middle"/>
 <pin name="3/CAN-TX/PWM" x="-22.86" y="20.32" visible="pin" length="middle"/>
 <pin name="2" x="-22.86" y="22.86" visible="pin" length="middle"/>
 <pin name="1/TX1/T" x="-22.86" y="25.4" visible="pin" length="middle"/>
 <pin name="0/RX1/T" x="-22.86" y="27.94" visible="pin" length="middle"/>
 <pin name="GND" x="22.86" y="20.32" visible="pin" length="middle" direction="pwr" rot="R180"/>
+<pin name="VIN" x="22.86" y="27.94" visible="pin" length="middle" direction="pwr" rot="R180"/>
 <pin name="AGND" x="22.86" y="7.62" visible="pin" length="middle" direction="pwr" rot="R180"/>
 <pin name="3.3V" x="22.86" y="25.4" visible="pin" length="middle" direction="pwr" rot="R180"/>
 <pin name="23/A9/T/PWM" x="-22.86" y="-30.48" visible="pin" length="middle"/>
@@ -226,23 +246,37 @@
 <pin name="15/A1/T" x="-22.86" y="-10.16" visible="pin" length="middle"/>
 <pin name="14/A0" x="-22.86" y="-7.62" visible="pin" length="middle"/>
 <pin name="13/SCK/LED" x="-22.86" y="-5.08" visible="pin" length="middle"/>
+<pin name="PGM" x="22.86" y="15.24" visible="pin" length="middle" rot="R180"/>
+<pin name="VBAT" x="22.86" y="22.86" visible="pin" length="middle" direction="pwr" rot="R180"/>
 <text x="-5.588" y="34.29" size="1.27" layer="95" font="vector" ratio="15">&gt;NAME</text>
 <text x="-2.794" y="-38.1" size="1.27" layer="96" font="vector" ratio="15">&gt;VALUE</text>
 <pin name="A10" x="22.86" y="-7.62" visible="pin" length="middle" rot="R180"/>
 <pin name="A11" x="22.86" y="-5.08" visible="pin" length="middle" rot="R180"/>
 <pin name="AREF" x="22.86" y="10.16" visible="pin" length="middle" direction="pwr" rot="R180"/>
 <pin name="VUSB" x="22.86" y="30.48" visible="pin" length="middle" direction="pwr" rot="R180"/>
-<pin name="VIN" x="22.86" y="27.94" visible="pin" length="middle" direction="pwr" rot="R180"/>
+<pin name="24" x="-22.86" y="-33.02" visible="pin" length="middle"/>
+<pin name="25/T/PWM" x="22.86" y="-33.02" visible="pin" length="middle" rot="R180"/>
+<pin name="26/A15" x="22.86" y="-30.48" visible="pin" length="middle" rot="R180"/>
+<pin name="27/A16" x="22.86" y="-27.94" visible="pin" length="middle" rot="R180"/>
+<pin name="28/A17" x="22.86" y="-25.4" visible="pin" length="middle" rot="R180"/>
+<pin name="29/A18/SCL1" x="22.86" y="-22.86" visible="pin" length="middle" rot="R180"/>
+<pin name="30/A19/SDA1" x="22.86" y="-20.32" visible="pin" length="middle" rot="R180"/>
+<pin name="31/A20" x="22.86" y="-17.78" visible="pin" length="middle" rot="R180"/>
+<pin name="32/T/PWM" x="22.86" y="-15.24" visible="pin" length="middle" rot="R180"/>
+<pin name="33/T" x="22.86" y="-12.7" visible="pin" length="middle" rot="R180"/>
+<pin name="A12" x="22.86" y="-2.54" visible="pin" length="middle" rot="R180"/>
+<pin name="A13" x="22.86" y="0" visible="pin" length="middle" rot="R180"/>
+<pin name="A14/DAC" x="22.86" y="2.54" visible="pin" length="middle" rot="R180"/>
 </symbol>
 </symbols>
 <devicesets>
-<deviceset name="TEENSY_3.1-3.2_DIL+4">
-<description>Teensy 3.1 and 3.2 in a DIL package with the inner 4 pins</description>
+<deviceset name="TEENSY_3.1-3.2_ALL_PINS&amp;PADS">
+<description>Footprint for Teensy 3.1 or 3.2 board using all pads and all through-holes. Pads need a 2x7 0.1" SMD header.</description>
 <gates>
-<gate name="G$1" symbol="TEENSY_3.1-3.2_DIL+4" x="0" y="0"/>
+<gate name="G$1" symbol="TEENSY_3.1-3.2_ALL_PINS_AND_PADS" x="0" y="0"/>
 </gates>
 <devices>
-<device name="" package="TEENSY_3.0-3.2&amp;LC_DIL+4">
+<device name="" package="TEENSY_3.0-3.2_ALL_PINS_&amp;_PADS">
 <connects>
 <connect gate="G$1" pin="0/RX1/T" pad="0"/>
 <connect gate="G$1" pin="1/TX1/T" pad="1"/>
@@ -261,9 +295,19 @@
 <connect gate="G$1" pin="21/A7/PWM" pad="21/A7"/>
 <connect gate="G$1" pin="22/A8/T/PWM" pad="22/A8"/>
 <connect gate="G$1" pin="23/A9/T/PWM" pad="23/A9"/>
-<connect gate="G$1" pin="3.3V" pad="3.3V"/>
+<connect gate="G$1" pin="24" pad="24"/>
+<connect gate="G$1" pin="25/T/PWM" pad="25"/>
+<connect gate="G$1" pin="26/A15" pad="26"/>
+<connect gate="G$1" pin="27/A16" pad="27"/>
+<connect gate="G$1" pin="28/A17" pad="28"/>
+<connect gate="G$1" pin="29/A18/SCL1" pad="29"/>
+<connect gate="G$1" pin="3.3V" pad="3.3V 3.3V1 3.3V2"/>
 <connect gate="G$1" pin="3/CAN-TX/PWM" pad="3"/>
-<connect gate="G$1" pin="4/CAN-RX-PWM" pad="4"/>
+<connect gate="G$1" pin="30/A19/SDA1" pad="30"/>
+<connect gate="G$1" pin="31/A20" pad="31"/>
+<connect gate="G$1" pin="32/T/PWM" pad="32"/>
+<connect gate="G$1" pin="33/T" pad="33"/>
+<connect gate="G$1" pin="4/CAN-RX/PWM" pad="4"/>
 <connect gate="G$1" pin="5/PWM" pad="5"/>
 <connect gate="G$1" pin="6/PWM" pad="6"/>
 <connect gate="G$1" pin="7/RX3" pad="7"/>
@@ -271,9 +315,14 @@
 <connect gate="G$1" pin="9/RX2/PWM" pad="9"/>
 <connect gate="G$1" pin="A10" pad="A10"/>
 <connect gate="G$1" pin="A11" pad="A11"/>
+<connect gate="G$1" pin="A12" pad="A12"/>
+<connect gate="G$1" pin="A13" pad="A13"/>
+<connect gate="G$1" pin="A14/DAC" pad="RESET/DAC"/>
 <connect gate="G$1" pin="AGND" pad="AGND"/>
 <connect gate="G$1" pin="AREF" pad="AREF"/>
-<connect gate="G$1" pin="GND" pad="GND"/>
+<connect gate="G$1" pin="GND" pad="GND GND1 GND2"/>
+<connect gate="G$1" pin="PGM" pad="PGM"/>
+<connect gate="G$1" pin="VBAT" pad="VBAT"/>
 <connect gate="G$1" pin="VIN" pad="VIN"/>
 <connect gate="G$1" pin="VUSB" pad="VUSB"/>
 </connects>
@@ -7717,7 +7766,6 @@ LilyPad 1206- DIO-09912&lt;br&gt;
 </class>
 </classes>
 <parts>
-<part name="U$1" library="Teensy_3_and_LC_Series_Boards_v1.4" deviceset="TEENSY_3.1-3.2_DIL+4" device=""/>
 <part name="MOTOR1" library="pinhead" deviceset="PINHD-2X3" device=""/>
 <part name="MOTOR2" library="pinhead" deviceset="PINHD-2X3" device=""/>
 <part name="MOTOR3" library="pinhead" deviceset="PINHD-2X3" device=""/>
@@ -7788,6 +7836,8 @@ LilyPad 1206- DIO-09912&lt;br&gt;
 <part name="LED5" library="SparkFun-LED" deviceset="LED-GREEN" device="0603" value="Green"/>
 <part name="R2" library="SparkFun-Resistors" deviceset="1KOHM1/10W1%(0603)" device="" value="1k"/>
 <part name="GND9" library="SparkFun" deviceset="GND" device=""/>
+<part name="U$2" library="Teensy_3_and_LC_Series_Boards_v1.4" deviceset="TEENSY_3.1-3.2_ALL_PINS&amp;PADS" device=""/>
+<part name="J12" library="con-molex" deviceset="22-?-03" device="27-2031"/>
 </parts>
 <sheets>
 <sheet>
@@ -7800,7 +7850,6 @@ LilyPad 1206- DIO-09912&lt;br&gt;
 <wire x1="-485.14" y1="139.7" x2="-304.8" y2="139.7" width="0.1524" layer="97"/>
 </plain>
 <instances>
-<instance part="U$1" gate="G$1" x="-345.44" y="180.34"/>
 <instance part="MOTOR1" gate="A" x="-447.04" y="200.66"/>
 <instance part="MOTOR2" gate="A" x="-447.04" y="185.42"/>
 <instance part="MOTOR3" gate="A" x="-447.04" y="170.18"/>
@@ -7894,6 +7943,10 @@ LilyPad 1206- DIO-09912&lt;br&gt;
 <instance part="LED5" gate="G$1" x="-317.5" y="-15.24"/>
 <instance part="R2" gate="G$1" x="-317.5" y="-5.08" rot="R90"/>
 <instance part="GND9" gate="1" x="-317.5" y="-25.4"/>
+<instance part="U$2" gate="G$1" x="-259.08" y="180.34"/>
+<instance part="J12" gate="-1" x="-393.7" y="10.16"/>
+<instance part="J12" gate="-2" x="-393.7" y="5.08"/>
+<instance part="J12" gate="-3" x="-393.7" y="0"/>
 </instances>
 <busses>
 </busses>
@@ -7928,11 +7981,6 @@ LilyPad 1206- DIO-09912&lt;br&gt;
 <pinref part="GND8" gate="1" pin="GND"/>
 <wire x1="-441.96" y1="-27.94" x2="-441.96" y2="-25.4" width="0.1524" layer="91"/>
 <pinref part="C2" gate="G$1" pin="2"/>
-</segment>
-<segment>
-<pinref part="U$1" gate="G$1" pin="GND"/>
-<wire x1="-322.58" y1="200.66" x2="-314.96" y2="200.66" width="0.1524" layer="91"/>
-<label x="-320.04" y="200.66" size="1.778" layer="95"/>
 </segment>
 <segment>
 <pinref part="SENSE1" gate="G$1" pin="2"/>
@@ -8068,6 +8116,16 @@ LilyPad 1206- DIO-09912&lt;br&gt;
 <pinref part="LED5" gate="G$1" pin="C"/>
 <pinref part="GND9" gate="1" pin="GND"/>
 </segment>
+<segment>
+<pinref part="J12" gate="-2" pin="S"/>
+<wire x1="-396.24" y1="5.08" x2="-401.32" y2="5.08" width="0.1524" layer="91"/>
+<label x="-401.32" y="5.08" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="U$2" gate="G$1" pin="GND"/>
+<wire x1="-236.22" y1="200.66" x2="-228.6" y2="200.66" width="0.1524" layer="91"/>
+<label x="-233.68" y="200.66" size="1.778" layer="95"/>
+</segment>
 </net>
 <net name="M1ENCB" class="0">
 <segment>
@@ -8075,12 +8133,22 @@ LilyPad 1206- DIO-09912&lt;br&gt;
 <wire x1="-441.96" y1="203.2" x2="-431.8" y2="203.2" width="0.1524" layer="91"/>
 <label x="-434.34" y="203.2" size="1.778" layer="95"/>
 </segment>
+<segment>
+<wire x1="-281.94" y1="167.64" x2="-292.1" y2="167.64" width="0.1524" layer="91"/>
+<label x="-292.1" y="167.64" size="1.778" layer="95"/>
+<pinref part="U$2" gate="G$1" pin="16/A2/T"/>
+</segment>
 </net>
 <net name="M1ENCA" class="0">
 <segment>
 <pinref part="MOTOR1" gate="A" pin="3"/>
 <wire x1="-449.58" y1="200.66" x2="-462.28" y2="200.66" width="0.1524" layer="91"/>
 <label x="-462.28" y="200.66" size="1.778" layer="95"/>
+</segment>
+<segment>
+<wire x1="-292.1" y1="170.18" x2="-281.94" y2="170.18" width="0.1524" layer="91"/>
+<label x="-292.1" y="170.18" size="1.778" layer="95"/>
+<pinref part="U$2" gate="G$1" pin="15/A1/T"/>
 </segment>
 </net>
 <net name="VCC" class="1">
@@ -8225,6 +8293,11 @@ LilyPad 1206- DIO-09912&lt;br&gt;
 <wire x1="-449.58" y1="185.42" x2="-462.28" y2="185.42" width="0.1524" layer="91"/>
 <label x="-462.28" y="185.42" size="1.778" layer="95"/>
 </segment>
+<segment>
+<wire x1="-281.94" y1="165.1" x2="-292.1" y2="165.1" width="0.1524" layer="91"/>
+<label x="-292.1" y="165.1" size="1.778" layer="95"/>
+<pinref part="U$2" gate="G$1" pin="17/A3/T"/>
+</segment>
 </net>
 <net name="M2M2" class="1">
 <segment>
@@ -8252,6 +8325,11 @@ LilyPad 1206- DIO-09912&lt;br&gt;
 <pinref part="MOTOR2" gate="A" pin="2"/>
 <wire x1="-441.96" y1="187.96" x2="-431.8" y2="187.96" width="0.1524" layer="91"/>
 <label x="-434.34" y="187.96" size="1.778" layer="95"/>
+</segment>
+<segment>
+<wire x1="-281.94" y1="162.56" x2="-292.1" y2="162.56" width="0.1524" layer="91"/>
+<label x="-292.1" y="162.56" size="1.778" layer="95"/>
+<pinref part="U$2" gate="G$1" pin="18/A4/T/SDA0"/>
 </segment>
 </net>
 <net name="M2M1" class="1">
@@ -8282,6 +8360,11 @@ LilyPad 1206- DIO-09912&lt;br&gt;
 <wire x1="-449.58" y1="170.18" x2="-462.28" y2="170.18" width="0.1524" layer="91"/>
 <label x="-462.28" y="170.18" size="1.778" layer="95"/>
 </segment>
+<segment>
+<wire x1="-281.94" y1="160.02" x2="-292.1" y2="160.02" width="0.1524" layer="91"/>
+<label x="-292.1" y="160.02" size="1.778" layer="95"/>
+<pinref part="U$2" gate="G$1" pin="19/A5/T/SCL0"/>
+</segment>
 </net>
 <net name="M3M2" class="1">
 <segment>
@@ -8309,6 +8392,11 @@ LilyPad 1206- DIO-09912&lt;br&gt;
 <pinref part="MOTOR3" gate="A" pin="2"/>
 <wire x1="-441.96" y1="172.72" x2="-431.8" y2="172.72" width="0.1524" layer="91"/>
 <label x="-434.34" y="172.72" size="1.778" layer="95"/>
+</segment>
+<segment>
+<wire x1="-281.94" y1="157.48" x2="-292.1" y2="157.48" width="0.1524" layer="91"/>
+<label x="-292.1" y="157.48" size="1.778" layer="95"/>
+<pinref part="U$2" gate="G$1" pin="20/A6/PWM"/>
 </segment>
 </net>
 <net name="M3M1" class="0">
@@ -8338,6 +8426,11 @@ LilyPad 1206- DIO-09912&lt;br&gt;
 <wire x1="-449.58" y1="154.94" x2="-462.28" y2="154.94" width="0.1524" layer="91"/>
 <label x="-462.28" y="154.94" size="1.778" layer="95"/>
 </segment>
+<segment>
+<wire x1="-281.94" y1="154.94" x2="-292.1" y2="154.94" width="0.1524" layer="91"/>
+<label x="-292.1" y="154.94" size="1.778" layer="95"/>
+<pinref part="U$2" gate="G$1" pin="21/A7/PWM"/>
+</segment>
 </net>
 <net name="M4M2" class="1">
 <segment>
@@ -8365,6 +8458,11 @@ LilyPad 1206- DIO-09912&lt;br&gt;
 <pinref part="MOTOR4" gate="A" pin="2"/>
 <wire x1="-441.96" y1="157.48" x2="-431.8" y2="157.48" width="0.1524" layer="91"/>
 <label x="-434.34" y="157.48" size="1.778" layer="95"/>
+</segment>
+<segment>
+<wire x1="-281.94" y1="152.4" x2="-292.1" y2="152.4" width="0.1524" layer="91"/>
+<label x="-292.1" y="152.4" size="1.778" layer="95"/>
+<pinref part="U$2" gate="G$1" pin="22/A8/T/PWM"/>
 </segment>
 </net>
 <net name="M4M1" class="1">
@@ -8396,12 +8494,6 @@ LilyPad 1206- DIO-09912&lt;br&gt;
 <wire x1="-424.18" y1="-12.7" x2="-424.18" y2="-17.78" width="0.1524" layer="91"/>
 <wire x1="-424.18" y1="-12.7" x2="-424.18" y2="-10.16" width="0.1524" layer="91"/>
 <pinref part="P+5" gate="1" pin="+5V"/>
-</segment>
-<segment>
-<label x="-320.04" y="208.28" size="1.778" layer="95"/>
-<pinref part="U$1" gate="G$1" pin="VIN"/>
-<wire x1="-322.58" y1="208.28" x2="-314.96" y2="208.28" width="0.1524" layer="91"/>
-<junction x="-322.58" y="208.28"/>
 </segment>
 <segment>
 <pinref part="IC2" gate="L298" pin="VS"/>
@@ -8490,6 +8582,18 @@ LilyPad 1206- DIO-09912&lt;br&gt;
 <wire x1="-419.1" y1="0" x2="-424.18" y2="0" width="0.1524" layer="91"/>
 <junction x="-419.1" y="0"/>
 </segment>
+<segment>
+<wire x1="-393.7" y1="0" x2="-396.24" y2="0" width="0.1524" layer="91"/>
+<label x="-401.32" y="0" size="1.778" layer="95"/>
+<pinref part="J12" gate="-3" pin="S"/>
+<wire x1="-396.24" y1="0" x2="-401.32" y2="0" width="0.1524" layer="91"/>
+<junction x="-396.24" y="0"/>
+</segment>
+<segment>
+<pinref part="U$2" gate="G$1" pin="VIN"/>
+<wire x1="-236.22" y1="208.28" x2="-228.6" y2="208.28" width="0.1524" layer="91"/>
+<label x="-231.14" y="208.28" size="1.778" layer="95"/>
+</segment>
 </net>
 <net name="M1EN" class="0">
 <segment>
@@ -8498,9 +8602,9 @@ LilyPad 1206- DIO-09912&lt;br&gt;
 <label x="-477.52" y="124.46" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="U$1" gate="G$1" pin="3/CAN-TX/PWM"/>
-<wire x1="-368.3" y1="200.66" x2="-375.92" y2="200.66" width="0.1524" layer="91"/>
-<label x="-375.92" y="200.66" size="1.778" layer="95"/>
+<wire x1="-281.94" y1="200.66" x2="-292.1" y2="200.66" width="0.1524" layer="91"/>
+<label x="-292.1" y="200.66" size="1.778" layer="95"/>
+<pinref part="U$2" gate="G$1" pin="3/CAN-TX/PWM"/>
 </segment>
 </net>
 <net name="M2EN" class="0">
@@ -8510,9 +8614,9 @@ LilyPad 1206- DIO-09912&lt;br&gt;
 <label x="-477.52" y="121.92" size="1.778" layer="95"/>
 </segment>
 <segment>
-<wire x1="-368.3" y1="198.12" x2="-375.92" y2="198.12" width="0.1524" layer="91"/>
-<pinref part="U$1" gate="G$1" pin="4/CAN-RX-PWM"/>
-<label x="-375.92" y="198.12" size="1.778" layer="95"/>
+<wire x1="-281.94" y1="198.12" x2="-292.1" y2="198.12" width="0.1524" layer="91"/>
+<label x="-292.1" y="198.12" size="1.778" layer="95"/>
+<pinref part="U$2" gate="G$1" pin="4/CAN-RX/PWM"/>
 </segment>
 </net>
 <net name="M3I1" class="0">
@@ -8522,9 +8626,9 @@ LilyPad 1206- DIO-09912&lt;br&gt;
 <label x="-477.52" y="73.66" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="U$1" gate="G$1" pin="11/MOSI"/>
-<wire x1="-368.3" y1="180.34" x2="-375.92" y2="180.34" width="0.1524" layer="91"/>
-<label x="-375.92" y="180.34" size="1.778" layer="95"/>
+<wire x1="-281.94" y1="180.34" x2="-292.1" y2="180.34" width="0.1524" layer="91"/>
+<label x="-292.1" y="180.34" size="1.778" layer="95"/>
+<pinref part="U$2" gate="G$1" pin="11/MOSI"/>
 </segment>
 </net>
 <net name="M3I2" class="0">
@@ -8534,9 +8638,9 @@ LilyPad 1206- DIO-09912&lt;br&gt;
 <label x="-477.52" y="71.12" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="U$1" gate="G$1" pin="12/MISO"/>
-<wire x1="-368.3" y1="177.8" x2="-375.92" y2="177.8" width="0.1524" layer="91"/>
-<label x="-375.92" y="177.8" size="1.778" layer="95"/>
+<wire x1="-281.94" y1="177.8" x2="-292.1" y2="177.8" width="0.1524" layer="91"/>
+<label x="-292.1" y="177.8" size="1.778" layer="95"/>
+<pinref part="U$2" gate="G$1" pin="12/MISO"/>
 </segment>
 </net>
 <net name="M4I1" class="0">
@@ -8546,9 +8650,9 @@ LilyPad 1206- DIO-09912&lt;br&gt;
 <label x="-477.52" y="68.58" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="U$1" gate="G$1" pin="13/SCK/LED"/>
-<wire x1="-368.3" y1="175.26" x2="-375.92" y2="175.26" width="0.1524" layer="91"/>
-<label x="-375.92" y="175.26" size="1.778" layer="95"/>
+<wire x1="-281.94" y1="175.26" x2="-292.1" y2="175.26" width="0.1524" layer="91"/>
+<label x="-292.1" y="175.26" size="1.778" layer="95"/>
+<pinref part="U$2" gate="G$1" pin="13/SCK/LED"/>
 </segment>
 </net>
 <net name="M4I2" class="0">
@@ -8558,9 +8662,9 @@ LilyPad 1206- DIO-09912&lt;br&gt;
 <label x="-477.52" y="66.04" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="U$1" gate="G$1" pin="14/A0"/>
-<wire x1="-368.3" y1="172.72" x2="-375.92" y2="172.72" width="0.1524" layer="91"/>
-<label x="-375.92" y="172.72" size="1.778" layer="95"/>
+<wire x1="-281.94" y1="172.72" x2="-292.1" y2="172.72" width="0.1524" layer="91"/>
+<label x="-292.1" y="172.72" size="1.778" layer="95"/>
+<pinref part="U$2" gate="G$1" pin="14/A0"/>
 </segment>
 </net>
 <net name="N$10" class="0">
@@ -8620,9 +8724,9 @@ LilyPad 1206- DIO-09912&lt;br&gt;
 <label x="-477.52" y="81.28" size="1.778" layer="95"/>
 </segment>
 <segment>
-<wire x1="-368.3" y1="195.58" x2="-375.92" y2="195.58" width="0.1524" layer="91"/>
-<pinref part="U$1" gate="G$1" pin="5/PWM"/>
-<label x="-375.92" y="195.58" size="1.778" layer="95"/>
+<wire x1="-281.94" y1="195.58" x2="-292.1" y2="195.58" width="0.1524" layer="91"/>
+<label x="-292.1" y="195.58" size="1.778" layer="95"/>
+<pinref part="U$2" gate="G$1" pin="5/PWM"/>
 </segment>
 </net>
 <net name="M4EN" class="0">
@@ -8632,9 +8736,9 @@ LilyPad 1206- DIO-09912&lt;br&gt;
 <label x="-477.52" y="78.74" size="1.778" layer="95"/>
 </segment>
 <segment>
-<wire x1="-368.3" y1="193.04" x2="-375.92" y2="193.04" width="0.1524" layer="91"/>
-<pinref part="U$1" gate="G$1" pin="6/PWM"/>
-<label x="-375.92" y="193.04" size="1.778" layer="95"/>
+<wire x1="-281.94" y1="193.04" x2="-292.1" y2="193.04" width="0.1524" layer="91"/>
+<label x="-292.1" y="193.04" size="1.778" layer="95"/>
+<pinref part="U$2" gate="G$1" pin="6/PWM"/>
 </segment>
 </net>
 <net name="M1I1" class="0">
@@ -8644,9 +8748,9 @@ LilyPad 1206- DIO-09912&lt;br&gt;
 <label x="-477.52" y="116.84" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="U$1" gate="G$1" pin="7/RX3"/>
-<wire x1="-368.3" y1="190.5" x2="-375.92" y2="190.5" width="0.1524" layer="91"/>
-<label x="-375.92" y="190.5" size="1.778" layer="95"/>
+<wire x1="-281.94" y1="190.5" x2="-292.1" y2="190.5" width="0.1524" layer="91"/>
+<label x="-292.1" y="190.5" size="1.778" layer="95"/>
+<pinref part="U$2" gate="G$1" pin="7/RX3"/>
 </segment>
 </net>
 <net name="M1I2" class="0">
@@ -8656,9 +8760,9 @@ LilyPad 1206- DIO-09912&lt;br&gt;
 <label x="-477.52" y="114.3" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="U$1" gate="G$1" pin="8/TX3"/>
-<wire x1="-368.3" y1="187.96" x2="-375.92" y2="187.96" width="0.1524" layer="91"/>
-<label x="-375.92" y="187.96" size="1.778" layer="95"/>
+<wire x1="-281.94" y1="187.96" x2="-292.1" y2="187.96" width="0.1524" layer="91"/>
+<label x="-292.1" y="187.96" size="1.778" layer="95"/>
+<pinref part="U$2" gate="G$1" pin="8/TX3"/>
 </segment>
 </net>
 <net name="M2I1" class="0">
@@ -8668,9 +8772,9 @@ LilyPad 1206- DIO-09912&lt;br&gt;
 <label x="-477.52" y="111.76" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="U$1" gate="G$1" pin="9/RX2/PWM"/>
-<wire x1="-368.3" y1="185.42" x2="-375.92" y2="185.42" width="0.1524" layer="91"/>
-<label x="-375.92" y="185.42" size="1.778" layer="95"/>
+<wire x1="-281.94" y1="185.42" x2="-292.1" y2="185.42" width="0.1524" layer="91"/>
+<label x="-292.1" y="185.42" size="1.778" layer="95"/>
+<pinref part="U$2" gate="G$1" pin="9/RX2/PWM"/>
 </segment>
 </net>
 <net name="M2I2" class="0">
@@ -8680,17 +8784,12 @@ LilyPad 1206- DIO-09912&lt;br&gt;
 <label x="-477.52" y="109.22" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="U$1" gate="G$1" pin="10/TX2/PWM"/>
-<wire x1="-368.3" y1="182.88" x2="-375.92" y2="182.88" width="0.1524" layer="91"/>
-<label x="-375.92" y="182.88" size="1.778" layer="95"/>
+<wire x1="-281.94" y1="182.88" x2="-292.1" y2="182.88" width="0.1524" layer="91"/>
+<label x="-292.1" y="182.88" size="1.778" layer="95"/>
+<pinref part="U$2" gate="G$1" pin="10/TX2/PWM"/>
 </segment>
 </net>
 <net name="RX" class="0">
-<segment>
-<pinref part="U$1" gate="G$1" pin="0/RX1/T"/>
-<wire x1="-368.3" y1="208.28" x2="-375.92" y2="208.28" width="0.1524" layer="91"/>
-<label x="-375.92" y="208.28" size="1.778" layer="95"/>
-</segment>
 <segment>
 <wire x1="-370.84" y1="43.18" x2="-360.68" y2="43.18" width="0.1524" layer="91"/>
 <label x="-368.3" y="43.18" size="1.27" layer="95"/>
@@ -8701,13 +8800,13 @@ LilyPad 1206- DIO-09912&lt;br&gt;
 <pinref part="LED2" gate="G$1" pin="C"/>
 <label x="-368.3" y="-22.86" size="1.27" layer="95" ratio="15" rot="R270" xref="yes"/>
 </segment>
+<segment>
+<wire x1="-281.94" y1="208.28" x2="-292.1" y2="208.28" width="0.1524" layer="91"/>
+<label x="-292.1" y="208.28" size="1.778" layer="95"/>
+<pinref part="U$2" gate="G$1" pin="0/RX1/T"/>
+</segment>
 </net>
 <net name="TX" class="0">
-<segment>
-<wire x1="-368.3" y1="205.74" x2="-375.92" y2="205.74" width="0.1524" layer="91"/>
-<pinref part="U$1" gate="G$1" pin="1/TX1/T"/>
-<label x="-375.92" y="205.74" size="1.778" layer="95"/>
-</segment>
 <segment>
 <wire x1="-370.84" y1="40.64" x2="-360.68" y2="40.64" width="0.1524" layer="91"/>
 <label x="-368.3" y="40.64" size="1.27" layer="95"/>
@@ -8718,163 +8817,145 @@ LilyPad 1206- DIO-09912&lt;br&gt;
 <pinref part="LED3" gate="G$1" pin="C"/>
 <label x="-358.14" y="-22.86" size="1.27" layer="95" ratio="15" rot="R270" xref="yes"/>
 </segment>
-</net>
-<net name="N$6" class="0">
 <segment>
-<pinref part="U$1" gate="G$1" pin="2"/>
-<wire x1="-368.3" y1="203.2" x2="-375.92" y2="203.2" width="0.1524" layer="91"/>
+<wire x1="-281.94" y1="205.74" x2="-292.1" y2="205.74" width="0.1524" layer="91"/>
+<label x="-292.1" y="205.74" size="1.778" layer="95"/>
+<pinref part="U$2" gate="G$1" pin="1/TX1/T"/>
 </segment>
 </net>
 <net name="DS1" class="0">
-<segment>
-<pinref part="U$1" gate="G$1" pin="15/A1/T"/>
-<wire x1="-375.92" y1="170.18" x2="-368.3" y2="170.18" width="0.1524" layer="91"/>
-<label x="-375.92" y="170.18" size="1.778" layer="95"/>
-</segment>
 <segment>
 <pinref part="J1" gate="-1" pin="S"/>
 <wire x1="-474.98" y1="48.26" x2="-480.06" y2="48.26" width="0.1524" layer="91"/>
 <label x="-480.06" y="48.26" size="1.778" layer="95"/>
 </segment>
+<segment>
+<wire x1="-281.94" y1="149.86" x2="-292.1" y2="149.86" width="0.1524" layer="91"/>
+<label x="-292.1" y="149.86" size="1.778" layer="95"/>
+<pinref part="U$2" gate="G$1" pin="23/A9/T/PWM"/>
+</segment>
 </net>
 <net name="DS2" class="0">
-<segment>
-<pinref part="U$1" gate="G$1" pin="16/A2/T"/>
-<wire x1="-368.3" y1="167.64" x2="-375.92" y2="167.64" width="0.1524" layer="91"/>
-<label x="-375.92" y="167.64" size="1.778" layer="95"/>
-</segment>
 <segment>
 <pinref part="J2" gate="-1" pin="S"/>
 <wire x1="-447.04" y1="48.26" x2="-452.12" y2="48.26" width="0.1524" layer="91"/>
 <label x="-452.12" y="48.26" size="1.778" layer="95"/>
 </segment>
+<segment>
+<pinref part="U$2" gate="G$1" pin="A10"/>
+<wire x1="-236.22" y1="172.72" x2="-228.6" y2="172.72" width="0.1524" layer="91"/>
+<label x="-231.14" y="172.72" size="1.778" layer="95"/>
+</segment>
 </net>
 <net name="DS3" class="0">
-<segment>
-<pinref part="U$1" gate="G$1" pin="17/A3/T"/>
-<wire x1="-368.3" y1="165.1" x2="-375.92" y2="165.1" width="0.1524" layer="91"/>
-<label x="-375.92" y="165.1" size="1.778" layer="95"/>
-</segment>
 <segment>
 <pinref part="J3" gate="-1" pin="S"/>
 <wire x1="-419.1" y1="48.26" x2="-424.18" y2="48.26" width="0.1524" layer="91"/>
 <label x="-424.18" y="48.26" size="1.778" layer="95"/>
 </segment>
+<segment>
+<pinref part="U$2" gate="G$1" pin="A11"/>
+<wire x1="-236.22" y1="175.26" x2="-228.6" y2="175.26" width="0.1524" layer="91"/>
+<label x="-231.14" y="175.26" size="1.778" layer="95"/>
+</segment>
 </net>
 <net name="DS4" class="0">
-<segment>
-<pinref part="U$1" gate="G$1" pin="18/A4/T/SDA0"/>
-<wire x1="-368.3" y1="162.56" x2="-375.92" y2="162.56" width="0.1524" layer="91"/>
-<label x="-375.92" y="162.56" size="1.778" layer="95"/>
-</segment>
 <segment>
 <pinref part="J4" gate="-1" pin="S"/>
 <wire x1="-396.24" y1="48.26" x2="-401.32" y2="48.26" width="0.1524" layer="91"/>
 <label x="-401.32" y="48.26" size="1.778" layer="95"/>
 </segment>
+<segment>
+<pinref part="U$2" gate="G$1" pin="A12"/>
+<wire x1="-236.22" y1="177.8" x2="-228.6" y2="177.8" width="0.1524" layer="91"/>
+<label x="-231.14" y="177.8" size="1.778" layer="95"/>
+</segment>
 </net>
 <net name="DS5" class="0">
-<segment>
-<pinref part="U$1" gate="G$1" pin="19/A5/T/SCL0"/>
-<wire x1="-368.3" y1="160.02" x2="-375.92" y2="160.02" width="0.1524" layer="91"/>
-<label x="-375.92" y="160.02" size="1.778" layer="95"/>
-</segment>
 <segment>
 <pinref part="J5" gate="-1" pin="S"/>
 <wire x1="-474.98" y1="30.48" x2="-480.06" y2="30.48" width="0.1524" layer="91"/>
 <label x="-480.06" y="30.48" size="1.778" layer="95"/>
 </segment>
+<segment>
+<pinref part="U$2" gate="G$1" pin="A13"/>
+<wire x1="-236.22" y1="180.34" x2="-228.6" y2="180.34" width="0.1524" layer="91"/>
+<label x="-231.14" y="180.34" size="1.778" layer="95"/>
+</segment>
 </net>
 <net name="DS6" class="0">
-<segment>
-<pinref part="U$1" gate="G$1" pin="20/A6/PWM"/>
-<wire x1="-368.3" y1="157.48" x2="-375.92" y2="157.48" width="0.1524" layer="91"/>
-<label x="-375.92" y="157.48" size="1.778" layer="95"/>
-</segment>
 <segment>
 <pinref part="J6" gate="-1" pin="S"/>
 <wire x1="-449.58" y1="30.48" x2="-454.66" y2="30.48" width="0.1524" layer="91"/>
 <label x="-454.66" y="30.48" size="1.778" layer="95"/>
 </segment>
+<segment>
+<pinref part="U$2" gate="G$1" pin="A14/DAC"/>
+<wire x1="-236.22" y1="182.88" x2="-228.6" y2="182.88" width="0.1524" layer="91"/>
+<label x="-231.14" y="182.88" size="1.778" layer="95"/>
+</segment>
 </net>
 <net name="DS7" class="0">
-<segment>
-<pinref part="U$1" gate="G$1" pin="21/A7/PWM"/>
-<wire x1="-368.3" y1="154.94" x2="-375.92" y2="154.94" width="0.1524" layer="91"/>
-<label x="-375.92" y="154.94" size="1.778" layer="95"/>
-</segment>
 <segment>
 <pinref part="J7" gate="-1" pin="S"/>
 <wire x1="-419.1" y1="30.48" x2="-424.18" y2="30.48" width="0.1524" layer="91"/>
 <label x="-424.18" y="30.48" size="1.778" layer="95"/>
 </segment>
+<segment>
+<pinref part="U$2" gate="G$1" pin="26/A15"/>
+<wire x1="-236.22" y1="149.86" x2="-228.6" y2="149.86" width="0.1524" layer="91"/>
+<label x="-231.14" y="149.86" size="1.778" layer="95"/>
+</segment>
 </net>
 <net name="DS8" class="0">
-<segment>
-<pinref part="U$1" gate="G$1" pin="22/A8/T/PWM"/>
-<wire x1="-368.3" y1="152.4" x2="-375.92" y2="152.4" width="0.1524" layer="91"/>
-<label x="-375.92" y="152.4" size="1.778" layer="95"/>
-</segment>
 <segment>
 <pinref part="J8" gate="-1" pin="S"/>
 <wire x1="-396.24" y1="30.48" x2="-401.32" y2="30.48" width="0.1524" layer="91"/>
 <label x="-401.32" y="30.48" size="1.778" layer="95"/>
 </segment>
+<segment>
+<pinref part="U$2" gate="G$1" pin="27/A16"/>
+<wire x1="-236.22" y1="152.4" x2="-228.6" y2="152.4" width="0.1524" layer="91"/>
+<label x="-231.14" y="152.4" size="1.778" layer="95"/>
+</segment>
 </net>
 <net name="DS9" class="0">
-<segment>
-<pinref part="U$1" gate="G$1" pin="23/A9/T/PWM"/>
-<wire x1="-368.3" y1="149.86" x2="-375.92" y2="149.86" width="0.1524" layer="91"/>
-<label x="-375.92" y="149.86" size="1.778" layer="95"/>
-</segment>
 <segment>
 <pinref part="J9" gate="-1" pin="S"/>
 <wire x1="-474.98" y1="10.16" x2="-480.06" y2="10.16" width="0.1524" layer="91"/>
 <label x="-480.06" y="10.16" size="1.778" layer="95"/>
 </segment>
+<segment>
+<pinref part="U$2" gate="G$1" pin="28/A17"/>
+<wire x1="-236.22" y1="154.94" x2="-228.6" y2="154.94" width="0.1524" layer="91"/>
+<label x="-231.14" y="154.94" size="1.778" layer="95"/>
+</segment>
 </net>
 <net name="DS11" class="0">
-<segment>
-<pinref part="U$1" gate="G$1" pin="A10"/>
-<wire x1="-322.58" y1="172.72" x2="-314.96" y2="172.72" width="0.1524" layer="91"/>
-<label x="-320.04" y="172.72" size="1.778" layer="95"/>
-</segment>
 <segment>
 <pinref part="J11" gate="-1" pin="S"/>
 <wire x1="-419.1" y1="10.16" x2="-424.18" y2="10.16" width="0.1524" layer="91"/>
 <label x="-424.18" y="10.16" size="1.778" layer="95"/>
 </segment>
+<segment>
+<pinref part="U$2" gate="G$1" pin="30/A19/SDA1"/>
+<wire x1="-236.22" y1="160.02" x2="-228.6" y2="160.02" width="0.1524" layer="91"/>
+<label x="-231.14" y="160.02" size="1.778" layer="95"/>
+</segment>
 </net>
 <net name="DS10" class="0">
-<segment>
-<pinref part="U$1" gate="G$1" pin="A11"/>
-<wire x1="-322.58" y1="175.26" x2="-314.96" y2="175.26" width="0.1524" layer="91"/>
-<label x="-320.04" y="175.26" size="1.778" layer="95"/>
-</segment>
 <segment>
 <pinref part="J10" gate="-1" pin="S"/>
 <wire x1="-447.04" y1="10.16" x2="-452.12" y2="10.16" width="0.1524" layer="91"/>
 <label x="-452.12" y="10.16" size="1.778" layer="95"/>
 </segment>
-</net>
-<net name="N$33" class="0">
 <segment>
-<pinref part="U$1" gate="G$1" pin="AGND"/>
-<wire x1="-322.58" y1="187.96" x2="-314.96" y2="187.96" width="0.1524" layer="91"/>
-</segment>
-</net>
-<net name="N$34" class="0">
-<segment>
-<pinref part="U$1" gate="G$1" pin="AREF"/>
-<wire x1="-322.58" y1="190.5" x2="-314.96" y2="190.5" width="0.1524" layer="91"/>
+<pinref part="U$2" gate="G$1" pin="29/A18/SCL1"/>
+<wire x1="-236.22" y1="157.48" x2="-228.6" y2="157.48" width="0.1524" layer="91"/>
+<label x="-231.14" y="157.48" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="+3.3V" class="0">
-<segment>
-<pinref part="U$1" gate="G$1" pin="3.3V"/>
-<wire x1="-322.58" y1="205.74" x2="-314.96" y2="205.74" width="0.1524" layer="91"/>
-<label x="-320.04" y="205.74" size="1.778" layer="95"/>
-</segment>
 <segment>
 <wire x1="-370.84" y1="45.72" x2="-363.22" y2="45.72" width="0.1524" layer="91"/>
 <wire x1="-363.22" y1="45.72" x2="-360.68" y2="45.72" width="0.1524" layer="91"/>
@@ -8898,11 +8979,10 @@ LilyPad 1206- DIO-09912&lt;br&gt;
 <pinref part="R11" gate="G$1" pin="2"/>
 <label x="-332.74" y="2.54" size="1.27" layer="95" rot="R90" xref="yes"/>
 </segment>
-</net>
-<net name="N$36" class="0">
 <segment>
-<pinref part="U$1" gate="G$1" pin="VUSB"/>
-<wire x1="-322.58" y1="210.82" x2="-314.96" y2="210.82" width="0.1524" layer="91"/>
+<pinref part="U$2" gate="G$1" pin="3.3V"/>
+<wire x1="-236.22" y1="205.74" x2="-228.6" y2="205.74" width="0.1524" layer="91"/>
+<label x="-233.68" y="205.74" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="DIO4" class="0">
@@ -9046,6 +9126,26 @@ LilyPad 1206- DIO-09912&lt;br&gt;
 <wire x1="-317.5" y1="-10.16" x2="-317.5" y2="-12.7" width="0.1524" layer="91"/>
 <pinref part="LED5" gate="G$1" pin="A"/>
 <pinref part="R2" gate="G$1" pin="1"/>
+</segment>
+</net>
+<net name="N$4" class="0">
+<segment>
+<wire x1="-281.94" y1="203.2" x2="-292.1" y2="203.2" width="0.1524" layer="91"/>
+<pinref part="U$2" gate="G$1" pin="2"/>
+</segment>
+</net>
+<net name="N$15" class="0">
+<segment>
+<pinref part="U$2" gate="G$1" pin="31/A20"/>
+<wire x1="-236.22" y1="162.56" x2="-228.6" y2="162.56" width="0.1524" layer="91"/>
+<label x="-231.14" y="162.56" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="DS12" class="0">
+<segment>
+<pinref part="J12" gate="-1" pin="S"/>
+<wire x1="-396.24" y1="10.16" x2="-401.32" y2="10.16" width="0.1524" layer="91"/>
+<label x="-401.32" y="10.16" size="1.778" layer="95"/>
 </segment>
 </net>
 </nets>
