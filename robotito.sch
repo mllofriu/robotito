@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE eagle SYSTEM "eagle.dtd">
-<eagle version="7.7.0">
+<eagle version="7.6.0">
 <drawing>
 <settings>
 <setting alwaysvectorfont="no"/>
@@ -8,20 +8,20 @@
 </settings>
 <grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="no" altdistance="0.01" altunitdist="inch" altunit="inch"/>
 <layers>
-<layer number="1" name="Top" color="4" fill="1" visible="yes" active="no"/>
-<layer number="16" name="Bottom" color="1" fill="1" visible="yes" active="no"/>
-<layer number="17" name="Pads" color="2" fill="1" visible="yes" active="no"/>
-<layer number="18" name="Vias" color="2" fill="1" visible="yes" active="no"/>
-<layer number="19" name="Unrouted" color="6" fill="1" visible="yes" active="no"/>
-<layer number="20" name="Dimension" color="15" fill="1" visible="yes" active="no"/>
-<layer number="21" name="tPlace" color="7" fill="1" visible="yes" active="no"/>
-<layer number="22" name="bPlace" color="7" fill="1" visible="yes" active="no"/>
-<layer number="23" name="tOrigins" color="15" fill="1" visible="yes" active="no"/>
-<layer number="24" name="bOrigins" color="15" fill="1" visible="yes" active="no"/>
-<layer number="25" name="tNames" color="7" fill="1" visible="yes" active="no"/>
-<layer number="26" name="bNames" color="7" fill="1" visible="yes" active="no"/>
-<layer number="27" name="tValues" color="7" fill="1" visible="yes" active="no"/>
-<layer number="28" name="bValues" color="7" fill="1" visible="yes" active="no"/>
+<layer number="1" name="Top" color="4" fill="1" visible="no" active="no"/>
+<layer number="16" name="Bottom" color="1" fill="1" visible="no" active="no"/>
+<layer number="17" name="Pads" color="2" fill="1" visible="no" active="no"/>
+<layer number="18" name="Vias" color="2" fill="1" visible="no" active="no"/>
+<layer number="19" name="Unrouted" color="6" fill="1" visible="no" active="no"/>
+<layer number="20" name="Dimension" color="15" fill="1" visible="no" active="no"/>
+<layer number="21" name="tPlace" color="7" fill="1" visible="no" active="no"/>
+<layer number="22" name="bPlace" color="7" fill="1" visible="no" active="no"/>
+<layer number="23" name="tOrigins" color="15" fill="1" visible="no" active="no"/>
+<layer number="24" name="bOrigins" color="15" fill="1" visible="no" active="no"/>
+<layer number="25" name="tNames" color="7" fill="1" visible="no" active="no"/>
+<layer number="26" name="bNames" color="7" fill="1" visible="no" active="no"/>
+<layer number="27" name="tValues" color="7" fill="1" visible="no" active="no"/>
+<layer number="28" name="bValues" color="7" fill="1" visible="no" active="no"/>
 <layer number="29" name="tStop" color="7" fill="3" visible="no" active="no"/>
 <layer number="30" name="bStop" color="7" fill="6" visible="no" active="no"/>
 <layer number="31" name="tCream" color="7" fill="4" visible="no" active="no"/>
@@ -30,8 +30,8 @@
 <layer number="34" name="bFinish" color="6" fill="6" visible="no" active="no"/>
 <layer number="35" name="tGlue" color="7" fill="4" visible="no" active="no"/>
 <layer number="36" name="bGlue" color="7" fill="5" visible="no" active="no"/>
-<layer number="37" name="tTest" color="7" fill="1" visible="yes" active="no"/>
-<layer number="38" name="bTest" color="7" fill="1" visible="yes" active="no"/>
+<layer number="37" name="tTest" color="7" fill="1" visible="no" active="no"/>
+<layer number="38" name="bTest" color="7" fill="1" visible="no" active="no"/>
 <layer number="39" name="tKeepout" color="4" fill="11" visible="no" active="no"/>
 <layer number="40" name="bKeepout" color="1" fill="11" visible="no" active="no"/>
 <layer number="41" name="tRestrict" color="4" fill="10" visible="no" active="no"/>
@@ -39,19 +39,19 @@
 <layer number="43" name="vRestrict" color="2" fill="10" visible="no" active="no"/>
 <layer number="44" name="Drills" color="7" fill="1" visible="no" active="no"/>
 <layer number="45" name="Holes" color="7" fill="1" visible="no" active="no"/>
-<layer number="46" name="Milling" color="3" fill="1" visible="yes" active="no"/>
-<layer number="47" name="Measures" color="7" fill="1" visible="yes" active="no"/>
-<layer number="48" name="Document" color="7" fill="1" visible="yes" active="no"/>
-<layer number="49" name="Reference" color="7" fill="1" visible="yes" active="no"/>
-<layer number="50" name="dxf" color="7" fill="1" visible="yes" active="no"/>
-<layer number="51" name="tDocu" color="7" fill="1" visible="yes" active="no"/>
-<layer number="52" name="bDocu" color="7" fill="1" visible="yes" active="no"/>
-<layer number="53" name="tGND_GNDA" color="7" fill="9" visible="yes" active="no"/>
-<layer number="54" name="bGND_GNDA" color="1" fill="9" visible="yes" active="no"/>
-<layer number="56" name="wert" color="7" fill="1" visible="yes" active="no"/>
-<layer number="57" name="tCAD" color="7" fill="1" visible="yes" active="no"/>
-<layer number="59" name="tCarbon" color="7" fill="1" visible="yes" active="no"/>
-<layer number="60" name="bCarbon" color="7" fill="1" visible="yes" active="no"/>
+<layer number="46" name="Milling" color="3" fill="1" visible="no" active="no"/>
+<layer number="47" name="Measures" color="7" fill="1" visible="no" active="no"/>
+<layer number="48" name="Document" color="7" fill="1" visible="no" active="no"/>
+<layer number="49" name="Reference" color="7" fill="1" visible="no" active="no"/>
+<layer number="50" name="dxf" color="7" fill="1" visible="no" active="no"/>
+<layer number="51" name="tDocu" color="7" fill="1" visible="no" active="no"/>
+<layer number="52" name="bDocu" color="7" fill="1" visible="no" active="no"/>
+<layer number="53" name="tGND_GNDA" color="7" fill="9" visible="no" active="no"/>
+<layer number="54" name="bGND_GNDA" color="1" fill="9" visible="no" active="no"/>
+<layer number="56" name="wert" color="7" fill="1" visible="no" active="no"/>
+<layer number="57" name="tCAD" color="7" fill="1" visible="no" active="no"/>
+<layer number="59" name="tCarbon" color="7" fill="1" visible="no" active="no"/>
+<layer number="60" name="bCarbon" color="7" fill="1" visible="no" active="no"/>
 <layer number="90" name="Modules" color="5" fill="1" visible="yes" active="yes"/>
 <layer number="91" name="Nets" color="2" fill="1" visible="yes" active="yes"/>
 <layer number="92" name="Busses" color="1" fill="1" visible="yes" active="yes"/>
@@ -510,14 +510,6 @@
 <text x="-2.54" y="-5.08" size="1.778" layer="96" rot="R90">&gt;VALUE</text>
 <pin name="+5V" x="0" y="-2.54" visible="off" length="short" direction="sup" rot="R90"/>
 </symbol>
-<symbol name="+24V">
-<wire x1="1.27" y1="-0.635" x2="0" y2="0" width="0.254" layer="94"/>
-<wire x1="0" y1="0" x2="-1.27" y2="-0.635" width="0.254" layer="94"/>
-<wire x1="1.27" y1="-0.635" x2="0" y2="1.27" width="0.254" layer="94"/>
-<wire x1="0" y1="1.27" x2="-1.27" y2="-0.635" width="0.254" layer="94"/>
-<text x="-2.54" y="-5.08" size="1.778" layer="96" rot="R90">&gt;VALUE</text>
-<pin name="+24V" x="0" y="-2.54" visible="off" length="short" direction="sup" rot="R90"/>
-</symbol>
 <symbol name="VCC">
 <wire x1="1.27" y1="-1.905" x2="0" y2="0" width="0.254" layer="94"/>
 <wire x1="0" y1="0" x2="-1.27" y2="-1.905" width="0.254" layer="94"/>
@@ -535,19 +527,6 @@
 <description>&lt;b&gt;SUPPLY SYMBOL&lt;/b&gt;</description>
 <gates>
 <gate name="1" symbol="+5V" x="0" y="0"/>
-</gates>
-<devices>
-<device name="">
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-</devices>
-</deviceset>
-<deviceset name="+24V" prefix="P+">
-<description>&lt;b&gt;SUPPLY SYMBOL&lt;/b&gt;</description>
-<gates>
-<gate name="1" symbol="+24V" x="0" y="0"/>
 </gates>
 <devices>
 <device name="">
@@ -7766,7 +7745,6 @@ LilyPad 1206- DIO-09912&lt;br&gt;
 <part name="GND8" library="SparkFun" deviceset="GND" device=""/>
 <part name="C2" library="adafruit" deviceset="C-US" device="C0805" value="0.1uF"/>
 <part name="P+5" library="supply1" deviceset="+5V" device=""/>
-<part name="P+6" library="supply1" deviceset="+24V" device=""/>
 <part name="IC2" library="st-microelectronics" deviceset="L298" device=""/>
 <part name="SENSE1" library="resistor" deviceset="R-EU_" device="0204/7" value=".5"/>
 <part name="SENSE2" library="resistor" deviceset="R-EU_" device="0204/7" value=".5"/>
@@ -7808,7 +7786,7 @@ LilyPad 1206- DIO-09912&lt;br&gt;
 <part name="J9" library="con-molex" deviceset="22-?-03" device="27-2031"/>
 <part name="J10" library="con-molex" deviceset="22-?-03" device="27-2031"/>
 <part name="J11" library="con-molex" deviceset="22-?-03" device="27-2031"/>
-<part name="FRAME1" library="frames" deviceset="A4-SMALL-DOCFIELD" device=""/>
+<part name="FRAME1" library="frames" deviceset="A4-SMALL-DOCFIELD" device="" value="robotito"/>
 <part name="SUPPLY" library="con-molex" deviceset="22-?-02" device="27-2021" value="SUPPLY"/>
 <part name="P+1" library="supply1" deviceset="VCC" device=""/>
 <part name="GND1" library="supply1" deviceset="GND" device=""/>
@@ -7829,6 +7807,7 @@ LilyPad 1206- DIO-09912&lt;br&gt;
 <part name="GND9" library="SparkFun" deviceset="GND" device=""/>
 <part name="U$2" library="Teensy_3_and_LC_Series_Boards_v1.4" deviceset="TEENSY_3.1-3.2_ALL_PINS&amp;PADS" device=""/>
 <part name="J12" library="con-molex" deviceset="22-?-03" device="27-2031"/>
+<part name="P+2" library="supply1" deviceset="VCC" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -7850,7 +7829,6 @@ LilyPad 1206- DIO-09912&lt;br&gt;
 <instance part="GND8" gate="1" x="-441.96" y="-30.48"/>
 <instance part="C2" gate="G$1" x="-424.18" y="-20.32"/>
 <instance part="P+5" gate="1" x="-424.18" y="-7.62"/>
-<instance part="P+6" gate="1" x="-472.44" y="-5.08" smashed="yes"/>
 <instance part="IC2" gate="L298" x="-452.12" y="114.3"/>
 <instance part="SENSE1" gate="G$1" x="-431.8" y="124.46"/>
 <instance part="SENSE2" gate="G$1" x="-416.56" y="121.92"/>
@@ -7934,10 +7912,11 @@ LilyPad 1206- DIO-09912&lt;br&gt;
 <instance part="LED5" gate="G$1" x="-317.5" y="-15.24"/>
 <instance part="R2" gate="G$1" x="-317.5" y="-5.08" rot="R90"/>
 <instance part="GND9" gate="1" x="-317.5" y="-25.4"/>
-<instance part="U$2" gate="G$1" x="-259.08" y="180.34"/>
+<instance part="U$2" gate="G$1" x="-363.22" y="182.88"/>
 <instance part="J12" gate="-1" x="-393.7" y="10.16"/>
 <instance part="J12" gate="-2" x="-393.7" y="5.08"/>
 <instance part="J12" gate="-3" x="-393.7" y="0"/>
+<instance part="P+2" gate="VCC" x="-472.44" y="-5.08"/>
 </instances>
 <busses>
 </busses>
@@ -7972,6 +7951,7 @@ LilyPad 1206- DIO-09912&lt;br&gt;
 <pinref part="GND8" gate="1" pin="GND"/>
 <wire x1="-441.96" y1="-27.94" x2="-441.96" y2="-25.4" width="0.1524" layer="91"/>
 <pinref part="C2" gate="G$1" pin="2"/>
+<junction x="-441.96" y="-25.4"/>
 </segment>
 <segment>
 <pinref part="SENSE1" gate="G$1" pin="2"/>
@@ -8005,7 +7985,7 @@ LilyPad 1206- DIO-09912&lt;br&gt;
 </segment>
 <segment>
 <pinref part="SENSE4" gate="G$1" pin="2"/>
-<wire x1="-416.56" y1="78.74" x2="-398.78" y2="78.74" width="0.1524" layer="91"/>
+<wire x1="-416.56" y1="78.74" x2="-406.4" y2="78.74" width="0.1524" layer="91"/>
 <label x="-414.02" y="78.74" size="1.778" layer="95"/>
 </segment>
 <segment>
@@ -8114,8 +8094,28 @@ LilyPad 1206- DIO-09912&lt;br&gt;
 </segment>
 <segment>
 <pinref part="U$2" gate="G$1" pin="GND"/>
-<wire x1="-236.22" y1="200.66" x2="-228.6" y2="200.66" width="0.1524" layer="91"/>
-<label x="-233.68" y="200.66" size="1.778" layer="95"/>
+<wire x1="-340.36" y1="203.2" x2="-332.74" y2="203.2" width="0.1524" layer="91"/>
+<label x="-337.82" y="203.2" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="D8" gate="1" pin="A"/>
+<pinref part="GND5" gate="1" pin="GND"/>
+<wire x1="-396.24" y1="91.44" x2="-393.7" y2="91.44" width="0.1524" layer="91"/>
+</segment>
+<segment>
+<pinref part="D16" gate="1" pin="A"/>
+<pinref part="GND12" gate="1" pin="GND"/>
+<wire x1="-347.98" y1="91.44" x2="-345.44" y2="91.44" width="0.1524" layer="91"/>
+</segment>
+<segment>
+<pinref part="D12" gate="1" pin="A"/>
+<pinref part="GND10" gate="1" pin="GND"/>
+<wire x1="-347.98" y1="116.84" x2="-345.44" y2="116.84" width="0.1524" layer="91"/>
+</segment>
+<segment>
+<pinref part="D4" gate="1" pin="A"/>
+<pinref part="GND3" gate="1" pin="GND"/>
+<wire x1="-396.24" y1="116.84" x2="-393.7" y2="116.84" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="M1ENCB" class="0">
@@ -8125,8 +8125,8 @@ LilyPad 1206- DIO-09912&lt;br&gt;
 <label x="-434.34" y="203.2" size="1.778" layer="95"/>
 </segment>
 <segment>
-<wire x1="-281.94" y1="167.64" x2="-292.1" y2="167.64" width="0.1524" layer="91"/>
-<label x="-292.1" y="167.64" size="1.778" layer="95"/>
+<wire x1="-386.08" y1="170.18" x2="-396.24" y2="170.18" width="0.1524" layer="91"/>
+<label x="-396.24" y="170.18" size="1.778" layer="95"/>
 <pinref part="U$2" gate="G$1" pin="16/A2/T"/>
 </segment>
 </net>
@@ -8137,8 +8137,8 @@ LilyPad 1206- DIO-09912&lt;br&gt;
 <label x="-462.28" y="200.66" size="1.778" layer="95"/>
 </segment>
 <segment>
-<wire x1="-292.1" y1="170.18" x2="-281.94" y2="170.18" width="0.1524" layer="91"/>
-<label x="-292.1" y="170.18" size="1.778" layer="95"/>
+<wire x1="-396.24" y1="172.72" x2="-386.08" y2="172.72" width="0.1524" layer="91"/>
+<label x="-396.24" y="172.72" size="1.778" layer="95"/>
 <pinref part="U$2" gate="G$1" pin="15/A1/T"/>
 </segment>
 </net>
@@ -8170,8 +8170,9 @@ LilyPad 1206- DIO-09912&lt;br&gt;
 <wire x1="-467.36" y1="-12.7" x2="-452.12" y2="-12.7" width="0.1524" layer="91"/>
 <wire x1="-472.44" y1="-12.7" x2="-467.36" y2="-12.7" width="0.1524" layer="91"/>
 <wire x1="-472.44" y1="-12.7" x2="-472.44" y2="-7.62" width="0.1524" layer="91"/>
-<pinref part="P+6" gate="1" pin="+24V"/>
-<label x="-474.98" y="-10.16" size="1.778" layer="95" rot="R90"/>
+<label x="-462.28" y="-10.16" size="1.778" layer="95" rot="R180"/>
+<junction x="-467.36" y="-12.7"/>
+<pinref part="P+2" gate="VCC" pin="VCC"/>
 </segment>
 <segment>
 <pinref part="IC2" gate="L298" pin="VCC"/>
@@ -8285,8 +8286,8 @@ LilyPad 1206- DIO-09912&lt;br&gt;
 <label x="-462.28" y="185.42" size="1.778" layer="95"/>
 </segment>
 <segment>
-<wire x1="-281.94" y1="165.1" x2="-292.1" y2="165.1" width="0.1524" layer="91"/>
-<label x="-292.1" y="165.1" size="1.778" layer="95"/>
+<wire x1="-386.08" y1="167.64" x2="-396.24" y2="167.64" width="0.1524" layer="91"/>
+<label x="-396.24" y="167.64" size="1.778" layer="95"/>
 <pinref part="U$2" gate="G$1" pin="17/A3/T"/>
 </segment>
 </net>
@@ -8318,8 +8319,8 @@ LilyPad 1206- DIO-09912&lt;br&gt;
 <label x="-434.34" y="187.96" size="1.778" layer="95"/>
 </segment>
 <segment>
-<wire x1="-281.94" y1="162.56" x2="-292.1" y2="162.56" width="0.1524" layer="91"/>
-<label x="-292.1" y="162.56" size="1.778" layer="95"/>
+<wire x1="-386.08" y1="165.1" x2="-396.24" y2="165.1" width="0.1524" layer="91"/>
+<label x="-396.24" y="165.1" size="1.778" layer="95"/>
 <pinref part="U$2" gate="G$1" pin="18/A4/T/SDA0"/>
 </segment>
 </net>
@@ -8352,8 +8353,8 @@ LilyPad 1206- DIO-09912&lt;br&gt;
 <label x="-462.28" y="170.18" size="1.778" layer="95"/>
 </segment>
 <segment>
-<wire x1="-281.94" y1="160.02" x2="-292.1" y2="160.02" width="0.1524" layer="91"/>
-<label x="-292.1" y="160.02" size="1.778" layer="95"/>
+<wire x1="-386.08" y1="162.56" x2="-396.24" y2="162.56" width="0.1524" layer="91"/>
+<label x="-396.24" y="162.56" size="1.778" layer="95"/>
 <pinref part="U$2" gate="G$1" pin="19/A5/T/SCL0"/>
 </segment>
 </net>
@@ -8385,8 +8386,8 @@ LilyPad 1206- DIO-09912&lt;br&gt;
 <label x="-434.34" y="172.72" size="1.778" layer="95"/>
 </segment>
 <segment>
-<wire x1="-281.94" y1="157.48" x2="-292.1" y2="157.48" width="0.1524" layer="91"/>
-<label x="-292.1" y="157.48" size="1.778" layer="95"/>
+<wire x1="-386.08" y1="160.02" x2="-396.24" y2="160.02" width="0.1524" layer="91"/>
+<label x="-396.24" y="160.02" size="1.778" layer="95"/>
 <pinref part="U$2" gate="G$1" pin="20/A6/PWM"/>
 </segment>
 </net>
@@ -8418,8 +8419,8 @@ LilyPad 1206- DIO-09912&lt;br&gt;
 <label x="-462.28" y="154.94" size="1.778" layer="95"/>
 </segment>
 <segment>
-<wire x1="-281.94" y1="154.94" x2="-292.1" y2="154.94" width="0.1524" layer="91"/>
-<label x="-292.1" y="154.94" size="1.778" layer="95"/>
+<wire x1="-386.08" y1="157.48" x2="-396.24" y2="157.48" width="0.1524" layer="91"/>
+<label x="-396.24" y="157.48" size="1.778" layer="95"/>
 <pinref part="U$2" gate="G$1" pin="21/A7/PWM"/>
 </segment>
 </net>
@@ -8451,8 +8452,8 @@ LilyPad 1206- DIO-09912&lt;br&gt;
 <label x="-434.34" y="157.48" size="1.778" layer="95"/>
 </segment>
 <segment>
-<wire x1="-281.94" y1="152.4" x2="-292.1" y2="152.4" width="0.1524" layer="91"/>
-<label x="-292.1" y="152.4" size="1.778" layer="95"/>
+<wire x1="-386.08" y1="154.94" x2="-396.24" y2="154.94" width="0.1524" layer="91"/>
+<label x="-396.24" y="154.94" size="1.778" layer="95"/>
 <pinref part="U$2" gate="G$1" pin="22/A8/T/PWM"/>
 </segment>
 </net>
@@ -8485,6 +8486,7 @@ LilyPad 1206- DIO-09912&lt;br&gt;
 <wire x1="-424.18" y1="-12.7" x2="-424.18" y2="-17.78" width="0.1524" layer="91"/>
 <wire x1="-424.18" y1="-12.7" x2="-424.18" y2="-10.16" width="0.1524" layer="91"/>
 <pinref part="P+5" gate="1" pin="+5V"/>
+<junction x="-424.18" y="-12.7"/>
 </segment>
 <segment>
 <pinref part="IC2" gate="L298" pin="VS"/>
@@ -8582,8 +8584,8 @@ LilyPad 1206- DIO-09912&lt;br&gt;
 </segment>
 <segment>
 <pinref part="U$2" gate="G$1" pin="VIN"/>
-<wire x1="-236.22" y1="208.28" x2="-228.6" y2="208.28" width="0.1524" layer="91"/>
-<label x="-231.14" y="208.28" size="1.778" layer="95"/>
+<wire x1="-340.36" y1="210.82" x2="-332.74" y2="210.82" width="0.1524" layer="91"/>
+<label x="-335.28" y="210.82" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="M1EN" class="0">
@@ -8593,8 +8595,8 @@ LilyPad 1206- DIO-09912&lt;br&gt;
 <label x="-477.52" y="124.46" size="1.778" layer="95"/>
 </segment>
 <segment>
-<wire x1="-281.94" y1="200.66" x2="-292.1" y2="200.66" width="0.1524" layer="91"/>
-<label x="-292.1" y="200.66" size="1.778" layer="95"/>
+<wire x1="-386.08" y1="203.2" x2="-396.24" y2="203.2" width="0.1524" layer="91"/>
+<label x="-396.24" y="203.2" size="1.778" layer="95"/>
 <pinref part="U$2" gate="G$1" pin="3/CAN-TX/PWM"/>
 </segment>
 </net>
@@ -8605,8 +8607,8 @@ LilyPad 1206- DIO-09912&lt;br&gt;
 <label x="-477.52" y="121.92" size="1.778" layer="95"/>
 </segment>
 <segment>
-<wire x1="-281.94" y1="198.12" x2="-292.1" y2="198.12" width="0.1524" layer="91"/>
-<label x="-292.1" y="198.12" size="1.778" layer="95"/>
+<wire x1="-386.08" y1="200.66" x2="-396.24" y2="200.66" width="0.1524" layer="91"/>
+<label x="-396.24" y="200.66" size="1.778" layer="95"/>
 <pinref part="U$2" gate="G$1" pin="4/CAN-RX/PWM"/>
 </segment>
 </net>
@@ -8617,8 +8619,8 @@ LilyPad 1206- DIO-09912&lt;br&gt;
 <label x="-477.52" y="73.66" size="1.778" layer="95"/>
 </segment>
 <segment>
-<wire x1="-281.94" y1="180.34" x2="-292.1" y2="180.34" width="0.1524" layer="91"/>
-<label x="-292.1" y="180.34" size="1.778" layer="95"/>
+<wire x1="-386.08" y1="182.88" x2="-396.24" y2="182.88" width="0.1524" layer="91"/>
+<label x="-396.24" y="182.88" size="1.778" layer="95"/>
 <pinref part="U$2" gate="G$1" pin="11/MOSI"/>
 </segment>
 </net>
@@ -8629,8 +8631,8 @@ LilyPad 1206- DIO-09912&lt;br&gt;
 <label x="-477.52" y="71.12" size="1.778" layer="95"/>
 </segment>
 <segment>
-<wire x1="-281.94" y1="177.8" x2="-292.1" y2="177.8" width="0.1524" layer="91"/>
-<label x="-292.1" y="177.8" size="1.778" layer="95"/>
+<wire x1="-386.08" y1="180.34" x2="-396.24" y2="180.34" width="0.1524" layer="91"/>
+<label x="-396.24" y="180.34" size="1.778" layer="95"/>
 <pinref part="U$2" gate="G$1" pin="12/MISO"/>
 </segment>
 </net>
@@ -8641,8 +8643,8 @@ LilyPad 1206- DIO-09912&lt;br&gt;
 <label x="-477.52" y="68.58" size="1.778" layer="95"/>
 </segment>
 <segment>
-<wire x1="-281.94" y1="175.26" x2="-292.1" y2="175.26" width="0.1524" layer="91"/>
-<label x="-292.1" y="175.26" size="1.778" layer="95"/>
+<wire x1="-386.08" y1="177.8" x2="-396.24" y2="177.8" width="0.1524" layer="91"/>
+<label x="-396.24" y="177.8" size="1.778" layer="95"/>
 <pinref part="U$2" gate="G$1" pin="13/SCK/LED"/>
 </segment>
 </net>
@@ -8653,8 +8655,8 @@ LilyPad 1206- DIO-09912&lt;br&gt;
 <label x="-477.52" y="66.04" size="1.778" layer="95"/>
 </segment>
 <segment>
-<wire x1="-281.94" y1="172.72" x2="-292.1" y2="172.72" width="0.1524" layer="91"/>
-<label x="-292.1" y="172.72" size="1.778" layer="95"/>
+<wire x1="-386.08" y1="175.26" x2="-396.24" y2="175.26" width="0.1524" layer="91"/>
+<label x="-396.24" y="175.26" size="1.778" layer="95"/>
 <pinref part="U$2" gate="G$1" pin="14/A0"/>
 </segment>
 </net>
@@ -8669,30 +8671,6 @@ LilyPad 1206- DIO-09912&lt;br&gt;
 <pinref part="IC2" gate="L298" pin="SEN_B"/>
 <pinref part="SENSE2" gate="G$1" pin="1"/>
 <wire x1="-421.64" y1="121.92" x2="-436.88" y2="121.92" width="0.1524" layer="91"/>
-</segment>
-</net>
-<net name="N$1" class="0">
-<segment>
-<pinref part="D4" gate="1" pin="A"/>
-<pinref part="GND3" gate="1" pin="GND"/>
-<wire x1="-396.24" y1="116.84" x2="-393.7" y2="116.84" width="0.1524" layer="91"/>
-</segment>
-<segment>
-<pinref part="D12" gate="1" pin="A"/>
-<pinref part="GND10" gate="1" pin="GND"/>
-<wire x1="-347.98" y1="116.84" x2="-345.44" y2="116.84" width="0.1524" layer="91"/>
-</segment>
-</net>
-<net name="N$2" class="0">
-<segment>
-<pinref part="D8" gate="1" pin="A"/>
-<pinref part="GND5" gate="1" pin="GND"/>
-<wire x1="-396.24" y1="91.44" x2="-393.7" y2="91.44" width="0.1524" layer="91"/>
-</segment>
-<segment>
-<pinref part="D16" gate="1" pin="A"/>
-<pinref part="GND12" gate="1" pin="GND"/>
-<wire x1="-347.98" y1="91.44" x2="-345.44" y2="91.44" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N$3" class="0">
@@ -8715,8 +8693,8 @@ LilyPad 1206- DIO-09912&lt;br&gt;
 <label x="-477.52" y="81.28" size="1.778" layer="95"/>
 </segment>
 <segment>
-<wire x1="-281.94" y1="195.58" x2="-292.1" y2="195.58" width="0.1524" layer="91"/>
-<label x="-292.1" y="195.58" size="1.778" layer="95"/>
+<wire x1="-386.08" y1="198.12" x2="-396.24" y2="198.12" width="0.1524" layer="91"/>
+<label x="-396.24" y="198.12" size="1.778" layer="95"/>
 <pinref part="U$2" gate="G$1" pin="5/PWM"/>
 </segment>
 </net>
@@ -8727,8 +8705,8 @@ LilyPad 1206- DIO-09912&lt;br&gt;
 <label x="-477.52" y="78.74" size="1.778" layer="95"/>
 </segment>
 <segment>
-<wire x1="-281.94" y1="193.04" x2="-292.1" y2="193.04" width="0.1524" layer="91"/>
-<label x="-292.1" y="193.04" size="1.778" layer="95"/>
+<wire x1="-386.08" y1="195.58" x2="-396.24" y2="195.58" width="0.1524" layer="91"/>
+<label x="-396.24" y="195.58" size="1.778" layer="95"/>
 <pinref part="U$2" gate="G$1" pin="6/PWM"/>
 </segment>
 </net>
@@ -8739,8 +8717,8 @@ LilyPad 1206- DIO-09912&lt;br&gt;
 <label x="-477.52" y="116.84" size="1.778" layer="95"/>
 </segment>
 <segment>
-<wire x1="-281.94" y1="190.5" x2="-292.1" y2="190.5" width="0.1524" layer="91"/>
-<label x="-292.1" y="190.5" size="1.778" layer="95"/>
+<wire x1="-386.08" y1="193.04" x2="-396.24" y2="193.04" width="0.1524" layer="91"/>
+<label x="-396.24" y="193.04" size="1.778" layer="95"/>
 <pinref part="U$2" gate="G$1" pin="7/RX3"/>
 </segment>
 </net>
@@ -8751,8 +8729,8 @@ LilyPad 1206- DIO-09912&lt;br&gt;
 <label x="-477.52" y="114.3" size="1.778" layer="95"/>
 </segment>
 <segment>
-<wire x1="-281.94" y1="187.96" x2="-292.1" y2="187.96" width="0.1524" layer="91"/>
-<label x="-292.1" y="187.96" size="1.778" layer="95"/>
+<wire x1="-386.08" y1="190.5" x2="-396.24" y2="190.5" width="0.1524" layer="91"/>
+<label x="-396.24" y="190.5" size="1.778" layer="95"/>
 <pinref part="U$2" gate="G$1" pin="8/TX3"/>
 </segment>
 </net>
@@ -8763,8 +8741,8 @@ LilyPad 1206- DIO-09912&lt;br&gt;
 <label x="-477.52" y="111.76" size="1.778" layer="95"/>
 </segment>
 <segment>
-<wire x1="-281.94" y1="185.42" x2="-292.1" y2="185.42" width="0.1524" layer="91"/>
-<label x="-292.1" y="185.42" size="1.778" layer="95"/>
+<wire x1="-386.08" y1="187.96" x2="-396.24" y2="187.96" width="0.1524" layer="91"/>
+<label x="-396.24" y="187.96" size="1.778" layer="95"/>
 <pinref part="U$2" gate="G$1" pin="9/RX2/PWM"/>
 </segment>
 </net>
@@ -8775,8 +8753,8 @@ LilyPad 1206- DIO-09912&lt;br&gt;
 <label x="-477.52" y="109.22" size="1.778" layer="95"/>
 </segment>
 <segment>
-<wire x1="-281.94" y1="182.88" x2="-292.1" y2="182.88" width="0.1524" layer="91"/>
-<label x="-292.1" y="182.88" size="1.778" layer="95"/>
+<wire x1="-386.08" y1="185.42" x2="-396.24" y2="185.42" width="0.1524" layer="91"/>
+<label x="-396.24" y="185.42" size="1.778" layer="95"/>
 <pinref part="U$2" gate="G$1" pin="10/TX2/PWM"/>
 </segment>
 </net>
@@ -8792,8 +8770,8 @@ LilyPad 1206- DIO-09912&lt;br&gt;
 <label x="-368.3" y="-22.86" size="1.27" layer="95" ratio="15" rot="R270" xref="yes"/>
 </segment>
 <segment>
-<wire x1="-281.94" y1="208.28" x2="-292.1" y2="208.28" width="0.1524" layer="91"/>
-<label x="-292.1" y="208.28" size="1.778" layer="95"/>
+<wire x1="-386.08" y1="210.82" x2="-396.24" y2="210.82" width="0.1524" layer="91"/>
+<label x="-396.24" y="210.82" size="1.778" layer="95"/>
 <pinref part="U$2" gate="G$1" pin="0/RX1/T"/>
 </segment>
 </net>
@@ -8809,8 +8787,8 @@ LilyPad 1206- DIO-09912&lt;br&gt;
 <label x="-358.14" y="-22.86" size="1.27" layer="95" ratio="15" rot="R270" xref="yes"/>
 </segment>
 <segment>
-<wire x1="-281.94" y1="205.74" x2="-292.1" y2="205.74" width="0.1524" layer="91"/>
-<label x="-292.1" y="205.74" size="1.778" layer="95"/>
+<wire x1="-386.08" y1="208.28" x2="-396.24" y2="208.28" width="0.1524" layer="91"/>
+<label x="-396.24" y="208.28" size="1.778" layer="95"/>
 <pinref part="U$2" gate="G$1" pin="1/TX1/T"/>
 </segment>
 </net>
@@ -8821,8 +8799,8 @@ LilyPad 1206- DIO-09912&lt;br&gt;
 <label x="-480.06" y="48.26" size="1.778" layer="95"/>
 </segment>
 <segment>
-<wire x1="-281.94" y1="149.86" x2="-292.1" y2="149.86" width="0.1524" layer="91"/>
-<label x="-292.1" y="149.86" size="1.778" layer="95"/>
+<wire x1="-386.08" y1="152.4" x2="-396.24" y2="152.4" width="0.1524" layer="91"/>
+<label x="-396.24" y="152.4" size="1.778" layer="95"/>
 <pinref part="U$2" gate="G$1" pin="23/A9/T/PWM"/>
 </segment>
 </net>
@@ -8834,8 +8812,8 @@ LilyPad 1206- DIO-09912&lt;br&gt;
 </segment>
 <segment>
 <pinref part="U$2" gate="G$1" pin="A10"/>
-<wire x1="-236.22" y1="172.72" x2="-228.6" y2="172.72" width="0.1524" layer="91"/>
-<label x="-231.14" y="172.72" size="1.778" layer="95"/>
+<wire x1="-340.36" y1="175.26" x2="-332.74" y2="175.26" width="0.1524" layer="91"/>
+<label x="-335.28" y="175.26" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="DS3" class="0">
@@ -8846,8 +8824,8 @@ LilyPad 1206- DIO-09912&lt;br&gt;
 </segment>
 <segment>
 <pinref part="U$2" gate="G$1" pin="A11"/>
-<wire x1="-236.22" y1="175.26" x2="-228.6" y2="175.26" width="0.1524" layer="91"/>
-<label x="-231.14" y="175.26" size="1.778" layer="95"/>
+<wire x1="-340.36" y1="177.8" x2="-332.74" y2="177.8" width="0.1524" layer="91"/>
+<label x="-335.28" y="177.8" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="DS4" class="0">
@@ -8858,8 +8836,8 @@ LilyPad 1206- DIO-09912&lt;br&gt;
 </segment>
 <segment>
 <pinref part="U$2" gate="G$1" pin="A12"/>
-<wire x1="-236.22" y1="177.8" x2="-228.6" y2="177.8" width="0.1524" layer="91"/>
-<label x="-231.14" y="177.8" size="1.778" layer="95"/>
+<wire x1="-340.36" y1="180.34" x2="-332.74" y2="180.34" width="0.1524" layer="91"/>
+<label x="-335.28" y="180.34" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="DS5" class="0">
@@ -8870,8 +8848,8 @@ LilyPad 1206- DIO-09912&lt;br&gt;
 </segment>
 <segment>
 <pinref part="U$2" gate="G$1" pin="A13"/>
-<wire x1="-236.22" y1="180.34" x2="-228.6" y2="180.34" width="0.1524" layer="91"/>
-<label x="-231.14" y="180.34" size="1.778" layer="95"/>
+<wire x1="-340.36" y1="182.88" x2="-332.74" y2="182.88" width="0.1524" layer="91"/>
+<label x="-335.28" y="182.88" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="DS6" class="0">
@@ -8882,8 +8860,8 @@ LilyPad 1206- DIO-09912&lt;br&gt;
 </segment>
 <segment>
 <pinref part="U$2" gate="G$1" pin="A14/DAC"/>
-<wire x1="-236.22" y1="182.88" x2="-228.6" y2="182.88" width="0.1524" layer="91"/>
-<label x="-231.14" y="182.88" size="1.778" layer="95"/>
+<wire x1="-340.36" y1="185.42" x2="-332.74" y2="185.42" width="0.1524" layer="91"/>
+<label x="-335.28" y="185.42" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="DS7" class="0">
@@ -8894,8 +8872,8 @@ LilyPad 1206- DIO-09912&lt;br&gt;
 </segment>
 <segment>
 <pinref part="U$2" gate="G$1" pin="26/A15"/>
-<wire x1="-236.22" y1="149.86" x2="-228.6" y2="149.86" width="0.1524" layer="91"/>
-<label x="-231.14" y="149.86" size="1.778" layer="95"/>
+<wire x1="-340.36" y1="152.4" x2="-332.74" y2="152.4" width="0.1524" layer="91"/>
+<label x="-335.28" y="152.4" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="DS8" class="0">
@@ -8906,8 +8884,8 @@ LilyPad 1206- DIO-09912&lt;br&gt;
 </segment>
 <segment>
 <pinref part="U$2" gate="G$1" pin="27/A16"/>
-<wire x1="-236.22" y1="152.4" x2="-228.6" y2="152.4" width="0.1524" layer="91"/>
-<label x="-231.14" y="152.4" size="1.778" layer="95"/>
+<wire x1="-340.36" y1="154.94" x2="-332.74" y2="154.94" width="0.1524" layer="91"/>
+<label x="-335.28" y="154.94" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="DS9" class="0">
@@ -8918,8 +8896,8 @@ LilyPad 1206- DIO-09912&lt;br&gt;
 </segment>
 <segment>
 <pinref part="U$2" gate="G$1" pin="28/A17"/>
-<wire x1="-236.22" y1="154.94" x2="-228.6" y2="154.94" width="0.1524" layer="91"/>
-<label x="-231.14" y="154.94" size="1.778" layer="95"/>
+<wire x1="-340.36" y1="157.48" x2="-332.74" y2="157.48" width="0.1524" layer="91"/>
+<label x="-335.28" y="157.48" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="DS11" class="0">
@@ -8930,8 +8908,8 @@ LilyPad 1206- DIO-09912&lt;br&gt;
 </segment>
 <segment>
 <pinref part="U$2" gate="G$1" pin="30/A19/SDA1"/>
-<wire x1="-236.22" y1="160.02" x2="-228.6" y2="160.02" width="0.1524" layer="91"/>
-<label x="-231.14" y="160.02" size="1.778" layer="95"/>
+<wire x1="-340.36" y1="162.56" x2="-332.74" y2="162.56" width="0.1524" layer="91"/>
+<label x="-335.28" y="162.56" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="DS10" class="0">
@@ -8942,8 +8920,8 @@ LilyPad 1206- DIO-09912&lt;br&gt;
 </segment>
 <segment>
 <pinref part="U$2" gate="G$1" pin="29/A18/SCL1"/>
-<wire x1="-236.22" y1="157.48" x2="-228.6" y2="157.48" width="0.1524" layer="91"/>
-<label x="-231.14" y="157.48" size="1.778" layer="95"/>
+<wire x1="-340.36" y1="160.02" x2="-332.74" y2="160.02" width="0.1524" layer="91"/>
+<label x="-335.28" y="160.02" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="+3.3V" class="0">
@@ -8972,92 +8950,8 @@ LilyPad 1206- DIO-09912&lt;br&gt;
 </segment>
 <segment>
 <pinref part="U$2" gate="G$1" pin="3.3V"/>
-<wire x1="-236.22" y1="205.74" x2="-228.6" y2="205.74" width="0.1524" layer="91"/>
-<label x="-233.68" y="205.74" size="1.778" layer="95"/>
-</segment>
-</net>
-<net name="DIO4" class="0">
-<segment>
-<wire x1="-314.96" y1="22.86" x2="-320.04" y2="22.86" width="0.1524" layer="91"/>
-<pinref part="JP1" gate="G$1" pin="DIO4"/>
-</segment>
-</net>
-<net name="CTS" class="0">
-<segment>
-<wire x1="-314.96" y1="25.4" x2="-320.04" y2="25.4" width="0.1524" layer="91"/>
-<pinref part="JP1" gate="G$1" pin="CTS"/>
-</segment>
-</net>
-<net name="DIO9" class="0">
-<segment>
-<wire x1="-314.96" y1="27.94" x2="-320.04" y2="27.94" width="0.1524" layer="91"/>
-<pinref part="JP1" gate="G$1" pin="DIO9"/>
-</segment>
-</net>
-<net name="RES2" class="0">
-<segment>
-<wire x1="-314.96" y1="30.48" x2="-320.04" y2="30.48" width="0.1524" layer="91"/>
-<pinref part="JP1" gate="G$1" pin="RES@14"/>
-</segment>
-</net>
-<net name="RTS" class="0">
-<segment>
-<wire x1="-314.96" y1="35.56" x2="-320.04" y2="35.56" width="0.1524" layer="91"/>
-<pinref part="JP1" gate="G$1" pin="RTS"/>
-</segment>
-</net>
-<net name="DIO3" class="0">
-<segment>
-<wire x1="-314.96" y1="38.1" x2="-320.04" y2="38.1" width="0.1524" layer="91"/>
-<pinref part="JP1" gate="G$1" pin="DIO3"/>
-</segment>
-</net>
-<net name="DIO2" class="0">
-<segment>
-<wire x1="-314.96" y1="40.64" x2="-320.04" y2="40.64" width="0.1524" layer="91"/>
-<pinref part="JP1" gate="G$1" pin="DIO2"/>
-</segment>
-</net>
-<net name="DIO1" class="0">
-<segment>
-<wire x1="-314.96" y1="43.18" x2="-320.04" y2="43.18" width="0.1524" layer="91"/>
-<pinref part="JP1" gate="G$1" pin="DIO1"/>
-</segment>
-</net>
-<net name="DIO0" class="0">
-<segment>
-<wire x1="-314.96" y1="45.72" x2="-320.04" y2="45.72" width="0.1524" layer="91"/>
-<pinref part="JP1" gate="G$1" pin="DIO0"/>
-</segment>
-</net>
-<net name="DTR" class="0">
-<segment>
-<wire x1="-370.84" y1="25.4" x2="-360.68" y2="25.4" width="0.1524" layer="91"/>
-<pinref part="JP1" gate="G$1" pin="DTR"/>
-</segment>
-</net>
-<net name="RES" class="0">
-<segment>
-<wire x1="-370.84" y1="27.94" x2="-360.68" y2="27.94" width="0.1524" layer="91"/>
-<pinref part="JP1" gate="G$1" pin="RES@8"/>
-</segment>
-</net>
-<net name="DIO11" class="0">
-<segment>
-<wire x1="-370.84" y1="30.48" x2="-360.68" y2="30.48" width="0.1524" layer="91"/>
-<pinref part="JP1" gate="G$1" pin="DIO11"/>
-</segment>
-</net>
-<net name="DIO12" class="0">
-<segment>
-<wire x1="-370.84" y1="38.1" x2="-360.68" y2="38.1" width="0.1524" layer="91"/>
-<pinref part="JP1" gate="G$1" pin="DIO12"/>
-</segment>
-</net>
-<net name="RESET" class="0">
-<segment>
-<wire x1="-370.84" y1="35.56" x2="-360.68" y2="35.56" width="0.1524" layer="91"/>
-<pinref part="JP1" gate="G$1" pin="RESET"/>
+<wire x1="-340.36" y1="208.28" x2="-332.74" y2="208.28" width="0.1524" layer="91"/>
+<label x="-337.82" y="208.28" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="DIO5" class="0">
@@ -9119,29 +9013,39 @@ LilyPad 1206- DIO-09912&lt;br&gt;
 <pinref part="R2" gate="G$1" pin="1"/>
 </segment>
 </net>
-<net name="N$4" class="0">
-<segment>
-<wire x1="-281.94" y1="203.2" x2="-292.1" y2="203.2" width="0.1524" layer="91"/>
-<pinref part="U$2" gate="G$1" pin="2"/>
-</segment>
-</net>
-<net name="N$15" class="0">
-<segment>
-<pinref part="U$2" gate="G$1" pin="31/A20"/>
-<wire x1="-236.22" y1="162.56" x2="-228.6" y2="162.56" width="0.1524" layer="91"/>
-<label x="-231.14" y="162.56" size="1.778" layer="95"/>
-</segment>
-</net>
 <net name="DS12" class="0">
 <segment>
 <pinref part="J12" gate="-1" pin="S"/>
 <wire x1="-396.24" y1="10.16" x2="-401.32" y2="10.16" width="0.1524" layer="91"/>
 <label x="-401.32" y="10.16" size="1.778" layer="95"/>
 </segment>
+<segment>
+<pinref part="U$2" gate="G$1" pin="31/A20"/>
+<wire x1="-340.36" y1="165.1" x2="-332.74" y2="165.1" width="0.1524" layer="91"/>
+<label x="-335.28" y="165.1" size="1.778" layer="95"/>
+</segment>
 </net>
 </nets>
 </sheet>
 </sheets>
+<errors>
+<approved hash="104,1,-436.88,129.54,IC2,VS,+5V,,,"/>
+<approved hash="104,1,-436.88,86.36,IC3,VS,+5V,,,"/>
+<approved hash="202,1,-360.68,35.56,JP1,RESET,,,,"/>
+<approved hash="202,1,-320.04,35.56,JP1,RTS,,,,"/>
+<approved hash="104,1,-360.68,45.72,JP1,VDD,+3.3V,,,"/>
+<approved hash="104,1,-340.36,210.82,U$2,VIN,+5V,,,"/>
+<approved hash="204,1,-340.36,190.5,U$2,AGND,,,,"/>
+<approved hash="104,1,-340.36,208.28,U$2,3.3V,+3.3V,,,"/>
+<approved hash="204,1,-340.36,205.74,U$2,VBAT,,,,"/>
+<approved hash="204,1,-340.36,193.04,U$2,AREF,,,,"/>
+<approved hash="204,1,-340.36,213.36,U$2,VUSB,,,,"/>
+<approved hash="113,1,-445.812,202.061,MOTOR1,,,,,"/>
+<approved hash="113,1,-445.812,186.821,MOTOR2,,,,,"/>
+<approved hash="113,1,-445.812,171.581,MOTOR3,,,,,"/>
+<approved hash="113,1,-445.812,156.341,MOTOR4,,,,,"/>
+<approved hash="113,1,-340.36,35.7251,JP1,,,,,"/>
+</errors>
 </schematic>
 </drawing>
 </eagle>
