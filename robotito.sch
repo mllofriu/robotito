@@ -4157,6 +4157,12 @@ LilyPad 1206- DIO-09912&lt;br&gt;
 <rectangle x1="-3.4201" y1="5.7001" x2="-2.9299" y2="7.22" layer="51"/>
 <rectangle x1="-4.6901" y1="5.7001" x2="-4.1999" y2="7.22" layer="51"/>
 <rectangle x1="-5.9601" y1="5.7001" x2="-5.4699" y2="7.22" layer="51"/>
+<polygon width="0.127" layer="1">
+<vertex x="-3.81" y="-3.81"/>
+<vertex x="-3.81" y="3.81"/>
+<vertex x="3.81" y="3.81"/>
+<vertex x="3.81" y="-3.81"/>
+</polygon>
 </package>
 <package name="2X06">
 <description>&lt;b&gt;PIN HEADER&lt;/b&gt;</description>
