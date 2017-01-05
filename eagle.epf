@@ -1,5 +1,5 @@
 [Eagle]
-Version="07 06 00"
+Version="07 07 00"
 Platform="Linux"
 Serial="62191E841E-LSR-WLM-1EL"
 Globals="Globals"
@@ -347,11 +347,12 @@ UsedLibrary="/home/martin/eagle-7.6.0/lbr/xilinx-xc9.lbr"
 UsedLibrary="/home/martin/eagle-7.6.0/lbr/xilinx-xcv.lbr"
 UsedLibrary="/home/martin/eagle-7.6.0/lbr/zetex.lbr"
 UsedLibrary="/home/martin/eagle-7.6.0/lbr/zilog.lbr"
+UsedLibrary="shorts-old.lbr"
 
 [Win_1]
 Type="Control Panel"
 Loc="45 72 644 471"
-State=2
+State=1
 Number=0
 
 [Desktop]
