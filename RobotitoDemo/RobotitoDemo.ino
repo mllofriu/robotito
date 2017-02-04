@@ -3,7 +3,7 @@
 #include <PID_v1.h>
 #include <PID_AutoTune_v0.h>
 
-#define MOVE_PERIOD 2000
+#define MOVE_PERIOD 800
 #define SLEEP_PERIOD 500
  
 PoluloMotor * m1;
@@ -24,14 +24,39 @@ void * pointer;
 
 bool autoTune1Completed = 1;
 
+
+int m1en = 3;
+int m2en = 4;
+int m3en = 5;
+int m4en = 6;
+
+int m1i1 = 7;
+int m1i2 = 8;
+int m2i1 = 9;
+int m2i2 = 10;
+int m3i1 = 11;
+int m3i2 = 12;
+int m4i1 = 13;
+int m4i2 = 14;
+
+int m1enc1 = 15;
+int m1enc2 = 16;
+int m2enc1 = 17;
+int m2enc2 = 18;
+int m3enc1 = 19;
+int m3enc2 = 20;
+int m4enc1 = 21;
+int m4enc2 = 22;
+
+
 void setup() {
   Serial.begin(9600);
 
 
   
-  m1 = new PoluloMotor(9, 8, 10, 11, 12,30.0f);
-  m2 = new PoluloMotor(3, 2, 6, 5, 4, 51.45f);
-  m3 = new PoluloMotor(16, 17, 20, 19, 18, 51.45f);
+  m1 = new PoluloMotor(m1enc1, m1enc2, m1en, m1i1, m1i2, 51.45f);
+  m2 = new PoluloMotor(m3enc1, m3enc2, m3en, m3i1, m3i2, 51.45f);
+  m3 = new PoluloMotor(m4enc1, m4enc2, m4en, m4i1, m4i2, 51.45f);
   
   state = 's';
   prevState = 'c';
@@ -61,8 +86,6 @@ void loop() {
 ////    m1->printTunedKs();
 //  }
   m1->pid();
-
-  
   m2->pid();
   m3->pid();
 
@@ -71,15 +94,15 @@ void loop() {
         if (millis() - lastUpdate > SLEEP_PERIOD){
           switch (prevState){
             case 'a':
-              setVels(-motionVel, motionVel, 0);
+              setVels(motionVel, -motionVel, 0);
               state = 'b';
               break;
             case 'b':
-              setVels(motionVel, 0, -motionVel);
+              setVels(-motionVel, 0, +motionVel);
               state = 'c';
               break;
             case 'c':
-              setVels(0, -motionVel, motionVel);
+              setVels(0, +motionVel, -motionVel);
               state = 'a';
               break;
           }

@@ -44,9 +44,9 @@ bool PoluloMotor::autoTune()
   myPID.SetMode(MANUAL);
   digitalWrite(dirPin1, HIGH);
   digitalWrite(dirPin2, LOW);  
-  analogWrite(enablePin, 200);
+  analogWrite(enablePin, 100);
 
-  delay (2000);
+  delay (500);
   
   long startTime = millis();
   // Discard one read
@@ -63,7 +63,7 @@ bool PoluloMotor::autoTune()
   analogWrite(enablePin, 0);
   digitalWrite(dirPin1, LOW);
   digitalWrite(dirPin2, LOW);
-  delay(2000);
+  delay(500);
   myPID.SetMode(AUTOMATIC); 
   return true;
 }
@@ -88,7 +88,7 @@ void PoluloMotor::pid()
   myPID.Compute();
   
   // Linear feedforward model - max power / max vel 
-  float ff = targetVel * (200.0f/ffModelVel) ;
+  float ff = targetVel * (100.0f/ffModelVel) ;
 
   float ctrlSignal = ff + Output;
   // Direction setting
