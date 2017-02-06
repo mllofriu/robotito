@@ -41,13 +41,13 @@ bool PoluloMotor::autoTune()
   digitalWrite(dirPin2, LOW);  
   analogWrite(enablePin, 100);
 
-  delay (300);
+  delay (500);
   
   long startTime = millis();
   // Discard one read
   encoder.getVel();
   float avgVel = encoder.getVel();
-  while (millis() - startTime < 300){
+  while (millis() - startTime < 1000){
     avgVel = .5 * encoder.getVel() + .5 * avgVel;
     delay(20);
   }
@@ -58,7 +58,7 @@ bool PoluloMotor::autoTune()
   analogWrite(enablePin, 0);
   digitalWrite(dirPin1, LOW);
   digitalWrite(dirPin2, LOW);
-  delay(300);
+  delay(500);
   return true;
 }
 

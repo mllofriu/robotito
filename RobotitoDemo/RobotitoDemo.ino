@@ -1,11 +1,10 @@
 #include "PoluloMotor.h"
 #include <Encoder.h>
-#include <PID_v1.h>
-#include <PID_AutoTune_v0.h>
 
 #define MOVE_PERIOD 800
 #define SLEEP_PERIOD 500
- 
+#define TICS_THRS 2000
+
 PoluloMotor * m1;
 PoluloMotor * m2;
 PoluloMotor * m3;
@@ -48,6 +47,8 @@ int m3enc2 = 20;
 int m4enc1 = 21;
 int m4enc2 = 22;
 
+long tics1, tics2;
+
 
 void setup() {
   Serial.begin(9600);
@@ -77,6 +78,8 @@ void setVels(float v1, float v2, float v3){
   
 }
 
+
+
 void loop() {
 //  if (!autoTune1Completed)
 //    autoTune1Completed = m1->autoTune();
@@ -89,19 +92,27 @@ void loop() {
   m2->pid();
   m3->pid();
 
+
+
   switch (state){
       case 's':
         if (millis() - lastUpdate > SLEEP_PERIOD){
           switch (prevState){
             case 'a':
+              tics1 = m1->getTics();
+              tics2 = m2->getTics();
               setVels(motionVel, -motionVel, 0);
               state = 'b';
               break;
             case 'b':
+              tics1 = m1->getTics();
+              tics2 = m3->getTics();
               setVels(-motionVel, 0, +motionVel);
               state = 'c';
               break;
             case 'c':
+              tics1 = m2->getTics();
+              tics2 = m3->getTics();
               setVels(0, +motionVel, -motionVel);
               state = 'a';
               break;
@@ -110,9 +121,23 @@ void loop() {
         }
         break;
       case 'a':
+        if (abs(m2->getTics() - tics1) > TICS_THRS && abs(m3->getTics() - tics2) > TICS_THRS){
+          setVels(0, 0, 0);
+          prevState = state;
+          state = 's';
+          lastUpdate = millis();
+        }
+        break;
       case 'b':
+        if (abs(m1->getTics() - tics1) > TICS_THRS && abs(m2->getTics() - tics2) > TICS_THRS){
+          setVels(0, 0, 0);
+          prevState = state;
+          state = 's';
+          lastUpdate = millis();
+        }
+        break;
       case 'c':
-        if (millis() - lastUpdate > MOVE_PERIOD){
+        if (abs(m1->getTics() - tics1) > TICS_THRS && abs(m3->getTics() - tics2) > TICS_THRS){
           setVels(0, 0, 0);
           prevState = state;
           state = 's';
@@ -124,5 +149,5 @@ void loop() {
   
     
 
-  delay(20);
+  delay(10);
 }

@@ -9,7 +9,6 @@ class PoluloEncoder {
   public:
     PoluloEncoder(int pin1, int pin2, float ratio);
     float getVel();
-    long getTics() { return ticsLastRead; };
   private:
     Encoder encoder;
     long timeLastRead;

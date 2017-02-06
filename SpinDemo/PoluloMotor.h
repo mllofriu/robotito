@@ -8,7 +8,6 @@ class PoluloMotor {
   public:
     PoluloMotor(int encoderPin1, int encoderPin2, int enablePin, int dirPin1, int dirPin2, float ratio);
     void setTargetVel(float targetVel);
-    long getTics(){ return encoder.getTics();}
     void pid();
     float getVel() {return encoder.getVel();}
     void setkP(float kp) { this->kp =  kp;}
@@ -36,7 +35,7 @@ class PoluloMotor {
     int dirPin1;
     int dirPin2;
     float ffModelVel;
-
+    
 };
 
 #endif
