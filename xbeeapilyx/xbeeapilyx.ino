@@ -30,19 +30,13 @@ void loop() {
   if (xbee.getResponse().isAvailable()) {
     // got something
     
-    if (xbee.getResponse().getApiId() == RX_16_RESPONSE || xbee.getResponse().getApiId() == RX_64_RESPONSE) {
+    if (xbee.getResponse().getApiId() == RX_16_RESPONSE) {
       // got a rx packet
       
-      if (xbee.getResponse().getApiId() == RX_16_RESPONSE) {
-              xbee.getResponse().getRx16Response(rx16);
-        option = rx16.getOption();
-        data = rx16.getData(0);
-      } else {
-              xbee.getResponse().getRx64Response(rx64);
-        option = rx64.getOption();
-        data = rx64.getData(0);
-      }
-      
+      xbee.getResponse().getRx16Response(rx16);
+      option = rx16.getOption();
+      data = rx16.getData(0);
+     
       Serial.write(data);
     }
   } 
