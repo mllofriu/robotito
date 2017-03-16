@@ -8,47 +8,51 @@
 #include "ros/ros.h"
 #include "geometry_msgs/Twist.h"
 
-#include <semaphore.h>
-
-#define LOOP_RATE 10
+#include <xbee.h>
 
 using namespace ros;
 
-// Mutex to protect the stored Twist msg
-sem_t twist_sem;
-geometry_msgs::Twist last_vel;
+struct xbee *xbee;
+struct xbee_con *con;
 
-void vel_cb(const geometry_msgs::Twist msg){
-	//ROS_INFO("Received vel msg");
+void vel_cb(const geometry_msgs::Twist vels)
+{
+	ROS_INFO("Last cmd_vel x val: %f\n", vels.linear.x);
 
-	sem_wait(&twist_sem);
-	last_vel = msg;
-	sem_post(&twist_sem);
+	unsigned char vel_bytes[4];
+	vel_bytes[0] = 128 + vels.linear.x * 127;
+	vel_bytes[1] = 128 + vels.linear.x * 127;
+	vel_bytes[2] = 128 - vels.linear.x * 127;
+	vel_bytes[3] = 128 - vels.linear.x * 127;
+	xbee_connTx(con, NULL, vel_bytes, 4);
 }
 
 int main(int argc, char ** argv)
 {
-	if (sem_init(&twist_sem, 0, 1) == -1)
-    {
-		printf("sem_init: failed: %s\n", strerror(errno));
-		return errno;
-    }
+	// Init xbee and connection
+	xbee_err ret;
+	if ((ret = xbee_setup(&xbee, "xbee1", "/dev/ttyUSB1", 57600)) != XBEE_ENONE) {
+		printf("ret: %d (%s)\n", ret, xbee_errorToStr(ret));
+		return ret;
+	}
+
+	struct xbee_conAddress address;
+	memset(&address, 0, sizeof(address));
+	address.addr16_enabled = 1;
+	address.addr16[0] = 0x22;
+	address.addr16[1] = 0x22;
+	if ((ret = xbee_conNew(xbee, &con, "16-bit Data", &address)) != XBEE_ENONE) {
+		xbee_log(xbee, -1, "xbee_conNew() returned: %d (%s)", ret, xbee_errorToStr(ret));
+		return ret;
+	}
 
 	init(argc,argv, "pilot");
 
 	NodeHandle n("~");
 
-	Subscriber sub = n.subscribe("cmd_vel", 100, vel_cb);
+	Subscriber sub = n.subscribe("cmd_vel", 1, vel_cb);
 
-	Rate loop_rate(LOOP_RATE);
-	while (ok()){
-		sem_wait(&twist_sem);
-		ROS_INFO("Last cmd_vel x val: %f\n", last_vel.linear.x);
-		sem_post(&twist_sem);
-
-		spinOnce();
-		loop_rate.sleep();
-	}
+	spin();
 
 	return 0;
 }
