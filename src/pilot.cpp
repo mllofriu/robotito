@@ -45,6 +45,14 @@ int main(int argc, char ** argv)
 		xbee_log(xbee, -1, "xbee_conNew() returned: %d (%s)", ret, xbee_errorToStr(ret));
 		return ret;
 	}
+	struct xbee_conSettings settings;
+	settings.disableAck = 1;
+	settings.noBlock = 1;
+	settings.noWaitForAck = 1;
+	if ((ret = xbee_conSettings(con, &settings, NULL)) != XBEE_ENONE) {
+		xbee_log(xbee, -1, "xbee_conSettings() returned: %d (%s)", ret, xbee_errorToStr(ret));
+		return ret;
+	}
 
 	init(argc,argv, "pilot");
 
