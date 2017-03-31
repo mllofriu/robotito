@@ -23,74 +23,45 @@ double RF_offset =  300*M_PI/180; //45
 double RB_offset = 240*M_PI/180; //315
 const double wheel_radius = 33;
 
-double MAX_ANGULAR_VEL = M_PI / 2;
-double MAX_LINEAR_VEL = 64;
-double MAX_WHEEL_SPEED = 64;
+double MAX_ANGULAR_VEL = 127;
+double MAX_LINEAR_VEL = 127;
+double MAX_WHEEL_SPEED = 127;
+
+unsigned char vel_bytes[3] = {128, 128, 128};
 
 void vel_cb(const geometry_msgs::Twist vels)
 {
-	ROS_INFO("Last cmd_vel z val: %f\n", vels.angular.z);
+	ROS_INFO("Last cmd_vel x val: %f\n", vels.linear.x);
 
 	// Get vels
 	double x_vel = vels.linear.x * MAX_LINEAR_VEL;
 	double y_vel = vels.linear.y * MAX_LINEAR_VEL;
 	double t_vel = vels.angular.z * MAX_ANGULAR_VEL;
 
-	// Convert linear and angular to wheel vels
-	double RF = (-sin(RF_offset) * x_vel + cos(RF_offset)*y_vel + wheel_radius*t_vel);
-	double LF = (-sin(LF_offset) * x_vel + cos(LF_offset)*y_vel + wheel_radius*t_vel);
-	double LB = (-sin(LB_offset) * x_vel + cos(LB_offset)*y_vel + wheel_radius*t_vel);
-	double RB = (-sin(RB_offset) * x_vel + cos(RB_offset)*y_vel + wheel_radius*t_vel);
-
-	ROS_INFO("RF: %f\n", RF);
-
-	// Normalize to max speed
-    if (abs(LF)>MAX_WHEEL_SPEED)
-    {
-        LB=(MAX_WHEEL_SPEED/abs(LF))*LB;
-        RF=(MAX_WHEEL_SPEED/abs(LF))*RF;
-        RB=(MAX_WHEEL_SPEED/abs(LF))*RB;
-        LF=(MAX_WHEEL_SPEED/abs(LF))*LF;
-    }
-    if (abs(LB)>MAX_WHEEL_SPEED)
-    {
-        LF=(MAX_WHEEL_SPEED/abs(LB))*LF;
-        RF=(MAX_WHEEL_SPEED/abs(LB))*RF;
-        RB=(MAX_WHEEL_SPEED/abs(LB))*RB;
-        LB=(MAX_WHEEL_SPEED/abs(LB))*LB;
-    }
-    if (abs(RF)>MAX_WHEEL_SPEED)
-    {
-        LF=(MAX_WHEEL_SPEED/abs(RF))*LF;
-        LB=(MAX_WHEEL_SPEED/abs(RF))*LB;
-        RB=(MAX_WHEEL_SPEED/abs(RF))*RB;
-        RF=(MAX_WHEEL_SPEED/abs(RF))*RF;
-    }
-    if (abs(RB)>MAX_WHEEL_SPEED)
-    {
-        LF=(MAX_WHEEL_SPEED/abs(RB))*LF;
-        LB=(MAX_WHEEL_SPEED/abs(RB))*LB;
-        RF=(MAX_WHEEL_SPEED/abs(RB))*RF;
-        RB=(MAX_WHEEL_SPEED/abs(RB))*RB;
-    }
-
-    ROS_INFO("RF Norm: %f\n", RF);
 
     // Set vels to send
-    unsigned char vel_bytes[4];
-	vel_bytes[0] = 128 + RB;
-	vel_bytes[1] = 128 + RF;
-	vel_bytes[2] = 128 + LB;
-	vel_bytes[3] = 128 + LF;
-	// Send the packet
-	xbee_connTx(con, NULL, vel_bytes, 4);
+	vel_bytes[0] = 128 + x_vel;
+	vel_bytes[1] = 128 + y_vel;
+	vel_bytes[2] = 128 + t_vel;
+}
+
+void sensor_cb(struct xbee *xbee, struct xbee_con *con, struct xbee_pkt **pkt, void **data) {
+	ROS_INFO("Received pkt");
+	if ((*pkt)->dataLen > 0) {
+		unsigned char * data = (*pkt)->data;
+		for (int i = 0; i < 2; i += 2){
+			unsigned short val = (data[i] << 8) | data[i+1];
+			ROS_INFO("%u ", val);
+		}
+		ROS_INFO("\n");
+	}
 }
 
 int main(int argc, char ** argv)
 {
 	// Init xbee and connection
 	xbee_err ret;
-	if ((ret = xbee_setup(&xbee, "xbee1", "/dev/ttyUSB1", 57600)) != XBEE_ENONE) {
+	if ((ret = xbee_setup(&xbee, "xbee1", "/dev/ttyUSB0", 57600)) != XBEE_ENONE) {
 		printf("ret: %d (%s)\n", ret, xbee_errorToStr(ret));
 		return ret;
 	}
@@ -113,13 +84,33 @@ int main(int argc, char ** argv)
 		return ret;
 	}
 
+	// Setup xbee callback for incoming information
+//	if ((ret = xbee_conCallbackSet(con, sensor_cb, NULL)) != XBEE_ENONE) {
+//		xbee_log(xbee, -1, "xbee_conCallbackSet() returned: %d", ret);
+//		return ret;
+//	}
+
 	init(argc,argv, "pilot");
 
 	NodeHandle n("~");
 
 	Subscriber sub = n.subscribe("cmd_vel", 1, vel_cb);
 
-	spin();
+	Rate rate(50);
+	struct xbee_pkt * rxpkt;
+	while (ok()){
+		xbee_conRx(con, &rxpkt, NULL);
+
+		ROS_INFO("Received Pkt");
+
+		xbee_pktFree(rxpkt);
+
+		// Send the packet
+		xbee_connTx(con, NULL, vel_bytes, 3);
+
+		spinOnce();
+		rate.sleep();
+	}
 
 	return 0;
 }
