@@ -7,10 +7,12 @@
 
 #include "ros/ros.h"
 #include "geometry_msgs/Twist.h"
+#include "sensor_msgs/Range.h"
 
 #include <xbee.h>
 
 #include <math.h>
+#include <boost/lexical_cast.hpp>
 
 using namespace ros;
 
@@ -97,8 +99,9 @@ int main(int argc, char ** argv) {
 	NodeHandle n("~");
 
 	Subscriber sub = n.subscribe("cmd_vel", 1, vel_cb);
+	Publisher pub = n.advertise<sensor_msgs::Range>("range", 1, false);
 
-	Rate rate(50);
+	Rate rate(20);
 	struct xbee_pkt * rxpkt;
 	while (ok()) {
 		// Receive sonar
@@ -107,7 +110,27 @@ int main(int argc, char ** argv) {
 			if (rxpkt->dataLen > 0) {
 				unsigned char * data = rxpkt->data;
 				for (unsigned int i = 0; i < rxpkt->dataLen; i += 2) {
+					sensor_msgs::Range r;
+					r.radiation_type = sensor_msgs::Range::INFRARED;
+					r.field_of_view = M_PI/12;
+					r.min_range = .05;
+					r.max_range = .3;
+					r.header.frame_id = "range" + boost::lexical_cast<std::string>(i/2);
+					r.header.stamp = Time::now();
+					// Conver to range
 					unsigned short val = (data[i] << 8) | data[i + 1];
+
+					float volt = (val/1023.0f) * 5;
+					if (volt < .3)
+						r.range = .3f;
+					else {
+						// Inverse of distance using eq
+						float distinv = 0.08 * volt - 0.002;
+						float dist = 1 / distinv - 0.42;
+						// return meters
+						r.range = dist / 100;
+					}
+					pub.publish(r);
 					ROS_INFO("%u ", val);
 				}
 				ROS_INFO("\n");

@@ -65,7 +65,7 @@ int sensors[] = {ds12, ds11, ds10, ds9, ds8, ds7,
 
 // Constants
 int NUM_SENSORS = 12;
-int COMM_PERIOD = 20;
+int COMM_PERIOD = 50;
 int CONTROL_PERIOD = 10;
 long XBEE_ADDR = 0x1111;
 float MAX_VEL = 20.0f;
