@@ -120,7 +120,7 @@ void loop() {
       sensor_vals[2*i+1] = lowByte(val);
     }
     // Send sensor data
-    Tx16Request tx = Tx16Request(0x1111, sensor_vals, sizeof(sensor_vals));
+    Tx16Request tx = Tx16Request(0xFFFF, sensor_vals, sizeof(sensor_vals));
     xbee.send(tx);
     
     // Receive motor commands
