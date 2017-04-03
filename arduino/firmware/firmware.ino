@@ -43,8 +43,8 @@ float motor_angles_sin[4]= {sin(motor_angles[0]), sin(motor_angles[1]),sin(motor
 float WHEEL_RADIUS = .0330f;
 
 // Control variables
-long velsLastUpdate = 0;
-long sensorsLastUpdate = 0;
+long lastUpdate = 0;
+uint8_t x_vel_uint = 128, y_vel_uint = 128, t_vel_uint = 128;
 
 // Sensor data
 int ds1 = A9;
@@ -65,8 +65,7 @@ int sensors[] = {ds12, ds11, ds10, ds9, ds8, ds7,
 
 // Constants
 int NUM_SENSORS = 12;
-int VELS_PERIOD = 10;
-int SENSORS_PERIOD = 50;
+int COMM_PERIOD = 20;
 int CONTROL_PERIOD = 10;
 long XBEE_ADDR = 0x1111;
 float MAX_VEL = 20.0f;
@@ -99,8 +98,8 @@ void setup() {
   xbeeserial.begin(57600);
   xbee.setSerial(xbeeserial);
 
-  Serial.begin(9600);
-  Serial.println("Program loaded");
+//  Serial.begin(9600);
+//  Serial.println("Program loaded");
   
 }
 
@@ -110,66 +109,65 @@ void loop() {
     motors[m]->pid();
   
   // Once on a while
-//  if (millis() - sensorsLastUpdate > SENSORS_PERIOD){
-//    sensorsLastUpdate = millis();
-//
-//     // Read sensors
-//    uint8_t sensor_vals[NUM_SENSORS * 2];
-//    for (int i = 0; i < NUM_SENSORS; i++){
-//      int val = analogRead(sensors[i]);
-//      sensor_vals[2*i] = highByte(val);
-//      sensor_vals[2*i+1] = lowByte(val);
-//      //Serial.println(val);
-//    }
-//    // Send sensor data
-//    Tx16Request tx = Tx16Request(0xFFFF, sensor_vals, NUM_SENSORS * 2);
-//    xbee.send(tx);
-//  }
+  if (millis() - lastUpdate > COMM_PERIOD){
+    lastUpdate = millis();
     
-  
-  if (millis() - velsLastUpdate > VELS_PERIOD){
-    velsLastUpdate = millis();
-    
-    // Receive motor command
-    xbee.readPacket();
-    if (xbee.getResponse().isAvailable() && xbee.getResponse().getApiId() == RX_16_RESPONSE ) {
-      // got a rx packet
-      xbee.getResponse().getRx16Response(rx16);
-      // get vels from packet
-      uint8_t x_vel_uint = rx16.getData(0);
-      uint8_t y_vel_uint = rx16.getData(1);
-      uint8_t t_vel_uint = rx16.getData(2);
-
-      // 128 means zero vel
-      float x_vel = (x_vel_uint - 128) * LINEAR_VEL_SCALE;
-      float y_vel = (y_vel_uint - 128) * LINEAR_VEL_SCALE;
-      float t_vel = (t_vel_uint - 128) * ANGULAR_VEL_SCALE;
-      
-      // precompute rotational component - the same for all wheels
-      float rot_comp =  WHEEL_RADIUS * t_vel;
-      float maxVel = 0;
-      for (int m = 0; m < 4; m++){
-        // get precomputed sin and cos for each motor
-//        Serial.print(motor_angles_sin[m]);
-//        Serial.print(" ");
-        float cosangle = motor_angles_cos[m];
-        float sinangle = motor_angles_sin[m];
-        float vel = -sinangle * x_vel + cosangle * y_vel + rot_comp;
-        motors[m]->setTargetVel(vel);
-        if (abs(vel) > maxVel)
-          maxVel = abs(vel);
-      }
-
-      // Check if we have to normalize
-      if (maxVel > MAX_VEL){
-        float normalizer = MAX_VEL / maxVel;
-        for (int m = 0; m < 4; m++){
-           motors[m]->setTargetVel(
-            motors[m]->getTargetVel()/normalizer);
-        }
-      }
-      Serial.println();
+    // Read sensors
+    uint8_t sensor_vals[NUM_SENSORS * 2];
+    for (int i = 0; i < NUM_SENSORS; i++){
+      int val = analogRead(sensors[i]);
+      sensor_vals[2*i] = highByte(val);
+      sensor_vals[2*i+1] = lowByte(val);
     }
+    // Send sensor data
+    Tx16Request tx = Tx16Request(0x1111, sensor_vals, sizeof(sensor_vals));
+    xbee.send(tx);
+    
+    // Receive motor commands
+    // Get all pending packages
+    xbee.readPacket();
+    while (xbee.getResponse().isAvailable()){
+      if (xbee.getResponse().getApiId() == RX_16_RESPONSE ) {
+        // got a rx packet
+        xbee.getResponse().getRx16Response(rx16);
+        // get vels from packet
+        x_vel_uint = rx16.getData(0);
+        y_vel_uint = rx16.getData(1);
+        t_vel_uint = rx16.getData(2);
+      }
+      xbee.readPacket();
+    }
+
+    // Set velocities with values obtained
+    // 128 means zero vel
+    float x_vel = (x_vel_uint - 128) * LINEAR_VEL_SCALE;
+    float y_vel = (y_vel_uint - 128) * LINEAR_VEL_SCALE;
+    float t_vel = (t_vel_uint - 128) * ANGULAR_VEL_SCALE;
+    
+    // precompute rotational component - the same for all wheels
+    float rot_comp =  WHEEL_RADIUS * t_vel;
+    float maxVel = 0;
+    for (int m = 0; m < 4; m++){
+      // get precomputed sin and cos for each motor
+    //        Serial.print(motor_angles_sin[m]);
+    //        Serial.print(" ");
+      float cosangle = motor_angles_cos[m];
+      float sinangle = motor_angles_sin[m];
+      float vel = -sinangle * x_vel + cosangle * y_vel + rot_comp;
+      motors[m]->setTargetVel(vel);
+      if (abs(vel) > maxVel)
+        maxVel = abs(vel);
+    }
+    
+    // Check if we have to normalize
+    if (maxVel > MAX_VEL){
+      float normalizer = MAX_VEL / maxVel;
+      for (int m = 0; m < 4; m++){
+         motors[m]->setTargetVel(
+          motors[m]->getTargetVel()/normalizer);
+      }
+    }
+
   }
 
 
