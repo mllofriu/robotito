@@ -1,13 +1,12 @@
 #include <XBee.h>
 #include <SoftwareSerial.h>
-#include "DistanceSensor.h"
+#include "DSensorManager.h"
 #include "PoluloMotor.h"
 
 // Xbee objects
 SoftwareSerial xbeeserial(0,1);
 XBee xbee = XBee();
-Rx16Response rx16 = Rx16Response();
-Rx64Response rx64 = Rx64Response();
+
 uint8_t option = 0;
 uint8_t data = 0;
 
@@ -44,33 +43,14 @@ float motor_angles_sin[4]= {sin(motor_angles[0]), sin(motor_angles[1]),sin(motor
 float WHEEL_RADIUS = .0330f;
 
 // Control variables
-unsigned long lastRXUpdate = 0, lastTXUpdate = 0, lastDSenseUpdate = 0;
+unsigned long lastRXUpdate = 0, lastTXUpdate = 0;
 uint8_t x_vel_uint = 128, y_vel_uint = 128, t_vel_uint = 128;
 
-// Sensor data
-int ds1 = A9;
-int ds2 = A10;
-int ds3 = A11;
-int ds4 = A12;
-int ds5 = A13;
-int ds6 = A14;
-int ds7 = A15;
-int ds8 = A16;
-int ds9 = A17;
-int ds10 = A18;
-int ds11 = A19;
-int ds12 = A20;
+DSensorManager dsMgr;
 
-#define NUM_SENSORS  12
-int sensorPorts[] = {ds12, ds11, ds10, ds9, ds8, ds7,
-                 ds1, ds2, ds3, ds4, ds5, ds6};
-RawDistanceSensor * dSensors[NUM_SENSORS];
 
-// Constants
-int DIST_BUFFER_LEN = 13;
-unsigned int DSENSE_PERIOD = 17;
 unsigned int RX_PERIOD = 40;
-unsigned int TX_PERIOD = 50;
+
 int CONTROL_PERIOD = 10000;
 long XBEE_ADDR = 0x1111;
 float MAX_VEL = 20.0f;
@@ -87,9 +67,7 @@ void setup() {
   xbeeserial.begin(57600);
   xbee.setSerial(xbeeserial);
 
-  for (int s = 0; s < NUM_SENSORS; s++){
-    dSensors[s] = new RawDistanceSensor(sensorPorts[s], DIST_BUFFER_LEN);
-  }
+  
 
 }
 
@@ -100,36 +78,19 @@ void loop() {
   for (int m = 0; m < 4; m++)
     motors[m]->pid();
 
-  unsigned long diffDSense = millis() - lastDSenseUpdate;
-  if (diffDSense > DSENSE_PERIOD){
-    lastDSenseUpdate = millis();
-    for (int s = 0; s < NUM_SENSORS; s++)
-      dSensors[s]->getRawValue();
-  }
+  dsMgr.process(xbee);
   
-  // Once on a while - Send data
-  unsigned long diffTX = millis() - lastTXUpdate;
-  if ( diffTX > TX_PERIOD){
-    lastTXUpdate = millis();
-
-    // Read sensors
-    uint8_t sensor_vals[NUM_SENSORS * 2];
-    for (int i = 0; i < NUM_SENSORS; i++){
-      int val = dSensors[i]->rawMedian();
-      sensor_vals[2*i] = highByte(val);
-      sensor_vals[2*i+1] = lowByte(val);
-    }
-    // Send sensor data
-    Tx16Request tx = Tx16Request(0xFFFF, sensor_vals, sizeof(sensor_vals));
-    xbee.send(tx);
-
-    
-    // Receive motor commands
+  // Receive motor commands
+  unsigned long diffRX = millis() - lastRXUpdate;
+  if (diffRX > RX_PERIOD){
+    lastRXUpdate = millis();
+    // Set velocities with values obtained
     // Get all pending packages
     xbee.readPacket();
-    while (xbee.getResponse().isAvailable()){
+    while (xbee.getResponse().isAvailable()) {
       if (xbee.getResponse().getApiId() == RX_16_RESPONSE ) {
         // got a rx packet
+        Rx16Response rx16;
         xbee.getResponse().getRx16Response(rx16);
         // get vels from packet
         x_vel_uint = rx16.getData(0);
@@ -138,13 +99,6 @@ void loop() {
       }
       xbee.readPacket();
     }
-  }
-
-  // Once on a while - receive data.
-  unsigned long diffRX = millis() - lastRXUpdate;
-  if (diffRX > RX_PERIOD){
-    lastRXUpdate = millis();
-    // Set velocities with values obtained
     // 128 means zero vel
     float x_vel = (x_vel_uint - 128) * LINEAR_VEL_SCALE;
     float y_vel = (y_vel_uint - 128) * LINEAR_VEL_SCALE;
