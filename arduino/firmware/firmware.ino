@@ -8,23 +8,20 @@
 SoftwareSerial xbeeserial(0,1);
 XBee xbee = XBee();
 
-uint8_t option = 0;
-uint8_t data = 0;
-
-
 // Control variables
 DSensorManager dsMgr;
 MotorManager mMgr;
 
 
-int CONTROL_PERIOD = 10000;
-
-long XBEE_ADDR = 0x1111;
+long period;
 
 
 void setup() {
   xbeeserial.begin(57600);
   xbee.setSerial(xbeeserial);
+
+  // Get the loop period as the minimum of all managers
+  period = min(dsMgr.getPeriod(), mMgr.getPeriod());
 }
 
 void loop() {
@@ -33,5 +30,5 @@ void loop() {
   dsMgr.process(xbee);
   mMgr.process(xbee);
   
-  delayMicroseconds(CONTROL_PERIOD - (micros() - wakeuptime));
+  delayMicroseconds(period - (micros() - wakeuptime));
 }

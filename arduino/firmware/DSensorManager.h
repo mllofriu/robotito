@@ -44,6 +44,10 @@ public:
       lastTXUpdate = 0;
     }
 
+    long getPeriod(){
+      return min(DSENSE_PERIOD, TX_PERIOD) * 1000;
+    }
+
     void process(XBee &xbee) {
       unsigned long diffDSense = millis() - lastDSenseUpdate;
       if (diffDSense > DSENSE_PERIOD) {

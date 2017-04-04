@@ -106,6 +106,10 @@ class MotorManager {
       lastRXUpdate = 0;
     }
 
+    long getPeriod(){
+      return min(CONTROL_PERIOD, RX_PERIOD * 1000);
+    }
+
     void process(XBee &xbee) {
       // Receive motor commands
       unsigned long diffRX = millis() - lastRXUpdate;
