@@ -35,13 +35,28 @@ unsigned char vel_bytes[3] = { 128, 128, 128 };
 
 int seq = 0;
 
+double sign(double num){
+	if (num >= 0) return 1;
+	else return -1;
+}
+
+double transfer(double val){
+//	double offset = .5;
+//
+//	if (abs(val) < .02)
+//		return 0;
+//	else
+//		return pow(val,3) + offset * sign(val);
+	return val;
+}
+
 void vel_cb(const geometry_msgs::Twist vels) {
 //	ROS_INFO("Last cmd_vel x val: %f\n", vels.linear.x);
 
 	// Get vels
-	double x_vel = vels.linear.x * MAX_LINEAR_VEL;
-	double y_vel = vels.linear.y * MAX_LINEAR_VEL;
-	double t_vel = vels.angular.z * MAX_ANGULAR_VEL;
+	double x_vel = transfer(vels.linear.x) * MAX_LINEAR_VEL;
+	double y_vel = transfer(vels.linear.y) * MAX_LINEAR_VEL;
+	double t_vel = transfer(vels.angular.z) * MAX_ANGULAR_VEL;
 
 	// Set vels to send
 	vel_bytes[0] = 128 + x_vel;
