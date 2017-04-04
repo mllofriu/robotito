@@ -14,7 +14,7 @@
   <node pkg="joy_teleop" type="joy_teleop.py" name="joy_teleop">
   </node>
 
-  <node pkg="robotito" type="pilot" name="pilot" output="screen">
+  <node pkg="robotito" type="pilot" name="pilot" output="screen" respawn="true">
   	<remap from="~cmd_vel" to="/cmd_vel"/>
   	
   </node>
@@ -25,7 +25,9 @@
   <arg name="gui" default="False" />
   <param name="use_gui" value="$(arg gui)"/>
   <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
-  <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher" />
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher">
+  	<param name="publish_frequency" value="100"/>
+  </node>
   <node pkg="rviz" type="rviz" name="rviz" output="screen"/>
   
 </launch>

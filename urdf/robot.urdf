@@ -143,7 +143,7 @@
 	  </joint>
 	  
 	  
-	  <link name="range1">
+	  <link name="range0">
           <visual> 
 			  <geometry>
 				  <box size="0.01 0.03 0.01"/>
@@ -157,16 +157,277 @@
 				  <box size="0.01 0.03 0.01"/>
 			  </geometry>
 		  </collision>
-		  
 	  </link>
-	  <joint name="top_to_range1" type="fixed">
+	  <joint name="top_to_range0" type="fixed">
 	  	<parent link="top"/>
-	  	<child link="range1"/>
+	  	<child link="range0"/>
 	  	<origin rpy="0 0 0" xyz="0.05 0 .02"/>
 	  	<limit effort="100" velocity="100"/>
 		<joint_properties damping="0.0" friction="10"/>
 	  </joint>
+	  
+  	  <link name="range1">
+      <visual> 
+		  <geometry>
+			  <box size="0.01 0.03 0.01"/>
+		  </geometry>
+		  <material name="green">
+			  <color rgba="0 0.8 0 1"/>
+		  </material>
+	  </visual>
+	  <collision>
+		  <geometry>
+			  <box size="0.01 0.03 0.01"/>
+		  </geometry>
+	  </collision>
+	  </link>
+	  <joint name="top_to_range1" type="fixed">
+	  	<parent link="top"/>
+	  	<child link="range1"/>
+	  	<origin rpy="0 0 -0.5235987756" xyz="0.0433012701892219 -0.025 -.02"/>
+	  	<limit effort="100" velocity="100"/>
+		<joint_properties damping="0.0" friction="10"/>
+	  </joint>
+	  
+  	  <link name="range2">
+      <visual> 
+		  <geometry>
+			  <box size="0.01 0.03 0.01"/>
+		  </geometry>
+		  <material name="green">
+			  <color rgba="0 0.8 0 1"/>
+		  </material>
+	  </visual>
+	  <collision>
+		  <geometry>
+			  <box size="0.01 0.03 0.01"/>
+		  </geometry>
+	  </collision>
+	  </link>
+	  <joint name="top_to_range2" type="fixed">
+	  	<parent link="top"/>
+	  	<child link="range2"/>
+	  	<origin rpy="0 0 -1.0471975512" xyz="0.025 -0.0433012701892219 .02"/>
+	  	<limit effort="100" velocity="100"/>
+		<joint_properties damping="0.0" friction="10"/>
+	  </joint>
+	  
+  	  <link name="range3">
+      <visual> 
+		  <geometry>
+			  <box size="0.01 0.03 0.01"/>
+		  </geometry>
+		  <material name="green">
+			  <color rgba="0 0.8 0 1"/>
+		  </material>
+	  </visual>
+	  <collision>
+		  <geometry>
+			  <box size="0.01 0.03 0.01"/>
+		  </geometry>
+	  </collision>
+	  </link>
+	  <joint name="top_to_range3" type="fixed">
+	  	<parent link="top"/>
+	  	<child link="range3"/>
+	  	<origin rpy="0 0 -1.5707963268" xyz="3.06161699786838E-018 -0.05 -.02"/>
+	  	<limit effort="100" velocity="100"/>
+		<joint_properties damping="0.0" friction="10"/>
+	  </joint>
+	  
+  	  <link name="range4">
+      <visual> 
+		  <geometry>
+			  <box size="0.01 0.03 0.01"/>
+		  </geometry>
+		  <material name="green">
+			  <color rgba="0 0.8 0 1"/>
+		  </material>
+	  </visual>
+	  <collision>
+		  <geometry>
+			  <box size="0.01 0.03 0.01"/>
+		  </geometry>
+	  </collision>
+	  </link>
+	  <joint name="top_to_range4" type="fixed">
+	  	<parent link="top"/>
+	  	<child link="range4"/>
+	  	<origin rpy="0 0 -2.0943951024" xyz="-0.025 -0.0433012701892219 .02"/>
+	  	<limit effort="100" velocity="100"/>
+		<joint_properties damping="0.0" friction="10"/>
+	  </joint>
+	  
+  	  <link name="range5">
+      <visual> 
+		  <geometry>
+			  <box size="0.01 0.03 0.01"/>
+		  </geometry>
+		  <material name="green">
+			  <color rgba="0 0.8 0 1"/>
+		  </material>
+	  </visual>
+	  <collision>
+		  <geometry>
+			  <box size="0.01 0.03 0.01"/>
+		  </geometry>
+	  </collision>
+	  </link>
+	  <joint name="top_to_range5" type="fixed">
+	  	<parent link="top"/>
+	  	<child link="range5"/>
+	  	<origin rpy="0 0 -2.617993878" xyz="-0.0433012701892219 -0.025 -.02"/>
+	  	<limit effort="100" velocity="100"/>
+		<joint_properties damping="0.0" friction="10"/>
+	  </joint>
+	  
+	  
+  	  <link name="range6">
+      <visual> 
+		  <geometry>
+			  <box size="0.01 0.03 0.01"/>
+		  </geometry>
+		  <material name="green">
+			  <color rgba="0 0.8 0 1"/>
+		  </material>
+	  </visual>
+	  <collision>
+		  <geometry>
+			  <box size="0.01 0.03 0.01"/>
+		  </geometry>
+	  </collision>
+	  </link>
+	  <joint name="top_to_range6" type="fixed">
+	  	<parent link="top"/>
+	  	<child link="range6"/>
+	  	<origin rpy="0 0 -3.1415926536" xyz="-0.05 -6.12323399573677E-018 .02"/>
+	  	<limit effort="100" velocity="100"/>
+		<joint_properties damping="0.0" friction="10"/>
+	  </joint>
+	  
+  	  <link name="range7">
+      <visual> 
+		  <geometry>
+			  <box size="0.01 0.03 0.01"/>
+		  </geometry>
+		  <material name="green">
+			  <color rgba="0 0.8 0 1"/>
+		  </material>
+	  </visual>
+	  <collision>
+		  <geometry>
+			  <box size="0.01 0.03 0.01"/>
+		  </geometry>
+	  </collision>
+	  </link>
+	  <joint name="top_to_range7" type="fixed">
+	  	<parent link="top"/>
+	  	<child link="range7"/>
+	  	<origin rpy="0 0 -3.6651914292" xyz="-0.0433012701892219 0.025 -.02"/>
+	  	<limit effort="100" velocity="100"/>
+		<joint_properties damping="0.0" friction="10"/>
+	  </joint>
+	  
+	  
+  	  <link name="range8">
+      <visual> 
+		  <geometry>
+			  <box size="0.01 0.03 0.01"/>
+		  </geometry>
+		  <material name="green">
+			  <color rgba="0 0.8 0 1"/>
+		  </material>
+	  </visual>
+	  <collision>
+		  <geometry>
+			  <box size="0.01 0.03 0.01"/>
+		  </geometry>
+	  </collision>
+	  </link>
+	  <joint name="top_to_range8" type="fixed">
+	  	<parent link="top"/>
+	  	<child link="range8"/>
+	  	<origin rpy="0 0 -4.1887902048" xyz="-0.025 0.0433012701892219 .02"/>
+	  	<limit effort="100" velocity="100"/>
+		<joint_properties damping="0.0" friction="10"/>
+	  </joint>
+	  
+	  
+  	  <link name="range9">
+      <visual> 
+		  <geometry>
+			  <box size="0.01 0.03 0.01"/>
+		  </geometry>
+		  <material name="green">
+			  <color rgba="0 0.8 0 1"/>
+		  </material>
+	  </visual>
+	  <collision>
+		  <geometry>
+			  <box size="0.01 0.03 0.01"/>
+		  </geometry>
+	  </collision>
+	  </link>
+	  <joint name="top_to_range9" type="fixed">
+	  	<parent link="top"/>
+	  	<child link="range9"/>
+	  	<origin rpy="0 0 -4.7123889804" xyz="-9.18485099360515E-018 0.05 -.02"/>
+	  	<limit effort="100" velocity="100"/>
+		<joint_properties damping="0.0" friction="10"/>
+	  </joint>
+	  
+	  
+  	  <link name="range10">
+      <visual> 
+		  <geometry>
+			  <box size="0.01 0.03 0.01"/>
+		  </geometry>
+		  <material name="green">
+			  <color rgba="0 0.8 0 1"/>
+		  </material>
+	  </visual>
+	  <collision>
+		  <geometry>
+			  <box size="0.01 0.03 0.01"/>
+		  </geometry>
+	  </collision>
+	  </link>
+	  <joint name="top_to_range10" type="fixed">
+	  	<parent link="top"/>
+	  	<child link="range10"/>
+	  	<origin rpy="0 0 -5.235987756" xyz="0.025 0.0433012701892219 .02"/>
+	  	<limit effort="100" velocity="100"/>
+		<joint_properties damping="0.0" friction="10"/>
+	  </joint>
+	  
+	  
+  	  <link name="range11">
+      <visual> 
+		  <geometry>
+			  <box size="0.01 0.03 0.01"/>
+		  </geometry>
+		  <material name="green">
+			  <color rgba="0 0.8 0 1"/>
+		  </material>
+	  </visual>
+	  <collision>
+		  <geometry>
+			  <box size="0.01 0.03 0.01"/>
+		  </geometry>
+	  </collision>
+	  </link>
+	  <joint name="top_to_range11" type="fixed">
+	  	<parent link="top"/>
+	  	<child link="range11"/>
+	  	<origin rpy="0 0 -5.7595865316" xyz="0.0433012701892219 0.025 -.02"/>
+	  	<limit effort="100" velocity="100"/>
+		<joint_properties damping="0.0" friction="10"/>
+	  </joint>
+	  
+	  
+  	 
     
+    	
 
 
   </robot>

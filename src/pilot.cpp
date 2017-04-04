@@ -13,6 +13,8 @@
 
 #include <math.h>
 #include <boost/lexical_cast.hpp>
+#include <vector>
+#include <float.h>
 
 using namespace ros;
 
@@ -31,8 +33,10 @@ double MAX_WHEEL_SPEED = 127;
 
 unsigned char vel_bytes[3] = { 128, 128, 128 };
 
+int seq = 0;
+
 void vel_cb(const geometry_msgs::Twist vels) {
-	ROS_INFO("Last cmd_vel x val: %f\n", vels.linear.x);
+//	ROS_INFO("Last cmd_vel x val: %f\n", vels.linear.x);
 
 	// Get vels
 	double x_vel = vels.linear.x * MAX_LINEAR_VEL;
@@ -99,16 +103,19 @@ int main(int argc, char ** argv) {
 	NodeHandle n("~");
 
 	Subscriber sub = n.subscribe("cmd_vel", 1, vel_cb);
-	Publisher pub = n.advertise<sensor_msgs::Range>("range", 1, false);
+	// Split range msgs in two because of bug in rviz
+	Publisher pub1 = n.advertise<sensor_msgs::Range>("rangeRight", 12, false);
+	Publisher pub2 = n.advertise<sensor_msgs::Range>("rangeLeft", 12, false);
 
-	Rate rate(20);
+
+	Rate rate(25);
 	struct xbee_pkt * rxpkt;
 	while (ok()) {
 		// Receive sonar
 		if (xbee_conRx(con, &rxpkt, NULL) == XBEE_ENONE) {
-			ROS_INFO("Received Pkt of len %d", rxpkt->dataLen);
 			if (rxpkt->dataLen > 0) {
 				unsigned char * data = rxpkt->data;
+				Time now = Time::now();
 				for (unsigned int i = 0; i < rxpkt->dataLen; i += 2) {
 					sensor_msgs::Range r;
 					r.radiation_type = sensor_msgs::Range::INFRARED;
@@ -116,24 +123,40 @@ int main(int argc, char ** argv) {
 					r.min_range = .05;
 					r.max_range = .3;
 					r.header.frame_id = "range" + boost::lexical_cast<std::string>(i/2);
-					r.header.stamp = Time::now();
+					r.header.stamp = now;
+					r.header.seq = seq++;
 					// Conver to range
-					unsigned short val = (data[i] << 8) | data[i + 1];
+					unsigned int val = (data[i] << 8) | data[i + 1];
 
-					float volt = (val/1023.0f) * 5;
+					float volt = (val/1024.0f) * 5;
 					if (volt < .3)
-						r.range = .3f;
-					else {
+						r.range = .3; //FLT_MAX;
+					else if (volt < 1.8){
 						// Inverse of distance using eq
-						float distinv = 0.08 * volt - 0.002;
+						float distinv = 0.0758 * volt - 0.00265;
+						float dist = 1 / distinv - 0.42;
+						// return meters
+						r.range = dist / 100;
+					} else {
+
+						float distinv = 0.1111 * volt - 0.07831;
 						float dist = 1 / distinv - 0.42;
 						// return meters
 						r.range = dist / 100;
 					}
-					pub.publish(r);
-					ROS_INFO("%u ", val);
+
+					if (r.range > .3)
+						r.range = .3;
+
+
+					ROS_INFO("Range %f on sensor %d",r.range, i);
+
+					if (i/2 >= 6)
+						pub1.publish(r);
+					else
+						pub2.publish(r);
+//					spinOnce();
 				}
-				ROS_INFO("\n");
 			}
 			xbee_pktFree(rxpkt);
 		}
