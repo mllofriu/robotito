@@ -2,7 +2,7 @@
 
 import rospy 
 import tf
-import geometry_msgs.msg
+from geometry_msgs.msg import Pose2D
 
 map_frame = 'map'
 marker_frame = 'ar_marker_0'
@@ -15,7 +15,7 @@ if __name__ == "__main__":
   listener = tf.TransformListener()
 
   # Initialize cmd_vel publisher
-  pose_pub = rospy.Publisher('/robotito/pose', geometry_msgs.msg.Pose, queue_size=1)
+  pose_pub = rospy.Publisher('/robotito/pose', Pose2D, queue_size=1)
 
   # Control loop
   rate = rospy.Rate(50.0)
@@ -27,13 +27,13 @@ if __name__ == "__main__":
           # Obtain the transform
           (trans,rot) = listener.lookupTransform(map_frame, marker_frame, rospy.Time())
           
-          p = Pose()
+          p = Pose2D()
           p.x = trans[0]
           p.y = trans[1]
           euler = tf.transformations.euler_from_quaternion(rot)
           p.theta = euler[2]
            
-          pose_pub.publis(p)
+          pose_pub.publish(p)
           
     except (tf.Exception):
         pass
