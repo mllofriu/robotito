@@ -36,6 +36,6 @@
   <arg name="output_frame2" default="/stingray2" />
   <node name="ar_track_alvar2" pkg="ar_track_alvar" type="individualMarkersNoKinect" respawn="false" output="screen" args="$(arg marker_size) $(arg max_new_marker_error) $(arg max_track_error) $(arg cam_image_topic2) $(arg cam_info_topic2) $(arg output_frame2)" />
   
-  <node pkg="robotito" type="pose_detector.py" name="pose_detector"/>
+  <node pkg="robotito" type="pose_publisher.py" name="pose_publisher"/>
 
 </launch>
