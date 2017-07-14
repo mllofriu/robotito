@@ -38,38 +38,38 @@ class MotorManager {
 
 
     unsigned int RX_PERIOD = 40;
-    int CONTROL_PERIOD = 10000;
+    unsigned long CONTROL_PERIOD = 10000;
+    unsigned long CMD_TIMEOUT = RX_PERIOD*4;
     // Timestamp of last time info was sent
     unsigned long lastRXUpdate;
 
     float MAX_VEL = 20.0f;
-    float LINEAR_VEL_SCALE = 4 / 128.0f;
-    float ANGULAR_VEL_SCALE =  16 * M_PI / 128.0f;
+    // 100 means 5 m/s
+    float LINEAR_VEL_SCALE = 5 / 100.0f;
+    // 100 means 4 turns per second
+    float ANGULAR_VEL_SCALE =  8 * M_PI / 100.0f;
 
     uint8_t x_vel_uint = 128, y_vel_uint = 128, t_vel_uint = 128;
 
-    void getVels(XBee & xbee) {
-      lastRXUpdate = millis();
-      // Set velocities with values obtained
-      // Get all pending packages
-      xbee.readPacket();
-      while (xbee.getResponse().isAvailable()) {
-        if (xbee.getResponse().getApiId() == RX_16_RESPONSE ) {
-          // got a rx packet
-          Rx16Response rx16;
-          xbee.getResponse().getRx16Response(rx16);
-          // get vels from packet
-          x_vel_uint = rx16.getData(0);
-          y_vel_uint = rx16.getData(1);
-          t_vel_uint = rx16.getData(2);
-        }
-        xbee.readPacket();
-      }
+    void setVels(unsigned int x_vel_uint,unsigned int y_vel_uint,unsigned int t_vel_uint) {
       // 128 means zero vel
-      float x_vel = (x_vel_uint - 128) * LINEAR_VEL_SCALE;
-      float y_vel = (y_vel_uint - 128) * LINEAR_VEL_SCALE;
-      float t_vel = (t_vel_uint - 128) * ANGULAR_VEL_SCALE;
+      float x_vel_signed = (x_vel_uint - 128);
+      float y_vel_signed = (y_vel_uint - 128); 
+      float t_vel_signed = (t_vel_uint - 128);
+      
+      // Cap on 100 
+      x_vel_signed = x_vel_signed > 100 ? 100 : x_vel_signed;
+      x_vel_signed = x_vel_signed < -100 ? -100 : x_vel_signed;
+      y_vel_signed = y_vel_signed > 100 ? 100 : y_vel_signed;
+      y_vel_signed = y_vel_signed < -100 ? -100 : y_vel_signed;
+      t_vel_signed = t_vel_signed > 100 ? 100 : t_vel_signed;
+      t_vel_signed = t_vel_signed < -100 ? -100 : t_vel_signed;
 
+      // Convert to m/s and r/s
+      float x_vel = x_vel_signed * LINEAR_VEL_SCALE;
+      float y_vel = y_vel_signed * LINEAR_VEL_SCALE;
+      float t_vel = t_vel_signed * ANGULAR_VEL_SCALE;
+     
       // precompute rotational component - the same for all wheels
       float rot_comp =  WHEEL_RADIUS * t_vel;
       float maxVel = 0;
@@ -103,7 +103,7 @@ class MotorManager {
       motors[2] = new PoluloMotor(m3enc1, m3enc2, m3en, m3i1, m3i2, 30.0f);
       motors[3] = new PoluloMotor(m4enc1, m4enc2, m4en, m4i1, m4i2, 30.0f);
 
-      lastRXUpdate = 0;
+      lastRXUpdate = millis();
     }
 
     long getPeriod(){
@@ -113,10 +113,33 @@ class MotorManager {
     void process(XBee &xbee) {
       // Receive motor commands
       unsigned long diffRX = millis() - lastRXUpdate;
+      
+
       if (diffRX > RX_PERIOD) {
-        getVels(xbee);
+        // Get all pending packages
+        // Receive packet
+        xbee.readPacket();
+        while (xbee.getResponse().isAvailable()) {
+          if (xbee.getResponse().getApiId() == RX_16_RESPONSE ) {
+            // Got a rx packet
+            Rx16Response rx16;
+            xbee.getResponse().getRx16Response(rx16);
+            // 'v' means set velocities
+            if (rx16.getData(0) == 'v'){
+              // get vels from packet
+              setVels(rx16.getData(0), rx16.getData(1), rx16.getData(2));
+            }             
+            lastRXUpdate = millis();
+          }
+          xbee.readPacket();
+        }
       }
 
+      // If we havent heard from the boss from a while - do nothing
+      if (millis() - lastRXUpdate > CMD_TIMEOUT){
+        setVels(128,128,128);
+      }
+      
       // Motor control
       for (int m = 0; m < 4; m++)
         motors[m]->pid();
