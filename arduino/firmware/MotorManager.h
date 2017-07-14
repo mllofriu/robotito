@@ -34,7 +34,9 @@ class MotorManager {
     float motor_angles_cos[4] = {cos(motor_angles[0]), cos(motor_angles[1]), cos(motor_angles[2]), cos(motor_angles[3])};
     float motor_angles_sin[4] = {sin(motor_angles[0]), sin(motor_angles[1]), sin(motor_angles[2]), sin(motor_angles[3])};
 
-    float WHEEL_RADIUS = .0330f;
+    float WHEEL_RADIUS = (.040f);
+    float WHEEL_CIRCUMF = (2*M_PI*WHEEL_RADIUS);
+    float ROBOT_RADIUS = 0.03f;
 
 
     unsigned int RX_PERIOD = 40;
@@ -43,7 +45,7 @@ class MotorManager {
     // Timestamp of last time info was sent
     unsigned long lastRXUpdate;
 
-    float MAX_VEL = 20.0f;
+    float MAX_VEL = 80.0f;
     // 100 means 5 m/s
     float LINEAR_VEL_SCALE = 5 / 100.0f;
     // 100 means 4 turns per second
@@ -53,10 +55,10 @@ class MotorManager {
 
     void setVels(unsigned int x_vel_uint,unsigned int y_vel_uint,unsigned int t_vel_uint) {
       // 128 means zero vel
-      float x_vel_signed = (x_vel_uint - 128);
-      float y_vel_signed = (y_vel_uint - 128); 
-      float t_vel_signed = (t_vel_uint - 128);
-      
+      float x_vel_signed = (((int)x_vel_uint) - 128);
+      float y_vel_signed = (((int)y_vel_uint) - 128); 
+      float t_vel_signed = (((int)t_vel_uint) - 128);
+     
       // Cap on 100 
       x_vel_signed = x_vel_signed > 100 ? 100 : x_vel_signed;
       x_vel_signed = x_vel_signed < -100 ? -100 : x_vel_signed;
@@ -65,13 +67,14 @@ class MotorManager {
       t_vel_signed = t_vel_signed > 100 ? 100 : t_vel_signed;
       t_vel_signed = t_vel_signed < -100 ? -100 : t_vel_signed;
 
+
+
       // Convert to m/s and r/s
       float x_vel = x_vel_signed * LINEAR_VEL_SCALE;
       float y_vel = y_vel_signed * LINEAR_VEL_SCALE;
       float t_vel = t_vel_signed * ANGULAR_VEL_SCALE;
-     
       // precompute rotational component - the same for all wheels
-      float rot_comp =  WHEEL_RADIUS * t_vel;
+      float rot_comp =  ROBOT_RADIUS * t_vel;
       float maxVel = 0;
       for (int m = 0; m < 4; m++) {
         // get precomputed sin and cos for each motor
@@ -79,7 +82,7 @@ class MotorManager {
         //        Serial.print(" ");
         float cosangle = motor_angles_cos[m];
         float sinangle = motor_angles_sin[m];
-        float vel = -sinangle * x_vel + cosangle * y_vel + rot_comp;
+        float vel = -(-sinangle * x_vel + cosangle * y_vel + rot_comp) * (2 * M_PI / WHEEL_CIRCUMF);
         motors[m]->setTargetVel(vel);
         if (abs(vel) > maxVel)
           maxVel = abs(vel);
@@ -127,8 +130,12 @@ class MotorManager {
             // 'v' means set velocities
             if (rx16.getData(0) == 'v'){
               // get vels from packet
-              setVels(rx16.getData(0), rx16.getData(1), rx16.getData(2));
-            }             
+              setVels(rx16.getData(1), rx16.getData(2), rx16.getData(3));
+            } else if (rx16.getData(0) == 'k'){
+              for (int m = 0; m < 4; m++){
+                motors[m]->setPID(rx16.getData(3*m+1),rx16.getData(3*m+2),rx16.getData(3*m+3));
+              }
+            }
             lastRXUpdate = millis();
           }
           xbee.readPacket();
@@ -143,6 +150,8 @@ class MotorManager {
       // Motor control
       for (int m = 0; m < 4; m++)
         motors[m]->pid();
+
+//      Serial.println(motors[0]->getTargetVel() - motors[0]->getVel());
     }
 };
 

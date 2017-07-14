@@ -8,6 +8,7 @@
 class PoluloEncoder {
   public:
     PoluloEncoder(int pin1, int pin2, float ratio);
+    // Returns the velocity in turns per second
     float getVel();
     long getTics() { return ticsLastRead; };
   private:

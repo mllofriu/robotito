@@ -17,6 +17,7 @@ long period;
 
 
 void setup() {
+  Serial.begin(9600);
   
   xbeeserial.begin(57600);
   xbee.setSerial(xbeeserial);
@@ -30,7 +31,8 @@ void loop() {
   
   dsMgr.process(xbee);
   mMgr.process(xbee);
-  
+
   delayMicroseconds(period - (micros() - wakeuptime));
 
+  Serial.println();
 }

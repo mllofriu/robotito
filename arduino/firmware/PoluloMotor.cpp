@@ -5,15 +5,15 @@
 
 PoluloMotor::PoluloMotor(int encoderPin1, int encoderPin2, int enablePin, int dirPin1, int dirPin2, float ratio)
 	: encoder(encoderPin1, encoderPin2, ratio)
-//	, pidTuner(&Input, &Output)
 {
 	this->enablePin = enablePin;
 	this->dirPin1 = dirPin1;
 	this->dirPin2 = dirPin2;
 
-	targetVel = 0;
-  Output = 0;
-  Input = encoder.getVel();
+	target_vel = 0;
+  integral = 0;
+  derivative = 0;
+  prev_err = 0;
 //
 //  pidTuner.SetOutputStep(50);
 //  pidTuner.SetControlType(1);
@@ -64,7 +64,7 @@ bool PoluloMotor::autoTune()
 
 void PoluloMotor::setTargetVel(float vel)
 {
-	targetVel = vel;
+	target_vel = vel;
 }
 
 int sign(float num){
@@ -78,22 +78,26 @@ int sign(float num){
 
 void PoluloMotor::pid()
 {
-  Input = encoder.getVel();
+  float curr_vel = encoder.getVel();
+  float error = target_vel -  curr_vel;
+  integral = integral + error;
+  // Don't allow integral to grow so that overpowers the motor
+  integral = abs(integral) > maxPWM / ki ? maxPWM / ki * sign(integral) : integral;
+  derivative = (prev_err - error);
+  prev_err = error;
   
-  // Linear feedforward model - max power / max vel 
-  float ff = targetVel * 100;
-
-  float ctrlSignal = ff + Output;
+  float ctrlSignal = kp * error + ki * integral + kd * derivative;
   // Direction setting
-  if (targetVel == 0){
-    digitalWrite(dirPin1, HIGH);
-    digitalWrite(dirPin2, HIGH); 
+  if (abs(ctrlSignal) < minPWM){
+//    digitalWrite(dirPin1, HIGH);
+//    digitalWrite(dirPin2, HIGH); 
   } else if (ctrlSignal > 0){
-    digitalWrite(dirPin1, LOW);
-    digitalWrite(dirPin2, HIGH);  
-  } else if (ctrlSignal < 0) {
     digitalWrite(dirPin1, HIGH);
     digitalWrite(dirPin2, LOW); 
+  } else if (ctrlSignal < 0) {
+    digitalWrite(dirPin1, LOW);
+    digitalWrite(dirPin2, HIGH); 
+
   }
 //  Serial.println("Control variables");
 //  Serial.println(Input);
@@ -101,5 +105,7 @@ void PoluloMotor::pid()
 //  Serial.println(Output);
 //  Serial.println(ff);
 
+  ctrlSignal = abs(ctrlSignal) < minPWM ? 0 : ctrlSignal;
+  
   analogWrite(enablePin, min(abs(ctrlSignal), maxPWM));
 }
