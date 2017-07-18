@@ -42,6 +42,7 @@ class MotorManager {
     unsigned int RX_PERIOD = 40;
     unsigned long CONTROL_PERIOD = 10000;
     unsigned long CMD_TIMEOUT = RX_PERIOD*4;
+    unsigned long RELEASE_TIMEOUT = RX_PERIOD * 20;
     // Timestamp of last time info was sent
     unsigned long lastRXUpdate;
 
@@ -151,6 +152,12 @@ class MotorManager {
       // If we havent heard from the boss from a while - do nothing
       if (millis() - lastRXUpdate > CMD_TIMEOUT){
         setVels(128,128,128);
+
+      }
+
+      if (millis() - lastRXUpdate > RELEASE_TIMEOUT){
+        for (int m = 0; m < 4; m++) 
+          motors[m]->releaseMotor();
       }
       
       // Motor control
