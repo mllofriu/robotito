@@ -21,17 +21,10 @@ using namespace ros;
 struct xbee *xbee;
 struct xbee_con *con;
 
-double LF_offset = 60 * M_PI / 180; // Robot's x-Axis (front) is zero
-double LB_offset = 120 * M_PI / 180; //170
-double RF_offset = 300 * M_PI / 180; //45
-double RB_offset = 240 * M_PI / 180; //315
-const double wheel_radius = 33;
-
-double MAX_ANGULAR_VEL = 127;
-double MAX_LINEAR_VEL = 127;
-double MAX_WHEEL_SPEED = 127;
-
-unsigned char vel_bytes[3] = { 128, 128, 128 };
+double MAX_ANGULAR_VEL = 20;
+double MAX_LINEAR_VEL = 10;
+      
+unsigned char vel_bytes[4] = { 'v', 128, 128, 128 };
 
 int seq = 0;
 
@@ -59,9 +52,9 @@ void vel_cb(const geometry_msgs::Twist vels) {
 	double t_vel = transfer(vels.angular.z) * MAX_ANGULAR_VEL;
 
 	// Set vels to send
-	vel_bytes[0] = 128 + x_vel;
-	vel_bytes[1] = 128 + y_vel;
-	vel_bytes[2] = 128 + t_vel;
+	vel_bytes[1] = 128 + x_vel;
+	vel_bytes[2] = 128 + y_vel;
+	vel_bytes[3] = 128 + t_vel;
 }
 
 void sensor_cb(struct xbee *xbee, struct xbee_con *con, struct xbee_pkt **pkt,
@@ -164,7 +157,7 @@ int main(int argc, char ** argv) {
 						r.range = .3;
 
 
-					ROS_INFO("Range %f on sensor %d",r.range, i);
+					//ROS_INFO("Range %f on sensor %d",r.range, i);
 
 					if (i/2 >= 6)
 						pub1.publish(r);
@@ -178,7 +171,7 @@ int main(int argc, char ** argv) {
 
 
 		// Send controls
-		xbee_connTx(con, NULL, vel_bytes, 3);
+		xbee_connTx(con, NULL, vel_bytes, 4);
 
 		spinOnce();
 		rate.sleep();
