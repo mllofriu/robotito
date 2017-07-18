@@ -27,8 +27,8 @@ class PoluloMotor {
   private:
     PoluloEncoder encoder;
     
-    float kp = 10;
-    float ki = 2;
+    float kp = 20;
+    float ki = 40;
     float kd = 0.0;
 
     int maxPWM = 255;
