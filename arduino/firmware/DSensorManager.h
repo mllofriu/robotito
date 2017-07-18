@@ -19,9 +19,10 @@ private:
     int ds11 = A19;
     int ds12 = A20;
 
-    // Sensors arranged starting front to the right
-    int sensorPorts[NUM_SENSORS] = {ds12, ds11, ds10, ds9, ds8, ds7,
-                         ds1, ds2, ds3, ds4, ds5, ds6};
+    // Sensors arranged starting front to the left
+    int sensorPorts[NUM_SENSORS] = {ds12, 
+                                      ds6, ds5, ds4, ds3, ds2, ds1, 
+                                      ds7, ds8, ds9,ds10, ds11,};
     DistanceSensor * dSensors[NUM_SENSORS];
 
     // Buffer length for median purposes

@@ -34,7 +34,7 @@ class MotorManager {
     float motor_angles_cos[4] = {cos(motor_angles[0]), cos(motor_angles[1]), cos(motor_angles[2]), cos(motor_angles[3])};
     float motor_angles_sin[4] = {sin(motor_angles[0]), sin(motor_angles[1]), sin(motor_angles[2]), sin(motor_angles[3])};
 
-    float WHEEL_RADIUS = (.040f);
+    float WHEEL_RADIUS = (.030f);
     float WHEEL_CIRCUMF = (2*M_PI*WHEEL_RADIUS);
     float ROBOT_RADIUS = 0.03f;
 
@@ -135,6 +135,12 @@ class MotorManager {
               for (int m = 0; m < 4; m++){
                 motors[m]->setPID(rx16.getData(3*m+1),rx16.getData(3*m+2),rx16.getData(3*m+3));
               }
+            } else if (rx16.getData(0) == 'r'){
+              for (int m = 0; m < 4; m++) 
+                motors[m]->releaseMotor();
+            } else if (rx16.getData(0) == 'e'){
+              for (int m = 0; m < 4; m++) 
+                motors[m]->engageMotor();
             }
             lastRXUpdate = millis();
           }

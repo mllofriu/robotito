@@ -10,6 +10,8 @@ PoluloMotor::PoluloMotor(int encoderPin1, int encoderPin2, int enablePin, int di
 	this->dirPin1 = dirPin1;
 	this->dirPin2 = dirPin2;
 
+  this->engaged = true;
+
 	target_vel = 0;
   integral = 0;
   derivative = 0;
@@ -78,6 +80,13 @@ int sign(float num){
 
 void PoluloMotor::pid()
 {
+  if (!engaged){
+    digitalWrite(dirPin1, LOW);
+    digitalWrite(dirPin2, LOW); 
+    digitalWrite(enablePin, LOW);
+    return;
+  }
+  
   float curr_vel = encoder.getVel();
   float error = target_vel -  curr_vel;
   integral = integral + error;
