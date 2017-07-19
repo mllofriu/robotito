@@ -24,6 +24,15 @@ void setup() {
 
   // Get the loop period as the minimum of all managers
   period = min(dsMgr.getPeriod(), mMgr.getPeriod());
+
+  // Blink
+  for (int i = 0; i < 10; i++){
+    digitalWrite(13, HIGH);
+    delay(100);
+    digitalWrite(13, LOW);
+    delay(100);
+  }
+  
 }
 
 void loop() {

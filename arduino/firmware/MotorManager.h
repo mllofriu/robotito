@@ -41,8 +41,8 @@ class MotorManager {
 
     unsigned int RX_PERIOD = 40;
     unsigned long CONTROL_PERIOD = 10000;
-    unsigned long CMD_TIMEOUT = RX_PERIOD*4;
-    unsigned long RELEASE_TIMEOUT = RX_PERIOD * 20;
+    unsigned long CMD_TIMEOUT = RX_PERIOD*20;
+    unsigned long RELEASE_TIMEOUT = RX_PERIOD * 100;
     // Timestamp of last time info was sent
     unsigned long lastRXUpdate;
 
