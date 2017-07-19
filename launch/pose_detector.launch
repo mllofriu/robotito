@@ -13,7 +13,7 @@
     <remap from="/camera/image_raw" to="/stingray1/image_raw"/>
     <remap from="/camera/camera_info" to="/stingray1/camera_info"/>
   </node>
-
+  
   <node pkg="camera1394" type="camera1394_node" name="stingray2" >
     <rosparam file="$(find robotito)/cfg/stingray2.yaml" />
     <remap from="/camera/image_raw" to="/stingray2/image_raw"/>
@@ -26,15 +26,22 @@
   <arg name="max_track_error" default="0.2" />
   <arg name="cam_image_topic1" default="/stingray1/image_raw" />
   <arg name="cam_info_topic1" default="/stingray1/camera_info" />
+  <!-- Transforms are published from a fake frame to allow a node to merge
+       both estimates and publish a single one. -->  
   <arg name="output_frame1" default="/stingray1" />
 
-  <node name="ar_track_alvar1" pkg="ar_track_alvar" type="individualMarkersNoKinect" respawn="false" output="screen" args="$(arg marker_size) $(arg max_new_marker_error) $(arg max_track_error) $(arg cam_image_topic1) $(arg cam_info_topic1) $(arg output_frame1)" />
+  <node name="ar_track_alvar1" pkg="ar_track_alvar" type="individualMarkersNoKinect" respawn="false" output="screen" args="$(arg marker_size) $(arg max_new_marker_error) $(arg max_track_error) $(arg cam_image_topic1) $(arg cam_info_topic1) $(arg output_frame1)" >
+    <param name="tf_prefix_ar" value="stingray1/"/>
+  </node> 
 
   <arg name="cam_image_topic2" default="/stingray2/image_raw" />
   <arg name="cam_info_topic2" default="/stingray2/camera_info" />
   <arg name="output_frame2" default="/stingray2" />
-  <node name="ar_track_alvar2" pkg="ar_track_alvar" type="individualMarkersNoKinect" respawn="false" output="screen" args="$(arg marker_size) $(arg max_new_marker_error) $(arg max_track_error) $(arg cam_image_topic2) $(arg cam_info_topic2) $(arg output_frame2)" />
   
-  <node pkg="robotito" type="pose_publisher.py" name="pose_publisher"/>
+  <node name="ar_track_alvar2" pkg="ar_track_alvar" type="individualMarkersNoKinect" respawn="false" output="screen" args="$(arg marker_size) $(arg max_new_marker_error) $(arg max_track_error) $(arg cam_image_topic2) $(arg cam_info_topic2) $(arg output_frame2)" ns="stingray2">
+    <param name="tf_prefix_ar" value="stingray2/"/>
+  </node> 
+  
+  <node pkg="robotito" type="pose_publisher.py" name="pose_publisher" output="screen"/>
 
 </launch>
