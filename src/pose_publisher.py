@@ -59,20 +59,24 @@ if __name__ == "__main__":
             frame_to_use = cam2frame
             time_to_use = latest_cam2
           
-        
-        # Obtain the transform using the selected camera
-        (trans,rot) = listener.lookupTransform(frame_to_use, frame_to_use + '/' + marker_frame,  time_to_use)
-        # Publish that transform to the marker for visualization
-        tf_pub.sendTransform(trans, rot, time_to_use, marker_frame, frame_to_use)
+        try:
+          # Obtain the transform using the selected camera
+          if (time_to_use != None):
+            (trans,rot) = listener.lookupTransform(map_frame, frame_to_use + '/' + marker_frame,  time_to_use)
+            # Publish that transform to the marker for visualization
+            tf_pub.sendTransform(trans, rot, time_to_use, marker_frame, map_frame)
 
-        # Send the transform as a msg too for java nodes - 2d
-        p = Pose2D()
-        p.x = trans[0]
-        p.y = trans[1]
-        euler = tf.transformations.euler_from_quaternion(rot)
-        p.theta = euler[2]
-         
-        pose_pub.publish(p)
+            # Send the transform as a msg too for java nodes - 2d
+
+            p = Pose2D()
+            p.x = trans[0]
+            p.y = trans[1]
+            euler = tf.transformations.euler_from_quaternion(rot)
+            p.theta = euler[2]
+             
+            pose_pub.publish(p)
+        except (tf.ExtrapolationException):
+          pass
             
     rate.sleep()
 

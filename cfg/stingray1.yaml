@@ -3,7 +3,7 @@ video_mode: format7_mode0
 roi_width: 780
 roi_height: 580
 frame_id: stingray1
-shutter: 800
+shutter: 260
 auto_shutter: 3
 gain: 680
 iso_speed: 800

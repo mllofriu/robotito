@@ -21,8 +21,8 @@
   </node>
 
 
-  <arg name="marker_size" default="13.0" />
-  <arg name="max_new_marker_error" default="0.2" />
+  <arg name="marker_size" default="10.0" />
+  <arg name="max_new_marker_error" default="0.05" />
   <arg name="max_track_error" default="0.2" />
   <arg name="cam_image_topic1" default="/stingray1/image_raw" />
   <arg name="cam_info_topic1" default="/stingray1/camera_info" />
@@ -43,5 +43,6 @@
   </node> 
   
   <node pkg="robotito" type="pose_publisher.py" name="pose_publisher" output="screen"/>
+  <node pkg="robotito" type="wall_publisher.py" name="wall_publisher" output="screen"/>
 
 </launch>
