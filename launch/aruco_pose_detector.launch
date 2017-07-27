@@ -1,0 +1,48 @@
+<launch>
+  <arg name="model" default="$(find robotito)/urdf/robot.urdf"/>
+  <param name="robot_description" command="$(find xacro)/xacro.py '$(arg model)'" />
+  <node pkg="tf" type="static_transform_publisher" name="marker_robot" args="0 0 -.05 0 0 0 ar_marker_0 base 100" />
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher" />
+
+  <!-- Publish cameras positions -->
+  <node pkg="tf" type="static_transform_publisher" name="stingray1_tf" args="1.05 0.4 2.54 -1.57 0 3.14 map stingray1 100" />
+
+  <node pkg="tf" type="static_transform_publisher" name="stingray2_tf" args="-1.05 0 2.54 -1.57 0 3.14 	 map stingray2 100" />
+  <node pkg="camera1394" type="camera1394_node" name="stingray1" >
+    <rosparam file="$(find robotito)/cfg/stingray1.yaml" />
+    <remap from="/camera/image_raw" to="/stingray1/image_raw"/>
+    <remap from="/camera/camera_info" to="/stingray1/camera_info"/>
+  </node>
+  
+  <node pkg="camera1394" type="camera1394_node" name="stingray2" >
+    <rosparam file="$(find robotito)/cfg/stingray2.yaml" />
+    <remap from="/camera/image_raw" to="/stingray2/image_raw"/>
+    <remap from="/camera/camera_info" to="/stingray2/camera_info"/>
+  </node>
+
+  <!-- namespace for camera input -->
+  <arg name="camera" default="/stingray1"/>
+  <arg name="image" default="image_raw"/>
+  <arg name="transport" default="compressed"/>
+  <arg name="fiducial_len" default="0.05"/>
+  <arg name="do_pose_estimation" default="true"/>
+
+  <node pkg="aruco_detect" name="aruco_detect"
+    type="aruco_detect" respawn="false">
+    <param name="dictionary" value="0" />
+    <param name="image_transport" value="$(arg transport)"/>
+    <param name="publish_images" value="true" />
+    <param name="fiducial_len" value="$(arg fiducial_len)"/>
+    <param name="do_pose_estimation" value="$(arg do_pose_estimation)"/>
+    <remap from="/camera/compressed" 
+        to="$(arg camera)/$(arg image)/$(arg transport)"/>
+    <remap from="/camera_info" to="$(arg camera)/camera_info"/>
+    <remap from="/fiducial_transforms" to="/stingray1/fiducial_transforms"/>
+    <remap from="/fiducial_vertices" to="/stingray1/fiducial_vertices"/>
+  </node>
+
+  <node pkg="robotito" type="pose_publisher.py" name="pose_publisher" output="screen"/>
+  <node pkg="robotito" type="wall_publisher.py" name="wall_publisher" output="screen"/>
+
+  
+</launch>
