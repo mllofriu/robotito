@@ -21,7 +21,7 @@
   </node>
 
 
-  <arg name="marker_size" default="10.0" />
+  <arg name="marker_size" default="11.0" />
   <arg name="max_new_marker_error" default="0.05" />
   <arg name="max_track_error" default="0.2" />
   <arg name="cam_image_topic1" default="/stingray1/image_raw" />

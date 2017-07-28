@@ -3,9 +3,9 @@ video_mode: format7_mode0
 roi_width: 780
 roi_height: 580
 frame_id: stingray1
-shutter: 2000
+shutter: 800
 auto_shutter: 3
-gain: 300
+gain: 500
 iso_speed: 800
 camera_info_url: package://robotito/cfg/stingray1_calibration.yaml
 

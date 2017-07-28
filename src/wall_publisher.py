@@ -31,7 +31,7 @@ if __name__ == "__main__":
       marker_frame_full = marker_frame + str(m)
       now = rospy.Time.now() - rospy.Duration(period)
       
-      print "Checking " + cam1frame + "/" + marker_frame_full
+      #print "Checking " + cam1frame + "/" + marker_frame_full
       if listener.canTransform(map_frame, cam1frame + "/" + marker_frame_full, now):
         frame_to_use = cam1frame
       elif listener.canTransform(map_frame, cam2frame + "/" + marker_frame_full, now):
