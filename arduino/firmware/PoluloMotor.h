@@ -19,22 +19,24 @@ class PoluloMotor {
     void setkD(float kd) { this->kd = kd;}
     void setPID(byte kp_b, byte ki_b, byte kd_b) {
       this->kp =  ((unsigned int)kp_b) - 128;
-      this->ki = (((unsigned int)ki_b) - 128) / 10.0;
       this->kd = ((unsigned int)kd_b) - 128;
       integral = 0;
       derivative = 0;
-      Serial.println(kp);}
+//      Serial.println(kp);
+      }
     bool autoTune();
     void printTunedKs();
   private:
     PoluloEncoder encoder;
     
-    float kp = 20;
-    float ki = 40;
+    float kp = 40;
+    float ki = 5;
     float kd = 0.0;
 
+    float MAX_DIFF_DROP_I = 1.0;
+
     int maxPWM = 255;
-    int minPWM = 30;
+    int minPWM = 20;
     
     //Define Variables we'll be connecting to
     float target_vel;

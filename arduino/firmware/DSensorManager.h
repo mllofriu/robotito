@@ -26,7 +26,7 @@ private:
     DistanceSensor * dSensors[NUM_SENSORS];
 
     // Buffer length for median purposes
-    int DIST_BUFFER_LEN = 3;
+    int DIST_BUFFER_LEN = 5;
     // Period of sensor refresh and send info
     unsigned int DSENSE_PERIOD = 17;
     unsigned int TX_PERIOD = 50;
