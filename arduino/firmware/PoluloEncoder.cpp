@@ -20,7 +20,9 @@ float PoluloEncoder::getVel()
   long timeDiff = newTime-timeLastRead;
 
   if (timeDiff > 0 && abs(posDiff)<100000){
-    averageVel = ((float)posDiff)/(timeDiff) * ticks_milli_2_turns_sec;
+    float instantVel = ((float)posDiff)/(timeDiff) * ticks_milli_2_turns_sec;
+    //averageVel = .9 * averageVel + .1 * instantVel;
+    averageVel = instantVel;
     //encoder.write(0);
   }
 

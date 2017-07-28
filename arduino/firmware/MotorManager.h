@@ -48,9 +48,9 @@ class MotorManager {
 
     float MAX_VEL = 80.0f;
     // 100 means 5 m/s
-    float LINEAR_VEL_SCALE = 5 / 100.0f;
+    float LINEAR_VEL_SCALE = 1 / 100.0f;
     // 100 means 4 turns per second
-    float ANGULAR_VEL_SCALE =  8 * M_PI / 100.0f;
+    float ANGULAR_VEL_SCALE =  2 * M_PI / 100.0f;
 
     uint8_t x_vel_uint = 128, y_vel_uint = 128, t_vel_uint = 128;
 
@@ -107,6 +107,7 @@ class MotorManager {
       motors[2] = new PoluloMotor(m3enc1, m3enc2, m3en, m3i1, m3i2, 30.0f);
       motors[3] = new PoluloMotor(m4enc1, m4enc2, m4en, m4i1, m4i2, 30.0f);
 
+//      setVels(130,128,128);
       lastRXUpdate = millis();
     }
 
@@ -126,6 +127,7 @@ class MotorManager {
         while (xbee.getResponse().isAvailable()) {
           if (xbee.getResponse().getApiId() == RX_16_RESPONSE ) {
             // Got a rx packet
+//            Serial.println("got packet");
             Rx16Response rx16;
             xbee.getResponse().getRx16Response(rx16);
             // 'v' means set velocities

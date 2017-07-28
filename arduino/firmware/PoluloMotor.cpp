@@ -66,6 +66,8 @@ bool PoluloMotor::autoTune()
 
 void PoluloMotor::setTargetVel(float vel)
 {
+  if (abs(vel-target_vel) > MAX_DIFF_DROP_I)
+    integral = 0;
 	target_vel = vel;
 }
 
@@ -88,7 +90,9 @@ void PoluloMotor::pid()
   }
   
   float curr_vel = encoder.getVel();
+  
   float error = target_vel -  curr_vel;
+  Serial.println(error);
   integral = integral + error;
   // Don't allow integral to grow so that overpowers the motor
   integral = abs(integral) > maxPWM / ki ? maxPWM / ki * sign(integral) : integral;
@@ -98,23 +102,18 @@ void PoluloMotor::pid()
   float ctrlSignal = kp * error + ki * integral + kd * derivative;
   // Direction setting
   if (abs(ctrlSignal) < minPWM){
-//    digitalWrite(dirPin1, HIGH);
-//    digitalWrite(dirPin2, HIGH); 
-  } else if (ctrlSignal > 0){
+    digitalWrite(dirPin1, LOW);
+    digitalWrite(dirPin2, LOW); 
+    ctrlSignal = 0;
+  } else if (ctrlSignal > minPWM){
     digitalWrite(dirPin1, HIGH);
     digitalWrite(dirPin2, LOW); 
-  } else if (ctrlSignal < 0) {
+  } else if (ctrlSignal < -minPWM) {
     digitalWrite(dirPin1, LOW);
     digitalWrite(dirPin2, HIGH); 
 
   }
-//  Serial.println("Control variables");
-//  Serial.println(Input);
-//  Serial.println(targetVel);
-//  Serial.println(Output);
-//  Serial.println(ff);
 
-  ctrlSignal = abs(ctrlSignal) < minPWM ? 0 : ctrlSignal;
   
   analogWrite(enablePin, min(abs(ctrlSignal), maxPWM));
 }
