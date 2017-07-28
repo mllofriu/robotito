@@ -20,29 +20,29 @@
     <remap from="/camera/camera_info" to="/stingray2/camera_info"/>
   </node>
 
+  <!-- namespace for camera input -->
+  <arg name="camera" default="/stingray1"/>
+  <arg name="image" default="image_raw"/>
+  <arg name="transport" default="compressed"/>
+  <arg name="fiducial_len" default="0.05"/>
+  <arg name="do_pose_estimation" default="true"/>
 
-  <arg name="marker_size" default="11.0" />
-  <arg name="max_new_marker_error" default="0.05" />
-  <arg name="max_track_error" default="0.2" />
-  <arg name="cam_image_topic1" default="/stingray1/image_raw" />
-  <arg name="cam_info_topic1" default="/stingray1/camera_info" />
-  <!-- Transforms are published from a fake frame to allow a node to merge
-       both estimates and publish a single one. -->  
-  <arg name="output_frame1" default="/stingray1" />
+  <node pkg="aruco_detect" name="aruco_detect"
+    type="aruco_detect" respawn="false">
+    <param name="dictionary" value="0" />
+    <param name="image_transport" value="$(arg transport)"/>
+    <param name="publish_images" value="true" />
+    <param name="fiducial_len" value="$(arg fiducial_len)"/>
+    <param name="do_pose_estimation" value="$(arg do_pose_estimation)"/>
+    <remap from="/camera/compressed" 
+        to="$(arg camera)/$(arg image)/$(arg transport)"/>
+    <remap from="/camera_info" to="$(arg camera)/camera_info"/>
+    <remap from="/fiducial_transforms" to="/stingray1/fiducial_transforms"/>
+    <remap from="/fiducial_vertices" to="/stingray1/fiducial_vertices"/>
+  </node>
 
-  <node name="ar_track_alvar1" pkg="ar_track_alvar" type="individualMarkersNoKinect" respawn="false" output="screen" args="$(arg marker_size) $(arg max_new_marker_error) $(arg max_track_error) $(arg cam_image_topic1) $(arg cam_info_topic1) $(arg output_frame1)" >
-    <param name="tf_prefix_ar" value="stingray1/"/>
-  </node> 
-
-  <arg name="cam_image_topic2" default="/stingray2/image_raw" />
-  <arg name="cam_info_topic2" default="/stingray2/camera_info" />
-  <arg name="output_frame2" default="/stingray2" />
-  
-  <node name="ar_track_alvar2" pkg="ar_track_alvar" type="individualMarkersNoKinect" respawn="false" output="screen" args="$(arg marker_size) $(arg max_new_marker_error) $(arg max_track_error) $(arg cam_image_topic2) $(arg cam_info_topic2) $(arg output_frame2)" ns="stingray2">
-    <param name="tf_prefix_ar" value="stingray2/"/>
-  </node> 
-  
   <node pkg="robotito" type="pose_publisher.py" name="pose_publisher" output="screen"/>
   <node pkg="robotito" type="wall_publisher.py" name="wall_publisher" output="screen"/>
 
+  
 </launch>
