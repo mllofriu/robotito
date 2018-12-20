@@ -1,0 +1,13 @@
+G04 Gerber job file.*
+%TF.FileFunction,JobInfo*%
+%TF.GenerationSoftware,Autodesk,EAGLE,9.1.0*%
+%TF.CreationDate,2018-11-28T00:37:37Z*%
+%TF.Part,Single*%
+%MOMM*%
+%TJ.B_Owner,Martin Llofriu <mllofriualon@mail.usf.edu>*%
+%TJ.B_ID,pwrboard*%
+%TJ.B_LayerNum,2*%
+%TJ.B_Thickness,1.570000*%
+%TJ.B_Size_X,21.500000*%
+%TJ.B_Size_Y,26.500000*%
+M02*
