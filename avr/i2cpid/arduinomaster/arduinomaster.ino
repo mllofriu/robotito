@@ -33,11 +33,13 @@ void loop() {
 //  Wire.endTransmission();
   Wire.requestFrom(10, 2);
   Serial.println(Wire.read());
+  while (Wire.available() == 0);
+  Serial.println(Wire.read());
 //  
 //  if (b == 5)
 //    b = 2;
 //  else
 //    b = 5;
 
-  delay(1);
+  delay(10);
 }
