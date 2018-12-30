@@ -30,10 +30,18 @@ void receive_cb(uint8_t num_bytes)
     HB_P &= ~(1 << HB_N);
 }
 
+int i = 0;
+void request_cb()
+{
+  i++;
+  TinyWireS.write(i);
+}
+
 int main()
 {
   TinyWireS.begin(SLAVE_ADDR);
   TinyWireS.onReceive(receive_cb);
+  TinyWireS.onRequest(request_cb);
 
 	HB_DDR |= 1 << HB_N;
 	HB_P &= ~(1<<HB_N);

@@ -11,13 +11,12 @@ void setup() {
   pinMode(13, INPUT_PULLUP);
   
   Wire.begin(); // join i2c bus (address optional for master)
-//  Serial.begin(9600);
+  Serial.begin(9600);
 //  pinMode(SDA, OUTPUT);
 //  pinMode(SCL, INPUT_PULLUP);
 //
 //  delay(500);
 //  digitalWrite(SDA, LOW);
-
 }
 
 uint8_t b = 5;
@@ -28,14 +27,17 @@ void loop() {
 //  Serial.println(Wire.write(1));  
 //  Serial.println(Wire.endTransmission());    // stop transmitting
 //  delay(500);
-  Wire.beginTransmission(10); // transmit to device #8
-  Wire.write(b);
-  Wire.endTransmission();
+//  Wire.beginTransmission(10); // transmit to device #8
+//  Wire.write(b);
+ 
+//  Wire.endTransmission();
+  Wire.requestFrom(10, 2);
+  Serial.println(Wire.read());
+//  
+//  if (b == 5)
+//    b = 2;
+//  else
+//    b = 5;
 
-  if (b == 5)
-    b = 2;
-  else
-    b = 5;
-
-  delay(200);
+  delay(1);
 }
