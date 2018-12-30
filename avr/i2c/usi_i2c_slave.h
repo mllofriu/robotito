@@ -45,6 +45,18 @@
     #define PIN_USI_SCL         PINB7
 #endif
 
+#if defined( __AVR_ATtiny261__ ) | \
+     defined( __AVR_ATtiny461__ ) | \
+     defined( __AVR_ATtiny861__ )
+    #define DDR_USI             DDRB
+    #define PORT_USI            PORTB
+    #define PIN_USI             PINB
+    #define PORT_USI_SDA        PB0
+    #define PORT_USI_SCL        PB2
+    #define PIN_USI_SDA         PINB0
+    #define PIN_USI_SCL         PINB2
+#endif
+
 //USI I2C Initialize
 //  address - If slave, this parameter is the slave address
 void USI_I2C_Init(char address);

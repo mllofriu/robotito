@@ -103,9 +103,11 @@ void USI_I2C_Init(char address)
 //  reset the start condition detector to detect the next start condition.     //
 /////////////////////////////////////////////////////////////////////////////////
 
-ISR(USI_STR_vect)
+ISR(USI_START_vect)
 
 {
+
+	PORTB ^= (1 << PB6);
 
 	USI_I2C_Slave_State = USI_SLAVE_CHECK_ADDRESS;
 

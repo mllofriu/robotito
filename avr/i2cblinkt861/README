@@ -1,0 +1,3 @@
+This file works with the attiny861 boards and the arduino master code.
+
+The hearthbeat led should blink 20 times a sec.

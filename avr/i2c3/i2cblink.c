@@ -9,23 +9,35 @@
 */
 
 #include <avr/io.h>
-#define F_CPU 1000000 
+#define F_CPU 8000000 
 #include <util/delay.h>                // for _delay_ms()
+#include <avr/interrupt.h>
+
 
 #define I2C_SLAVE_ADDRESS 0xA   //this slave address (0x1, 0x2, 0x3)
 #include "TinyWireS/utility/USI_TWI_Slave.h"          //the ATTiny Wire library
+
+#define HB_DDR DDRB
+#define HB_P PORTB
+#define HB_N PORTB6
   
 void read_cb(uint8_t num_bytes)
 {
-	// LED on
-  PORTB = 0b00000001;            // PC0 = High = Vcc
+  uint8_t b = usiTwiReceiveByte();
+  if (b == 5U)
+	  HB_P |= 1 << HB_N;
+  else 
+    HB_P &= ~(1 << HB_N);
 }
 
 int main()
 {
 	usiTwiSlaveInit(I2C_SLAVE_ADDRESS);
-	DDRB = 0x01;
-	PORTB = 0b00000000;
+	HB_DDR |= 1 << HB_N;
+	HB_P &= ~(1<<HB_N);
+
+  sei();
+
 	while(1)
   {
 		// put your main code here, to run repeatedly:
