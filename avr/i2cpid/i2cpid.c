@@ -18,6 +18,18 @@
 #include "TinyWireS/TinyWireS.h"          //the ATTiny Wire library
 
 #include "pin_config.hpp"
+#include "motor_controller.hpp"
+
+#define CONTROL_PERIOD_MS 100
+#define CONTROL_PERIOD_S (.1)
+
+#define DEFAULT_KP 200
+#define DEFUALT_KTI 0
+#define DEFAULT_MAX_E_KI ((int32_t) 256 * 128 - 1)
+
+MotorController m1(
+  DEFAULT_KP, DEFUALT_KTI * DEFAULT_KP, 
+  DEFAULT_MAX_E_KI, CONTROL_PERIOD_S);
   
 void receive_cb(uint8_t num_bytes)
 {
@@ -48,6 +60,47 @@ void setup_motors()
   TCCR1D = (0 << WGM11) | (0 << WGM10);
 }
 
+void enable_interrupts(){
+	// Enable interrupt to handle encoder updates
+	// Enable Interrupts for changes in pins PCINT[7:0] or PCINT[15:12]	
+	GIMSK |= (1<<PCIE1);	
+	// Enable the individual ports
+	PCMSK0 = 0;
+	PCMSK1 = 0;
+	PCMSK0 |= (1<<INT_QUAD_A);
+	PCMSK0 |= (1<<INT_QUAD_B);
+	sei();
+}
+
+void run_motor(int16_t pwm)
+{
+  if (pwm < 0) {
+    M1_DIRA_P &= ~(1 << M1_DIRA_N);
+		M1_DIRB_P |= (1 << M1_DIRB_N);
+    pwm = -pwm;
+  } else {
+    M1_DIRA_P |= (1 << M1_DIRA_N);
+    M1_DIRB_P &= ~(1 << M1_DIRB_N);
+  }
+
+  OCR1B = pwm;
+}
+
+ISR(PCINT_vect){
+  uint8_t pinquad = PIN_QUAD;
+  bool a = (pinquad >> PIN_QUAD_A) & 1;
+  bool b = (pinquad >> PIN_QUAD_B) & 1;
+  m1.encoder_update(a, b);
+}
+
+int8_t sign(int16_t n)
+{
+  if (n < 0)
+    return -1;
+  else
+    return 1;
+}
+
 int main()
 {
   // Setup communications
@@ -61,11 +114,26 @@ int main()
 
   // Enable PWM
   setup_motors();
+  
+  int motor_red = 30;
+	int gear_red = 1;
+	int tics_per_turn = 12;
+	int target_rps = 2;
+	m1.set_target(-motor_red * gear_red * tics_per_turn * target_rps);
 
-  sei();
+  enable_interrupts();
 
 	while(1)
   {
+    // TODO: put control in timer interrupt
+    int16_t pwm = m1.get_control_signal();
+    // int16_t pwm_scaled = sign(pwm) *(200 + pwm / 255.0f * 50.f);
+    run_motor(pwm);
+
+    m1.new_control_cycle();
+
     TinyWireS_stop_check();
+
+    _delay_ms(CONTROL_PERIOD_MS);
   }
 }
