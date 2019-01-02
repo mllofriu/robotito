@@ -22,5 +22,7 @@ clean:
 	rm -rf *.o *.hex *.a
 
 fuses:
-	avrdude -p t861 -P $(DEV)-c avrisp -b 19200 -U lfuse:w:0xe2:m -U hfuse:w:0xdf:m -U efuse:w:0xff:m
+	avrdude -p t861 -P $(DEV) -c avrisp -b 19200 -U lfuse:w:0xe2:m -U hfuse:w:0xdf:m -U efuse:w:0xff:m
 
+reset:	# The v in the fuse parameters is for verify, might fail, but resets anyway.
+	avrdude -p t861 -P $(DEV) -c avrisp -b 19200 -U lfuse:v:0xE1:m	

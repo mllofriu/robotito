@@ -30,6 +30,22 @@ int16_t max(int16_t a, int16_t b)
         return b;
 }
 
+inline int16_t add_saturate(volatile int16_t& a, int16_t b, int16_t max = MAX_INT16)
+{
+    if (max - b > a)
+        a += b;
+    else
+        a = max;
+}
+
+inline int16_t sub_saturate(volatile int16_t& a, int16_t b, int16_t min = -MAX_INT16)
+{
+    if (min + b < a)
+        a -= b;
+    else
+        a = min;
+}
+
 void 
 MotorController::set_target(int16_t tics_per_sec)
 {
@@ -44,7 +60,6 @@ MotorController::set_target(int16_t tics_per_sec)
 int16_t
 MotorController::get_control_signal() {
     // Use the last 8 bits for pwm - last bit is used for sign
-    // TODO: overflow?
     return m_accum_p_err / 128 + m_accum_i_err / 128;
     //return m_kp * (m_current - m_target) / 128;
 }
@@ -70,22 +85,6 @@ MotorController::new_control_cycle() {
     m_current = 0;
 }
 
-inline int16_t add_saturate(volatile int16_t& a, int16_t b, int16_t max = MAX_INT16)
-{
-    if (max - b > a)
-        a += b;
-    else
-        a = max;
-}
-
-inline int16_t sub_saturate(volatile int16_t& a, int16_t b, int16_t min = -MAX_INT16)
-{
-    if (min + b < a)
-        a -= b;
-    else
-        a = min;
-}
-
 void 
 MotorController::encoder_update(bool a, bool b){
     // http://www.me.unm.edu/~starr/teaching/me470/quad.pdf
@@ -98,31 +97,15 @@ MotorController::encoder_update(bool a, bool b){
     // b_old ^ a_new == 1 iff dir is pos
     bool dir = m_quad_b ^ a;
 
-    // // update the accumulated error
-    // // TODO: find better way of doing this
-    // if ((m_current < m_target && dir) || 
-    //         (m_current > m_target && !dir)){
-    //     sub_saturate(m_accum_p_err, m_kp);
-    //     if (m_accum_i_err > -m_max_e_ki + m_ki)
-    //         m_accum_i_err -= m_ki;
-    //     else
-    //         m_accum_i_err = -m_max_e_ki;
-    // } else if ((m_current >= m_target && dir) || 
-    //         (m_current <= m_target && !dir)){
-    //     add_saturate(m_accum_p_err, m_kp);
-    //     if (m_accum_i_err < m_max_e_ki - m_ki)
-    //         m_accum_i_err += m_ki;
-    //     else
-    //         m_accum_i_err = m_max_e_ki;
-    // }
-
     // update the current count
     if (dir) {
         sub_saturate(m_accum_p_err, m_kp);
+        sub_saturate(m_accum_i_err, m_ki, -m_max_e_ki);
         m_current++;
         PORTB |= 1 << PB6;
     } else {
         add_saturate(m_accum_p_err, m_kp);
+        add_saturate(m_accum_i_err, m_ki, m_max_e_ki);
         m_current--;
         PORTB &= ~(1 << PB6);
     }

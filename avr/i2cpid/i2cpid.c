@@ -23,9 +23,9 @@
 #define CONTROL_PERIOD_MS 100
 #define CONTROL_PERIOD_S (.1)
 
-#define DEFAULT_KP 200
-#define DEFUALT_KTI 0
-#define DEFAULT_MAX_E_KI ((int32_t) 256 * 128 - 1)
+#define DEFAULT_KP 20
+#define DEFUALT_KTI 0.5
+#define DEFAULT_MAX_E_KI ((int32_t) 200 * 128 - 1)
 
 MotorController m1(
   DEFAULT_KP, DEFUALT_KTI * DEFAULT_KP, 
@@ -118,7 +118,7 @@ int main()
   int motor_red = 30;
 	int gear_red = 1;
 	int tics_per_turn = 12;
-	int target_rps = 2;
+	int target_rps = 4;
 	m1.set_target(-motor_red * gear_red * tics_per_turn * target_rps);
 
   enable_interrupts();
