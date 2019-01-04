@@ -20,12 +20,11 @@
 #include "pin_config.hpp"
 #include "motor_controller.hpp"
 
-#define CONTROL_PERIOD_MS 100
-#define CONTROL_PERIOD_S (.1)
+#define CONTROL_PERIOD_S (.005)
 
-#define DEFAULT_KP 20
+#define DEFAULT_KP .016
 #define DEFUALT_KTI 0.5
-#define DEFAULT_MAX_E_KI ((int32_t) 200 * 128 - 1)
+#define DEFAULT_MAX_E_KI 200
 
 MotorController m1(
   DEFAULT_KP, DEFUALT_KTI * DEFAULT_KP, 
@@ -118,11 +117,12 @@ int main()
   int motor_red = 30;
 	int gear_red = 1;
 	int tics_per_turn = 12;
-	int target_rps = 4;
-	m1.set_target(-motor_red * gear_red * tics_per_turn * target_rps);
+	int target_rps = 2;
+	m1.set_target(motor_red * gear_red * tics_per_turn * target_rps);
 
   enable_interrupts();
 
+  int16_t control_period_ms = CONTROL_PERIOD_S * 1000;
 	while(1)
   {
     // TODO: put control in timer interrupt
@@ -134,6 +134,6 @@ int main()
 
     TinyWireS_stop_check();
 
-    _delay_ms(CONTROL_PERIOD_MS);
+    _delay_ms(control_period_ms);
   }
 }

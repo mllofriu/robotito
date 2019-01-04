@@ -5,7 +5,7 @@
 class MotorController {
 public:
     MotorController(
-        int16_t kp, int16_t ki, int16_t max_e_ki,
+        float kp, float ki, float max_e_ki,
         float control_period_s);
 
     void set_target(int16_t tics_per_sec);

@@ -2,13 +2,19 @@
 #include "motor_controller.hpp"
 
 #define MAX_INT16 32767
+// Try to keep this a power of two
+// so the compiler can optimize division 
+// by shifting
+#define SCALE_FACTOR 128
 
 #include <avr/io.h>
 
 MotorController::MotorController(
-    int16_t kp, int16_t ki, int16_t max_e_ki,
+    float kp, float ki, float max_e_ki,
     float control_period_s) :
-        m_kp(kp), m_ki(ki), m_max_e_ki(max_e_ki),
+        m_kp(kp * SCALE_FACTOR / control_period_s),
+        m_ki(ki * SCALE_FACTOR / control_period_s), 
+        m_max_e_ki(max_e_ki * SCALE_FACTOR),
         m_control_period_s(control_period_s)
 {
     set_target(0);
@@ -30,12 +36,21 @@ int16_t max(int16_t a, int16_t b)
         return b;
 }
 
-inline int16_t add_saturate(volatile int16_t& a, int16_t b, int16_t max = MAX_INT16)
+inline int16_t add_saturate(
+    volatile int16_t& a, int16_t b, int16_t max = MAX_INT16,
+    int16_t min = -MAX_INT16)
 {
-    if (max - b > a)
-        a += b;
-    else
-        a = max;
+    if (b > 0){
+        if (max - b > a)
+            a += b;
+        else
+            a = max;
+    } else {
+        if (min - b < a)
+            a += b;
+        else
+            a = min;
+    }
 }
 
 inline int16_t sub_saturate(volatile int16_t& a, int16_t b, int16_t min = -MAX_INT16)
@@ -60,8 +75,9 @@ MotorController::set_target(int16_t tics_per_sec)
 int16_t
 MotorController::get_control_signal() {
     // Use the last 8 bits for pwm - last bit is used for sign
-    return m_accum_p_err / 128 + m_accum_i_err / 128;
-    //return m_kp * (m_current - m_target) / 128;
+    int16_t s = m_accum_p_err / SCALE_FACTOR;
+    add_saturate(s, m_accum_i_err / SCALE_FACTOR);
+    return s;
 }
 
 void
@@ -70,17 +86,7 @@ MotorController::new_control_cycle() {
     m_accum_p_err = m_target_p;
     // Add target * ki to the accumulated error * ki = ie
     // Watch for max_e_ki
-    if (m_target_i > 0) {
-        if (m_accum_i_err < m_max_e_ki - m_target_i)
-            m_accum_i_err += m_target_i;
-        else 
-            m_accum_i_err = m_max_e_ki;
-    } else if (m_target_i < 0) {
-        if (m_accum_i_err > -m_max_e_ki - m_target_i)
-            m_accum_i_err += m_target_i;
-        else 
-            m_accum_i_err = -m_max_e_ki;
-    } 
+    add_saturate(m_accum_i_err, m_target_i, m_max_e_ki, -m_max_e_ki);
     // Reset the current count of tics
     m_current = 0;
 }
