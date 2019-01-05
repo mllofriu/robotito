@@ -1,6 +1,7 @@
 
 #include "motor_controller.hpp"
 
+// The max value held by a int16_t
 #define MAX_INT16 32767
 // Try to keep this a power of two
 // so the compiler can optimize division 
@@ -12,6 +13,11 @@
 MotorController::MotorController(
     float kp, float ki, float max_e_ki,
     float control_period_s) :
+        // Multiply the constants by the scale factor
+        // so as to use some bits of the ints 
+        // for fractional values
+        // Normalize by period to keep the constants
+        // independent of the control frequency
         m_kp(kp * SCALE_FACTOR / control_period_s),
         m_ki(ki * SCALE_FACTOR / control_period_s), 
         m_max_e_ki(max_e_ki * SCALE_FACTOR),
@@ -64,6 +70,7 @@ inline int16_t sub_saturate(volatile int16_t& a, int16_t b, int16_t min = -MAX_I
 void 
 MotorController::set_target(int16_t tics_per_sec)
 {
+    // Compute the expected amount of tics per control period
     int16_t tics_per_period = 
         tics_per_sec * m_control_period_s;
     m_target = tics_per_period;
