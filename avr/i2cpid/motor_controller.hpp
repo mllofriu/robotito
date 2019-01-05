@@ -2,6 +2,26 @@
 
 #include <stdint.h>
 
+#include "macros.h"
+
+#define CLOCK_PRE_SET(tccr, pwm, num) TCCR1 ## tccr |= 1 << COM1 ## pwm ## num
+#define CLOCK_PRE_CL(tccr, pwm, num) TCCR1 ## tccr &= ~(1 << COM1 ## pwm ## num)
+#define PWM_OUT(tccr, pwm) TCCR1 ## tccr |= 1 << PWM1 ## pwm
+
+/// Macro to set up motors
+#define SETUP_MOTOR(DIRA, DIRB, EN, TCCR, PWM) {\
+    OUTPUTP(DIRA); \
+    OUTPUTP(DIRB); \
+    OUTPUTP(EN); \
+    CLOCK_PRE_SET(TCCR, PWM, 1); \
+    CLOCK_PRE_CL(TCCR, PWM, 0); \
+    PWM_OUT(TCCR, PWM); \
+    _SET(TCCR1,B,CS10); \
+    _CLEAR(TCCR1,D,WGM10); \
+    _CLEAR(TCCR1,D,WGM11); \
+}
+
+
 ///@brief A PI motor controller that uses feedback from
 ///       quadrature endoders, using solely integer math.
 ///       The constants, error and target are stored in

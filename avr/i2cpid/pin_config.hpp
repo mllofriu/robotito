@@ -4,19 +4,17 @@
 #define HB_P PORTB
 #define HB_N PORTB6
 
-#define M1_DIRA_P PORTA
-#define M1_DIRA_N PA4
-#define M1_DIRB_P PORTA
-#define M1_DIRB_N PA5
-#define M1_EN_P PORTB
-#define M1_EN_N	PB3
+#define M1DIRA A,4
+#define M1DIRB A,5
+#define M1EN B,3
+#define M1TCCR A
+#define M1PWM B
 
-#define M2_DIRA_P PORTA
-#define M2_DIRA_N PA6
-#define M2_DIRB_P PORTA
-#define M2_DIRB_N PA7
-#define M2_EN_P PORTB
-#define M2_EN_N	PB5
+#define M2DIRA A,6
+#define M2DIRB A,7
+#define M2EN B,5
+#define M2TCCR C
+#define M2PWM D
 
 #define INT_QUAD_A PCINT0
 #define INT_QUAD_B PCINT1

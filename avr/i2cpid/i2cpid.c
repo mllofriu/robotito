@@ -19,6 +19,10 @@
 
 #include "pin_config.hpp"
 #include "motor_controller.hpp"
+#include "macros.h"
+
+#define PWM_SET(ocr,val) _PWM_SET(ocr,val)
+#define _PWM_SET(ocr,val) OCR1 ## ocr = val
 
 #define CONTROL_PERIOD_S (.005)
 
@@ -49,14 +53,8 @@ void request_cb()
 
 void setup_motors()
 {
-	DDRA = (1 << M1_DIRA_N) | (1 << M1_DIRB_N) | (1 << M2_DIRA_N) | (1 << M2_DIRB_N);
-	DDRB |= 1 << M1_EN_N;
-	DDRB |= 1 << M2_EN_N;
-
-  TCCR1A = (1 << COM1B1) | (0 << COM1B0) | (1 << PWM1B);
-	TCCR1C |= (1 << COM1D1) | (0 << COM1D0) | (1 << PWM1D);
-	TCCR1B = (1 << CS10);
-  TCCR1D = (0 << WGM11) | (0 << WGM10);
+  SETUP_MOTOR(M1DIRA, M1DIRB, M1EN, M1TCCR, M1PWM);
+  SETUP_MOTOR(M2DIRA, M2DIRB, M2EN, M2TCCR, M2PWM);
 }
 
 void enable_interrupts(){
@@ -71,18 +69,18 @@ void enable_interrupts(){
 	sei();
 }
 
-void run_motor(int16_t pwm)
+void run_motor(int16_t pwmval)
 {
-  if (pwm < 0) {
-    M1_DIRA_P &= ~(1 << M1_DIRA_N);
-		M1_DIRB_P |= (1 << M1_DIRB_N);
-    pwm = -pwm;
+  if (pwmval < 0) {
+    LOW(M1DIRA);
+    HIGH(M1DIRB);
+    pwmval = -pwmval;
   } else {
-    M1_DIRA_P |= (1 << M1_DIRA_N);
-    M1_DIRB_P &= ~(1 << M1_DIRB_N);
+    LOW(M1DIRB);
+    HIGH(M1DIRA);
   }
 
-  OCR1B = pwm;
+  PWM_SET(M1PWM,pwmval);
 }
 
 ISR(PCINT_vect){
