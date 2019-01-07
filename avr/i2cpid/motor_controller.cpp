@@ -1,12 +1,14 @@
 
 #include "motor_controller.hpp"
 
-// The max value held by a int16_t
-#define MAX_INT16 32767
 // Try to keep this a power of two
 // so the compiler can optimize division 
 // by shifting
 #define SCALE_FACTOR 128
+// The max value of the output signal (255) scaled 
+// by the scale factor
+// There is no point on accumulators going over this value
+#define MAX_INT16 32640
 
 #include <avr/io.h>
 
@@ -79,9 +81,9 @@ MotorController::set_target(int16_t tics_per_period)
 int16_t
 MotorController::get_control_signal() {
     // Use the last 8 bits for pwm - last bit is used for sign
-    int16_t s = m_accum_p_err / SCALE_FACTOR;
-    add_saturate(s, m_accum_i_err / SCALE_FACTOR);
-    return s;
+    int16_t s = m_accum_p_err;
+    add_saturate(s, m_accum_i_err);
+    return s / SCALE_FACTOR;
 }
 
 void
@@ -108,17 +110,22 @@ MotorController::encoder_update(bool a, bool b){
     bool dir = m_quad_b ^ a;
 
     // update the current count
+    // compute the update to p and i accum k*err
+    int16_t p_upd, i_upd;
     if (dir) {
-        sub_saturate(m_accum_p_err, m_kp);
-        sub_saturate(m_accum_i_err, m_ki, -m_max_e_ki);
+        p_upd = -m_kp;
+        i_upd = -m_ki;
         m_current++;
     } else {
-        add_saturate(m_accum_p_err, m_kp);
-        add_saturate(m_accum_i_err, m_ki, m_max_e_ki);
+        p_upd = m_kp;
+        i_upd = m_ki;
         m_current--;
     }
+    // Update the accum k*err
+    add_saturate(m_accum_p_err, p_upd);
+    add_saturate(m_accum_i_err, i_upd,  m_max_e_ki, -m_max_e_ki);
 
-    // save new state as old
+    // save new state
     m_quad_a = a;
     m_quad_b = b;
 }
