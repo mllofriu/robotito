@@ -33,14 +33,33 @@
 MotorController m1(
   DEFAULT_KP, DEFUALT_KTI * DEFAULT_KP, 
   DEFAULT_MAX_E_KI, CONTROL_PERIOD_S);
-  
+
+// Tics per motor turn * motor gear reduction
+// TODO: make this i2c configurable
+const int16_t tics_per_turn = 12 * 30;
+const float max_turns_per_sec_100 = 1100 / (60 * 100);
+
 void receive_cb(uint8_t num_bytes)
 {
-  uint8_t b = TinyWireS.read();
-  if (b == 5U)
-	  HB_P |= 1 << HB_N;
-  else 
-    HB_P &= ~(1 << HB_N);
+  HIGH(HBLED);
+  if (num_bytes > 0){
+    uint8_t b = TinyWireS.read();
+    // Most significant bit decides between
+    // velocity commands and configuration ones
+    if (b & 1 << 7) {
+      // TODO: else receive configuration values
+    } else {
+      uint8_t vel = (b & 63);
+      int8_t tics_per_cycle = ((int8_t)vel) - 32;
+      // Second most significant bit switchs between motors
+      if (b & 1 << 6) {
+        m1.set_target(tics_per_cycle);
+      } else {
+        // TODO: other motor
+      }
+    }
+  }
+  
 }
 
 int i = 0;
@@ -112,11 +131,8 @@ int main()
   // Enable PWM
   setup_motors();
   
-  int motor_red = 30;
-	int gear_red = 1;
-	int tics_per_turn = 12;
 	int target_rps = 2;
-	m1.set_target(motor_red * gear_red * tics_per_turn * target_rps);
+	m1.set_target(tics_per_turn * target_rps * CONTROL_PERIOD_S);
 
   enable_interrupts();
 

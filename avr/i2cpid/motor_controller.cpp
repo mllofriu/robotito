@@ -68,11 +68,8 @@ inline int16_t sub_saturate(volatile int16_t& a, int16_t b, int16_t min = -MAX_I
 }
 
 void 
-MotorController::set_target(int16_t tics_per_sec)
+MotorController::set_target(int16_t tics_per_period)
 {
-    // Compute the expected amount of tics per control period
-    int16_t tics_per_period = 
-        tics_per_sec * m_control_period_s;
     m_target = tics_per_period;
     // TODO: overflow?
     m_target_p = max(-MAX_INT16, min(m_target * m_kp, MAX_INT16));
@@ -115,12 +112,10 @@ MotorController::encoder_update(bool a, bool b){
         sub_saturate(m_accum_p_err, m_kp);
         sub_saturate(m_accum_i_err, m_ki, -m_max_e_ki);
         m_current++;
-        PORTB |= 1 << PB6;
     } else {
         add_saturate(m_accum_p_err, m_kp);
         add_saturate(m_accum_i_err, m_ki, m_max_e_ki);
         m_current--;
-        PORTB &= ~(1 << PB6);
     }
 
     // save new state as old

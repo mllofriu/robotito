@@ -47,9 +47,9 @@ public:
         float control_period_s);
 
     ///@brief Set the target expressed in tics of the encoder per second.
-    ///@param tics_per_sec The expected amount of tics per second. The sign
-    ///       denotes direction.
-    void set_target(int16_t tics_per_sec);
+    ///@param tics_per_ctrl_period The expected amount of tics per control cycle.
+    ///       The sign denotes direction.
+    void set_target(int16_t tics_per_ctrl_period);
 
     ///@brief Get the control signal, i.e. kp * err + ki * sum_err
     ///@note  Returns a value between -255 and 255

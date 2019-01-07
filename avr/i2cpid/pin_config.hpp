@@ -4,6 +4,8 @@
 #define HB_P PORTB
 #define HB_N PORTB6
 
+#define HBLED B,6
+
 #define M1DIRA A,4
 #define M1DIRB A,5
 #define M1EN B,3
