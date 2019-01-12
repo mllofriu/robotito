@@ -1,6 +1,9 @@
 *.s#*
+*.elf
+.vscode
 *.so
 *.a
 *.hex
 *.b#*
 *.lck*
+*.o
