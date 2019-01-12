@@ -41,7 +41,6 @@ const float max_turns_per_sec_100 = 1100 / (60 * 100);
 
 void receive_cb(uint8_t num_bytes)
 {
-  HIGH(HBLED);
   if (num_bytes > 0){
     uint8_t b = TinyWireS.read();
     // Most significant bit decides between
@@ -62,12 +61,23 @@ void receive_cb(uint8_t num_bytes)
   
 }
 
-int i = 0;
 void request_cb()
 {
-  i++;
-  TinyWireS.write(i++);
-  TinyWireS.write(i);
+  int16_t accum_ticks = m1.get_accum_ticks();
+  TinyWireS.write(accum_ticks & 255);
+  TinyWireS.write(accum_ticks >> 8);
+  int16_t accum_p_err = m1.get_accum_p_err();
+  TinyWireS.write(accum_p_err & 255);
+  TinyWireS.write(accum_p_err >> 8);
+  int16_t accum_i_err = m1.get_accum_i_err();
+  TinyWireS.write(accum_i_err & 255);
+  TinyWireS.write(accum_i_err >> 8);
+  int16_t ctrl_s = m1.get_last_control_signal();
+  TinyWireS.write(ctrl_s & 255);
+  TinyWireS.write(ctrl_s >> 8);
+
+  // Write a control char to ensure proper sending
+  TinyWireS.write(0b01010101);
 }
 
 void setup_motors()

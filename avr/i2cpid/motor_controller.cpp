@@ -8,7 +8,10 @@
 // The max value of the output signal (255) scaled 
 // by the scale factor
 // There is no point on accumulators going over this value
-#define MAX_INT16 32640
+#define MAX_SIGNAL 32640
+
+#define MAX_SBYTE 127
+#define MAX_INT16 32767
 
 #include <avr/io.h>
 
@@ -45,8 +48,8 @@ int16_t max(int16_t a, int16_t b)
 }
 
 inline int16_t add_saturate(
-    volatile int16_t& a, int16_t b, int16_t max = MAX_INT16,
-    int16_t min = -MAX_INT16)
+    volatile int16_t& a, int16_t b, int16_t max = MAX_SIGNAL,
+    int16_t min = -MAX_SIGNAL)
 {
     if (b > 0){
         if (max - b > a)
@@ -61,12 +64,21 @@ inline int16_t add_saturate(
     }
 }
 
-inline int16_t sub_saturate(volatile int16_t& a, int16_t b, int16_t min = -MAX_INT16)
+inline int8_t add_saturate(
+    volatile int8_t& a, int8_t b, int8_t max = MAX_SBYTE,
+    int16_t min = -MAX_SBYTE)
 {
-    if (min + b < a)
-        a -= b;
-    else
-        a = min;
+    if (b > 0){
+        if (max - b > a)
+            a += b;
+        else
+            a = max;
+    } else {
+        if (min - b < a)
+            a += b;
+        else
+            a = min;
+    }
 }
 
 void 
@@ -74,16 +86,26 @@ MotorController::set_target(int16_t tics_per_period)
 {
     m_target = tics_per_period;
     // TODO: overflow?
-    m_target_p = max(-MAX_INT16, min(m_target * m_kp, MAX_INT16));
-    m_target_i = max(-MAX_INT16, min(m_target * m_ki, MAX_INT16));
+    m_target_p = max(-MAX_SIGNAL, min(m_target * m_kp, MAX_SIGNAL));
+    m_target_i = max(-MAX_SIGNAL, min(m_target * m_ki, MAX_SIGNAL));
 }
 
 int16_t
 MotorController::get_control_signal() {
-    // Use the last 8 bits for pwm - last bit is used for sign
-    int16_t s = m_accum_p_err;
-    add_saturate(s, m_accum_i_err);
-    return s / SCALE_FACTOR;
+    if (!m_enabled)
+        m_last_control_signal = 0;
+    else {
+        // Use the last 8 bits for pwm - last bit is used for sign
+        int16_t s = m_accum_p_err;
+        add_saturate(s, m_accum_i_err);
+        m_last_control_signal = s / SCALE_FACTOR;
+    }
+    return m_last_control_signal;
+}
+
+int16_t
+MotorController::get_last_control_signal(){
+    return m_last_control_signal;
 }
 
 void
@@ -112,27 +134,32 @@ MotorController::encoder_update(bool a, bool b){
     // update the current count
     // compute the update to p and i accum k*err
     int16_t p_upd, i_upd;
+    int8_t tick_upd;
     if (dir) {
         p_upd = -m_kp;
         i_upd = -m_ki;
-        m_current++;
+        tick_upd = 1;
     } else {
         p_upd = m_kp;
         i_upd = m_ki;
-        m_current--;
+        tick_upd = -1;
     }
     // Update the accum k*err
     add_saturate(m_accum_p_err, p_upd);
     add_saturate(m_accum_i_err, i_upd,  m_max_e_ki, -m_max_e_ki);
-
+    add_saturate(m_current, tick_upd, MAX_SBYTE, -MAX_SBYTE);
+    add_saturate(m_accum_ticks, tick_upd, MAX_INT16, -MAX_INT16);
+    
     // save new state
     m_quad_a = a;
     m_quad_b = b;
 }
 
 int16_t 
-MotorController::get_curr_vel(){
-    return m_current;
+MotorController::get_accum_ticks(){
+    int16_t val = m_accum_ticks;
+    m_accum_ticks = 0;
+    return val;
 }
 
 int16_t 
@@ -143,4 +170,14 @@ MotorController::get_accum_p_err(){
 int16_t 
 MotorController::get_accum_i_err(){
     return m_accum_p_err;
+}
+
+void 
+MotorController::enable(){
+    m_enabled = true;
+}
+
+void 
+MotorController::disable(){
+    m_enabled = false;
 }

@@ -55,6 +55,8 @@ public:
     ///@note  Returns a value between -255 and 255
     int16_t get_control_signal();
 
+    int16_t get_last_control_signal();
+
     ///@brief Reset the state of the control cycle. This should be called
     ///       once per control cycle, after getting the control signal.
     void new_control_cycle();
@@ -64,15 +66,21 @@ public:
     void encoder_update(bool a, bool b);
 
     /// Getters
-    int16_t get_curr_vel();
+    int16_t get_accum_ticks();
     int16_t get_accum_p_err();
     int16_t get_accum_i_err();
 
+    void enable();
+    void disable();
 private:
     /// The target tic counts for a control period 
     int16_t m_target{0};
     /// The tic counts for the current control period
-    volatile int16_t m_current{0};
+    volatile int8_t m_current{0};
+    /// The accumulated ticks since last query
+    volatile int16_t m_accum_ticks{0};
+    /// The last issued control signal
+    int16_t m_last_control_signal;
     /// The control period in seconds
     float m_control_period_s{0};
     /// The proportional constant of the PI controller
@@ -95,4 +103,6 @@ private:
     volatile int16_t m_accum_p_err{0};
     /// The accumulated error times the integral constant
     volatile int16_t m_accum_i_err{0};
+
+    volatile bool m_enabled{true};
 };
