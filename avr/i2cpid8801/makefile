@@ -1,0 +1,23 @@
+PROG=i2cpid
+DEV=/dev/ttyACM1
+LINKFLAGS=-Wl,-gc-sections 
+CFLAGS=-Os -fshort-enums -fdata-sections -ffunction-sections -std=c++11 -mmcu=attiny24
+AVRDUDEFLAGS=-p t24 -P $(DEV) -c avrisp -b 19200 
+
+all: $(PROG).c USI_TWI_Slave.o motor_controller.o
+	avr-c++ $(LINKFLAGS) $(CFLAGS) -o $(PROG).elf $(PROG).c USI_TWI_Slave.o motor_controller.o
+	avr-objcopy -j .text -j .data -O ihex $(PROG).elf $(PROG).hex
+	avr-size $(PROG).hex
+	avrdude $(AVRDUDEFLAGS)  -U flash:w:$(PROG).hex
+
+USI_TWI_Slave.o: TinyWireS/utility/USI_TWI_Slave.c
+	avr-c++ $(CFLAGS) -c TinyWireS/utility/USI_TWI_Slave.c
+
+motor_controller.o: motor_controller.cpp
+	avr-c++ $(CFLAGS) -c motor_controller.cpp
+
+clean:
+	rm -rf *.o *.hex *.a
+
+reset:	# The v in the fuse parameters is for verify, might fail, but resets anyway.
+	avrdude $(AVRDUDEFLAGS)  -U lfuse:v:0xE1:m	

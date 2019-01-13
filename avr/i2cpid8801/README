@@ -1,0 +1,1 @@
+This program combines the pid controller of clpid and the working i2c slave code from i2cblinkt861, to make a working i2c commanded controller.
