@@ -50,14 +50,10 @@ void receive_cb(uint8_t num_bytes)
     if (b & 1 << 7) {
       // TODO: else receive configuration values
     } else {
-      uint8_t vel = (b & 63);
-      int8_t tics_per_cycle = ((int8_t)vel) - 32;
+      uint8_t vel = b & 127;
+      int8_t tics_per_cycle = ((int8_t)vel) - 64;
       // Second most significant bit switchs between motors
-      if (b & 1 << 6) {
-        m1.set_target(tics_per_cycle);
-      } else {
-        // TODO: other motor
-      }
+      m1.set_target(tics_per_cycle);
     }
   }
   
@@ -65,18 +61,8 @@ void receive_cb(uint8_t num_bytes)
 
 void request_cb()
 {
-  int16_t accum_ticks = m1.get_accum_ticks();
-  usiTwiTransmitByte(accum_ticks & 255);
-  usiTwiTransmitByte(accum_ticks >> 8);
-  int16_t accum_p_err = m1.get_accum_p_err();
-  usiTwiTransmitByte(accum_p_err & 255);
-  usiTwiTransmitByte(accum_p_err >> 8);
-  int16_t accum_i_err = m1.get_accum_i_err();
-  usiTwiTransmitByte(accum_i_err & 255);
-  usiTwiTransmitByte(accum_i_err >> 8);
-  int16_t ctrl_s = m1.get_last_control_signal();
-  usiTwiTransmitByte(ctrl_s & 255);
-  usiTwiTransmitByte(ctrl_s >> 8);
+  int8_t accum_ticks = m1.get_accum_ticks();
+  usiTwiTransmitByte(accum_ticks);
 
   // Write a control char to ensure proper sending
   usiTwiTransmitByte(0b01010101);
