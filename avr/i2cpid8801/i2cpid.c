@@ -38,6 +38,8 @@ MotorController m1(
 // TODO: make this i2c configurable
 constexpr int16_t tics_per_turn = 12 * 30;
 constexpr float max_turns_per_sec_100 = 1100 / (60 * 100);
+constexpr int target_rps = 2;
+constexpr int target_init = tics_per_turn * target_rps * control_period_s;
 
 void receive_cb(uint8_t num_bytes)
 {
@@ -137,8 +139,7 @@ int main()
   // Enable HeartBeat
   OUTPUT(HBLED);
 
-  int target_rps = 2;
-	m1.set_target(tics_per_turn * target_rps * control_period_s);
+  m1.set_target(target_init);
 
   // Enable PWM
   setup_motors();
