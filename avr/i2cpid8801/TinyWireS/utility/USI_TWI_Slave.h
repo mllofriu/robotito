@@ -45,7 +45,7 @@ bool    usiTwiDataInTransmitBuffer(void);
 uint8_t usiTwiAmountDataInReceiveBuffer(void);
 
 #ifndef TWI_RX_BUFFER_SIZE
-#define TWI_RX_BUFFER_SIZE (32)
+#define TWI_RX_BUFFER_SIZE (8)
 #endif
 
 #define TWI_RX_BUFFER_MASK (TWI_RX_BUFFER_SIZE - 1)
@@ -55,7 +55,7 @@ uint8_t usiTwiAmountDataInReceiveBuffer(void);
 #endif
 
 #ifndef TWI_TX_BUFFER_SIZE
-#define TWI_TX_BUFFER_SIZE (32)
+#define TWI_TX_BUFFER_SIZE (8)
 #endif
 
 #define TWI_TX_BUFFER_MASK (TWI_TX_BUFFER_SIZE - 1)
