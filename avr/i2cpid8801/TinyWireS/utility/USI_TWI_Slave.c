@@ -91,7 +91,7 @@
 #  define PIN_USI_SDA         PINB0
 #  define PIN_USI_SCL         PINB2
 #  define USI_START_COND_INT  USISIF
-#  define USI_START_VECTOR    USI_START_vect
+#  define USI_START_VECTOR    USI_SRT_vect
 #  define USI_OVERFLOW_VECTOR USI_OVF_vect
 #endif
 
