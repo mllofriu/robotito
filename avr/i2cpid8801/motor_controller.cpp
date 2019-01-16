@@ -16,33 +16,19 @@
 #include <avr/io.h>
 
 MotorController::MotorController(
-    float kp, float ki, float max_e_ki,
-    float control_period_s) :
+    int16_t kp, int16_t ki, int16_t max_e_ki) :
         // Multiply the constants by the scale factor
         // so as to use some bits of the ints 
         // for fractional values
         // Normalize by period to keep the constants
         // independent of the control frequency
-        m_kp(kp * m_scale_factor / control_period_s),
-        m_ki(ki * m_scale_factor / control_period_s), 
-        m_max_e_ki(max_e_ki * m_scale_factor),
-        m_control_period_s(control_period_s)
-{
-    set_target(0);
-}
-
-// Optimized constructor that takes 
-// the constants already preprocessed
-MotorController::MotorController(
-    int16_t scale_factor,
-    int16_t kp, int16_t ki, int16_t max_e_ki,
-    float control_period_s) :
-        m_scale_factor(scale_factor),
         m_kp(kp),
         m_ki(ki), 
-        m_max_e_ki(max_e_ki),
-        m_control_period_s(control_period_s)
+        m_max_e_ki(max_e_ki)
 {
+    m_kp = m_kp << m_scale_factor_shift;
+    m_ki = m_ki << m_scale_factor_shift;
+    m_max_e_ki = m_max_e_ki << m_scale_factor_shift;
     set_target(0);
 }
 
@@ -96,7 +82,7 @@ MotorController::get_control_signal() {
         // Use the last 8 bits for pwm - last bit is used for sign
         int16_t s = m_accum_p_err;
         add_saturate(s, m_accum_i_err);
-        m_last_control_signal = s / m_scale_factor;
+        m_last_control_signal = s >> m_scale_factor_shift;
     }
     return m_last_control_signal;
 }

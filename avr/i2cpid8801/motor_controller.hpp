@@ -21,7 +21,7 @@
     _CLEAR(TCCR1,B,WGM13); \
 }
 
-#define DEFAULT_SCALE_FACTOR 128
+#define DEFAULT_SCALE_FACTOR_SHIFT 7
 
 ///@brief A PI motor controller that uses feedback from
 ///       quadrature endoders, using solely integer math.
@@ -33,41 +33,18 @@ class MotorController {
 public:
     ///@brief The constructor
     ///@param kp The proportionality constant. It effectively multiplies
-    ///       the error in tics per second to get a pwm signal [-255, 255]
+    ///       the error in tics per second to get a pwm signal [-255, 255].
+    ///       This constant should be invariant with the control period.
     ///@param ki The integral constant. It effectively multiplies the
     ///       integral of the error to get a pwm signal [-255, 255].
+    ///       This constant should be invariant with the control period.
     ///@param max_e_ki The maximum allowd value of (ki * sum_err). 
     ///       Expressed in the space of the control signal (0,255].
     ///       This prevents the controller from lagging behind due to too much 
     ///       accumulated error.
-    ///@param control_period_s the control period in seconds. This is used
-    ///       to normalize the constants and make them indep. of the control
-    ///       frequency.                        
+    ///       This constant should be invariant with the control period.
     MotorController(
-        float kp, float ki, float max_e_ki,
-        float control_period_s);
-
-    ///@brief An optimized constructor that takes the constants already preprocessed
-    ///@param scale_factor The scale factor to be used for fixed point arithm.
-    ///@param kp The proportionality constant. It effectively multiplies
-    ///       the error in tics per second to get a pwm signal [-255, 255]
-    ///       This constant should be already multiplied by the scale factor
-    ///       and divided by the control period.
-    ///@param ki The integral constant. It effectively multiplies the
-    ///       integral of the error to get a pwm signal [-255, 255].
-    ///       This constant should be already multiplied by the scale factor
-    ///       and divided by the control period.    
-    ///@param max_e_ki The maximum allowd value of (ki * sum_err). 
-    ///       Expressed in the space of the control signal (0,255].
-    ///       This prevents the controller from lagging behind due to too much 
-    ///       accumulated error.
-    ///@param control_period_s the control period in seconds. This is used
-    ///       to normalize the constants and make them indep. of the control
-    ///       frequency.  
-    MotorController(
-        int16_t scale_factor,
-        int16_t kp, int16_t ki, int16_t max_e_ki,
-        float control_period_s);
+        int16_t kp, int16_t ki, int16_t max_e_ki);
 
     ///@brief Set the target expressed in tics of the encoder per second.
     ///@param tics_per_ctrl_period The expected amount of tics per control cycle.
@@ -97,7 +74,7 @@ public:
     void disable();
 private:
     /// The scale factor for fixed point arithmetic
-    int16_t m_scale_factor{DEFAULT_SCALE_FACTOR};
+    int16_t m_scale_factor_shift{DEFAULT_SCALE_FACTOR_SHIFT};
     /// The target tic counts for a control period 
     int16_t m_target{0};
     /// The tic counts for the current control period
@@ -106,8 +83,6 @@ private:
     volatile int16_t m_accum_ticks{0};
     /// The last issued control signal
     int16_t m_last_control_signal;
-    /// The control period in seconds
-    float m_control_period_s{0};
     /// The proportional constant of the PI controller
     int16_t m_kp{0};
     /// The integral constant of the PI controller

@@ -25,16 +25,14 @@
 #define _PWM_SET(ocr,val) OCR1 ## ocr = val
 
 constexpr float control_period_s = 0.005;
-constexpr int16_t scale_factor = 128;
-constexpr int16_t default_kp = .016f * scale_factor / control_period_s;
+constexpr int16_t default_kp = .016f / control_period_s;
 constexpr float default_kti = .5;
 constexpr int16_t default_ki = default_kp * default_kti;
-constexpr int16_t default_max_e_ki = 200 * scale_factor;
+constexpr int16_t default_max_e_ki = 200;
 
 MotorController m1(
-  scale_factor,
   default_kp, default_ki, 
-  default_max_e_ki, control_period_s);
+  default_max_e_ki);
 
 // Tics per motor turn * motor gear reduction
 // TODO: make this i2c configurable
