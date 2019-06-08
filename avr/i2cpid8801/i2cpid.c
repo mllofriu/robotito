@@ -61,8 +61,18 @@ void receive_cb(uint8_t num_bytes)
 
 void request_cb()
 {
-  int8_t accum_ticks = m1.get_accum_ticks();
-  usiTwiTransmitByte(accum_ticks);
+  int16_t accum_ticks = m1.get_accum_ticks();
+  usiTwiTransmitByte(accum_ticks & 255);
+  usiTwiTransmitByte(accum_ticks >> 8);
+  int16_t accum_p_err = m1.get_accum_p_err();
+  usiTwiTransmitByte(accum_p_err & 255);
+  usiTwiTransmitByte(accum_p_err >> 8);
+  int16_t accum_i_err = m1.get_accum_i_err();
+  usiTwiTransmitByte(accum_i_err & 255);
+  usiTwiTransmitByte(accum_i_err >> 8);
+  int16_t ctrl_s = m1.get_last_control_signal();
+  usiTwiTransmitByte(ctrl_s & 255);
+  usiTwiTransmitByte(ctrl_s >> 8);
 
   // Write a control char to ensure proper sending
   usiTwiTransmitByte(0b01010101);
