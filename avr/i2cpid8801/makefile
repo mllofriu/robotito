@@ -1,8 +1,8 @@
 PROG=i2cpid
-DEV=/dev/ttyACM1
+DEV=/dev/ttyACM0
 LINKFLAGS=
-CFLAGS=-O1 -std=c++11 -mmcu=attiny24a
-AVRDUDEFLAGS=-p t24 -P $(DEV) -c avrisp -b 19200 
+CFLAGS=-O2 -std=c++11 -mmcu=attiny84
+AVRDUDEFLAGS=-p t84 -P $(DEV) -c avrisp -b 19200 
 
 all: $(PROG).c USI_TWI_Slave.o motor_controller.o
 	avr-c++ $(LINKFLAGS) $(CFLAGS) -o $(PROG).elf $(PROG).c USI_TWI_Slave.o motor_controller.o

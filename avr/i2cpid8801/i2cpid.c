@@ -38,7 +38,7 @@ MotorController m1(
 // TODO: make this i2c configurable
 constexpr int16_t tics_per_turn = 12 * 30;
 constexpr float max_turns_per_sec_100 = 1100 / (60 * 100);
-constexpr int target_rps = 2;
+constexpr int target_rps = 0;
 constexpr int target_init = tics_per_turn * target_rps * control_period_s;
 
 void receive_cb(uint8_t num_bytes)
@@ -75,12 +75,12 @@ void setup_motors()
 
 void enable_interrupts(){
 	// Enable interrupt to handle encoder updates
-	// Enable Interrupts for changes in pins PCINT[7:0] or PCINT[15:12]	
-	GIMSK |= (1<<PCIE0);	
+	// Enable Interrupts for changes in pins PCINT[11:8]	
+	GIMSK |= (1<<PCIE1);	
 	// Enable the individual ports
-	PCMSK0 = 0;
-	PCMSK0 |= (1<<INT_QUAD_A);
-	PCMSK0 |= (1<<INT_QUAD_B);
+	PCMSK1 = 0;
+	PCMSK1 |= (1<<INT_QUAD_A);
+	PCMSK1 |= (1<<INT_QUAD_B);
 	sei();
 }
 
@@ -96,12 +96,12 @@ void run_motor(int16_t pwmval)
   PWM_SET(PWM,pwmval);
 }
 
-ISR(PCINT0_vect){
+ISR(PCINT1_vect){
   uint8_t pinquad = PIN_QUAD;
   bool a = (pinquad >> PIN_QUAD_A) & 1;
   bool b = (pinquad >> PIN_QUAD_B) & 1;
   m1.encoder_update(a, b);
-  HIGH(HBLED);
+  //TOGGLE(HBLED);
 }
 
 extern void    (*usi_onRequestPtr)(void);
@@ -125,6 +125,9 @@ int main()
   // Enable HeartBeat
   OUTPUT(HBLED);
 
+  // Read from the Fault line
+  INPUT(FAULT);
+
   m1.set_target(target_init);
 
   // Enable PWM
@@ -133,6 +136,8 @@ int main()
   enable_interrupts();
 
   const int16_t control_period_ms = control_period_s * 1000;
+  const int16_t hb_period_in_ctrl_tics = 1 / control_period_s;
+  int16_t ctrl_tics_hb = 0;
 	while(1)
   {
     // TODO: put control in timer interrupt
@@ -142,6 +147,15 @@ int main()
     m1.new_control_cycle();
 
     TinyWireS_stop_check();
+
+    if (!READ(FAULT)){
+      // HIGH(HBLED);
+    } else {
+      ctrl_tics_hb++;
+      if (ctrl_tics_hb % hb_period_in_ctrl_tics == 0) {
+        TOGGLE(HBLED);
+      }
+    }
 
     _delay_ms(control_period_ms);
   }
