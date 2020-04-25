@@ -51,6 +51,8 @@ public:
     ///       The sign denotes direction.
     void set_target(int16_t tics_per_ctrl_period);
 
+    int16_t get_target() { return m_target;}
+
     ///@brief Get the control signal, i.e. kp * err + ki * sum_err
     ///@note  Returns a value between -255 and 255
     int16_t get_control_signal();

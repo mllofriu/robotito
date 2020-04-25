@@ -238,7 +238,7 @@ ISR(USI_START_VECTOR) {
 ISR(USI_OVERFLOW_VECTOR) {
     switch (overflowState) {
         case (USI_SLAVE_CHECK_ADDRESS):
-            // PORTB |= 1 << PORTB6;
+            //PORTA |= 1 << PORTA3;
             if ((USIDR == 0) || ((USIDR >> 1) == slaveAddress)) {
                 if (USIDR & 0x01) {
                     // m1.disable();

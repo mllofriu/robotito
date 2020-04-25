@@ -14,7 +14,8 @@
 #include <avr/interrupt.h>
 
 
-#define SLAVE_ADDR 0xA   //this slave address (0x1, 0x2, 0x3)
+#define SLAVE_ADDR 11
+//this slave address (0x1, 0x2, 0x3)
 #include "TinyWireS/utility/USI_TWI_Slave.h"
 
 #include "pin_config.hpp"
@@ -36,7 +37,7 @@ MotorController m1(
 
 // Tics per motor turn * motor gear reduction
 // TODO: make this i2c configurable
-constexpr int16_t tics_per_turn = 12 * 30;
+constexpr int16_t tics_per_turn = 2 * 12 * 30;
 constexpr float max_turns_per_sec_100 = 1100 / (60 * 100);
 constexpr int target_rps = 0;
 constexpr int target_init = tics_per_turn * target_rps * control_period_s;
@@ -96,14 +97,19 @@ void enable_interrupts(){
 
 void run_motor(int16_t pwmval)
 {
-  if (pwmval < 0) {
-    LOW(DIR);
-    pwmval = -pwmval;
+  // Let motor loose on 0 target
+  if (m1.get_target() == 0) {
+    PWM_SET(PWM,0);
   } else {
-    HIGH(DIR);
+    if (pwmval < 0) {
+      LOW(DIR);
+      pwmval = -pwmval;
+    } else {
+      HIGH(DIR);
+    } 
+    
+    PWM_SET(PWM,pwmval);
   }
-
-  PWM_SET(PWM,pwmval);
 }
 
 ISR(PCINT1_vect){

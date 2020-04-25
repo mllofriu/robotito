@@ -1,5 +1,5 @@
 PROG=i2cpid
-DEV=/dev/ttyACM0
+DEV=/dev/ttyACM1
 LINKFLAGS=
 CFLAGS=-O2 -std=c++11 -mmcu=attiny84
 AVRDUDEFLAGS=-p t84 -P $(DEV) -c avrisp -b 19200 
@@ -24,3 +24,8 @@ reset:	# The v in the fuse parameters is for verify, might fail, but resets anyw
 
 fuses:
 	avrdude $(AVRDUDEFLAGS) -U lfuse:w:0xe2:m -U hfuse:w:0xdf:m -U efuse:w:0xff:m
+
+testprotocol:
+	scp i2c.cpp piw:
+	ssh piw g++ i2c.cpp -o i2c
+	ssh piw ./i2c 95
